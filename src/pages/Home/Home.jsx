@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from '../../components/Navbar/Navbar'
 
-const Home = () => {
+const Home = ({logout}) => {
   return (
-    <div>Home</div>
+    <div>
+      <Navbar logout={logout}/>
+    </div>
   )
 }
 

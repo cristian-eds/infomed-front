@@ -1,0 +1,39 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(17, 180, 101);
+    height: 3em;
+    padding: .5em 5em;
+}
+
+.navbar span {
+    font-size: 1.1em;
+}
+
+.navbar__itens {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+
+.navbar__itens a {
+    color: rgb(231, 231, 231);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.navbar__itens a:hover, .navbar button:hover {
+    color: rgb(251, 237, 237);;
+    transform: scale(1.05);
+}
+
+.navbar button {
+    background: transparent;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+}
