@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './App.css'
 import Login from './pages/Login/Login'
+import { AuthContext } from './context/AuthContext';
 
 function App() {
 
-  const [isLogged, setIsLogged] = useState(true);
-
-  return (
-    <>
-      {isLogged ? <Login></Login> : <Register></Register>}
-    </>
+  const {user} = useContext(AuthContext);
+ 
+  return (<>
+    {user ? <Login></Login> : <Register></Register>}
+  </>
   )
 }
 
