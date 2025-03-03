@@ -3,16 +3,24 @@ import React, { useState } from 'react'
 import logo from '../../assets/react.svg'
 
 import styles from './Login.module.css'
+import { useNavigate } from 'react-router';
 
-const Login = () => {
+const Login = ({login}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
     setError(null);
+    const user = {
+      email,
+      password
+    }
+    login(user);
   }
 
   return (
@@ -27,7 +35,7 @@ const Login = () => {
             {error && <p className={styles.error}>{error}</p>  }
             <div className={styles.login__buttons}>
               <input type="submit" value="Enter" />
-              <input type="button" value="Register" />
+              <input type="button" value="Register" onClick={() => navigate("/register")}/>
             </div>
             
         </form>

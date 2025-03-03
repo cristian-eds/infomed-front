@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import logo from '../../assets/react.svg'
 
 import styles from '../Login/Login.module.css'
+import { useNavigate } from 'react-router';
 
 const Register = () => {
 
@@ -10,6 +11,8 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -34,7 +37,7 @@ const Register = () => {
                 {error && <p className={styles.error}>{error}</p>  }
                 <div className={styles.login__buttons}>
                     <input type="submit" value="Register" />
-                    <input type="button" value="Login" />
+                    <input type="button" value="Login" onClick={() => navigate("/login")}/>
                 </div>
 
             </form>
