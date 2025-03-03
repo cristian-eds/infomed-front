@@ -8,9 +8,11 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setError(null);
   }
 
   return (
@@ -22,10 +24,10 @@ const Login = () => {
         <form className={styles.login} onSubmit={handleLogin}>
             <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)}/>
             <input type="password" name="password" id="" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-
+            {error && <p className={styles.error}>{error}</p>  }
             <div className={styles.login__buttons}>
-              <input type="submit" value="Entrar" />
-              <input type="button" value="Cadastrar" />
+              <input type="submit" value="Enter" />
+              <input type="button" value="Register" />
             </div>
             
         </form>

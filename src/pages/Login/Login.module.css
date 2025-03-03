@@ -45,3 +45,9 @@
     font-size: 1em;
 }
 
+.error {
+    font-size: 1em;
+    color: rgb(202, 11, 11);
+    padding: 0;
+}
+
