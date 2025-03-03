@@ -1,10 +1,14 @@
+import { useState } from 'react'
 import './App.css'
 import Login from './pages/Login/Login'
 
 function App() {
+
+  const [isLogged, setIsLogged] = useState(true);
+
   return (
     <>
-      <Login></Login>
+      {isLogged ? <Login></Login> : <Register></Register>}
     </>
   )
 }
