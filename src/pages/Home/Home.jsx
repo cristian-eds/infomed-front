@@ -42,7 +42,7 @@ const Home = ({ logout }) => {
                 <td>1/10</td>
                 <td>3-3 horas</td>
                 <td>16:30</td>
-                <td></td>
+                <td> <input type="checkbox" name="" id="" /> </td>
                 <td>Editar</td>
               </tr>
               <tr>
@@ -50,7 +50,7 @@ const Home = ({ logout }) => {
                 <td>1/10</td>
                 <td>3-3 horas</td>
                 <td>16:30</td>
-                <td></td>
+                <td> <input type="checkbox" name="" id="" /> </td>
                 <td>Editar</td>
               </tr>
             </tbody>

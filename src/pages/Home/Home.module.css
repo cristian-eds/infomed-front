@@ -76,6 +76,7 @@
     .container_main {
         padding: 1em 1em;
         width: 90%;
+        text-align: center;
     }
 
     .header {

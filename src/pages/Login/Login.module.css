@@ -51,3 +51,32 @@
     padding: 0;
 }
 
+
+
+@media (max-width: 1200px) {
+    .container_login {
+        padding: 1em 3em;
+        width: 90%;
+    }
+}
+
+
+@media (max-width: 992px) {
+    .container_login {
+        padding: 1em 3em;
+        width: 85%;
+    }
+}
+
+@media (max-width : 768px) {
+    .container_login {
+        padding: 1em 1em;
+        width: 90%;
+    }
+
+    .login__buttons {
+        flex-direction: column;
+        gap: 2em;
+    }
+
+}
