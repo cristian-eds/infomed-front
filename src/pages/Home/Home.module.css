@@ -1,6 +1,6 @@
 .container_main {
     padding: 2em 7em;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -27,4 +27,32 @@
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+
+@media (max-width : 768px) {
+    .container_main {
+        padding: 1em 1em;
+        width: 90%;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 2em;
+    }
+
+}
+
+@media (max-width: 992px) {
+    .container_main {
+        padding: 1em 3em;
+        width: 85%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container_main {
+        padding: 1em 3em;
+        width: 90%;
+    }
 }
