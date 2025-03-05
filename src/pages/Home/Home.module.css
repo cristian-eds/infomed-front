@@ -41,6 +41,15 @@
     border-spacing: 0 1em;
 }
 
+.table thead tr th:first-child {
+    border-top-left-radius: .5em;
+}
+
+
+.table thead tr th:last-child {
+    border-top-right-radius: .5em;
+}
+
 .table th, td {
     padding: 8px;
     text-align: left;

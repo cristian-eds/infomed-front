@@ -1,0 +1,25 @@
+.pagination {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+.pagination ul {
+    display: inline-block;
+}
+
+.pagination ul li {
+    display: inline;
+    border: 1px solid green;
+    padding: .4em;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination ul li:hover {
+    background-color: rgb(28, 28, 28);
+}
+
+.pagination ul li a{
+    color: white;
+}

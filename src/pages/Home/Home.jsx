@@ -4,11 +4,11 @@ import Navbar from '../../components/Navbar/Navbar'
 import styles from './Home.module.css'
 
 import { FaSearch } from "react-icons/fa";
+import Pagination from '../../components/Pagination/Pagination';
 
 const Home = ({ logout }) => {
 
   const date = new Date();
-
 
   return (
     <div>
@@ -17,12 +17,12 @@ const Home = ({ logout }) => {
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-            <p>Próximo medicamento em 30 muinutos...</p>
+            <p>Próximo medicamento em 30 minutos...</p>
           </div>
-          <div className={styles.search_input}>
+          <form className={styles.search_input}>
             <input type="text" placeholder='Pesquisar...' />
-            <FaSearch className={styles.search_input__icon} />
-          </div>
+            <FaSearch className={styles.search_input__icon} onClick={() => alert("clicou")}/>
+          </form>
         </header>
         <div className={styles.container_table}>
           <table className={styles.table}>
@@ -47,15 +47,16 @@ const Home = ({ logout }) => {
               </tr>
               <tr>
                 <td>Ibuprofeno</td>
-                <td>1/10</td>
+                <td>2/10</td>
                 <td>3-3 horas</td>
-                <td>16:30</td>
+                <td>19:30</td>
                 <td> <input type="checkbox" name="" id="" /> </td>
                 <td>Editar</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <Pagination/>
       </main>
     </div>
   )
