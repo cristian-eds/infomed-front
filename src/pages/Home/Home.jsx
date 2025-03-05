@@ -1,17 +1,20 @@
 import React from 'react'
-import Navbar from '../../components/Navbar/Navbar'
+
 
 import styles from './Home.module.css'
 
 import { FaSearch } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+
 import Pagination from '../../components/Pagination/Pagination';
+import Navbar from '../../components/Navbar/Navbar'
 
 const Home = ({ logout }) => {
 
   const date = new Date();
 
   return (
-    <div>
+    <>
       <Navbar logout={logout} />
       <main className={styles.container_main}>
         <header className={styles.header}>
@@ -24,6 +27,9 @@ const Home = ({ logout }) => {
             <FaSearch className={styles.search_input__icon} onClick={() => alert("clicou")}/>
           </form>
         </header>
+        <div className={styles.container_caption}>
+          <button><FaPlus/></button>
+        </div>
         <div className={styles.container_table}>
           <table className={styles.table}>
             <thead>
@@ -58,7 +64,7 @@ const Home = ({ logout }) => {
         </div>
         <Pagination/>
       </main>
-    </div>
+    </>
   )
 }
 
