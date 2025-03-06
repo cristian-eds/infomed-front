@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
 
 import logo from '../../assets/react.svg'
 
 import styles from '../Login/Login.module.css'
-import { useNavigate } from 'react-router';
+import ButtonGroup from '../../components/Button/ButtonGroup';
+
 
 const Register = () => {
 
@@ -35,11 +37,11 @@ const Register = () => {
                 <input type="password" name="password" id="" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input type="password" name="confirmPassword" id="" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 {error && <p className={styles.error}>{error}</p>  }
-                <div className={styles.login__buttons}>
+            
+                <ButtonGroup>
                     <input type="submit" value="Register" />
                     <input type="button" value="Login" onClick={() => navigate("/login")}/>
-                </div>
-
+                </ButtonGroup>
             </form>
         </div>
     )

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
 
 import logo from '../../assets/react.svg'
 
 import styles from './Login.module.css'
-import { useNavigate } from 'react-router';
+
+import ButtonGroup from '../../components/Button/ButtonGroup';
 
 const Login = ({login}) => {
 
@@ -33,10 +35,12 @@ const Login = ({login}) => {
             <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)}/>
             <input type="password" name="password" id="" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
             {error && <p className={styles.error}>{error}</p>  }
-            <div className={styles.login__buttons}>
+            
+            <ButtonGroup>
               <input type="submit" value="Enter" />
               <input type="button" value="Register" onClick={() => navigate("/register")}/>
-            </div>
+            </ButtonGroup>
+            
             
         </form>
     </div>

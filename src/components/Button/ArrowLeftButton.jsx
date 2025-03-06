@@ -7,7 +7,7 @@ import styles from './Button.module.css';
 
 const ArrowLeftButton = ({actionClick}) => {
   return (
-    <button onClick={actionClick} className={styles.button}>
+    <button onClick={actionClick} className={`${styles.button} ${styles.button_back}`}>
         <FaArrowLeft />
     </button>
   )

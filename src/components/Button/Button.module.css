@@ -7,6 +7,46 @@
     transition: all .5s;
 }
 
+.button_group {
+    display: flex;
+    flex-direction: row;
+    gap: 5em;
+    margin: auto;
+    padding-top: 2em;
+    justify-content: center;
+}
+
+.button_group input {
+    width: 14em;
+    height: 2.5em;
+    border-radius: .5em;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.button_confirm {
+    background-color: rgb(17, 180, 101);
+}
+
+
+
+.button_back {
+    background-color: #3cbc46;
+}
+
+.button_back:hover {
+    background-color: #34a03d;
+}
+
 .button:hover {
     background-color: rgb(208, 208, 208);
+}
+
+@media (max-width : 768px) {
+    
+    .button_group {
+        flex-direction: column;
+        gap: 2em;
+        align-items: center;
+    }
 }
