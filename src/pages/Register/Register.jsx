@@ -5,6 +5,7 @@ import logo from '../../assets/react.svg'
 
 import styles from '../Login/Login.module.css'
 import ButtonGroup from '../../components/Button/ButtonGroup';
+import Button from '../../components/Button/Button';
 
 
 const Register = () => {
@@ -39,8 +40,8 @@ const Register = () => {
                 {error && <p className={styles.error}>{error}</p>  }
             
                 <ButtonGroup>
-                    <input type="submit" value="Register" />
-                    <input type="button" value="Login" onClick={() => navigate("/login")}/>
+                    <Button type="submit" value="Registrar" variant="button_confirm"/>
+                    <Button type="button" value="Entrar" variant="button_cancel" onClick={() => navigate("/login")}/>
                 </ButtonGroup>
             </form>
         </div>

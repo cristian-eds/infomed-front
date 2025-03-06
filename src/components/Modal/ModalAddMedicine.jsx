@@ -5,6 +5,8 @@ import styles from './ModalAddMedicine.module.css'
 import Modal from './Modal'
 import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
+import ConfirmButton from '../Button/Button'
+import Button from '../Button/Button'
 
 
 const ModalAddMedicine = ({ showModal, setShowModal }) => {
@@ -50,8 +52,8 @@ const ModalAddMedicine = ({ showModal, setShowModal }) => {
                             </div>
 
                             <ButtonGroup>
-                                <input type="submit" value="Cadastrar" />
-                                <input type="button" value="Cancelar" onClick={() => setShowModal(false)}/>
+                                <Button value="Cadastrar" type="submit" variant="button_confirm" />
+                                <Button value="Cancelar" type="button" onClick={()=> setShowModal(false)} variant="button_cancel"/>
                             </ButtonGroup>
                         </form>
                     </div>

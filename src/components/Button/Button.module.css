@@ -16,7 +16,7 @@
     justify-content: center;
 }
 
-.button_group input {
+.button_input {
     width: 14em;
     height: 2.5em;
     border-radius: .5em;
@@ -28,7 +28,9 @@
     background-color: rgb(17, 180, 101);
 }
 
-
+.button_cancel {
+    background-color: rgb(114, 132, 114);
+}
 
 .button_back {
     background-color: #3cbc46;
@@ -43,7 +45,7 @@
 }
 
 @media (max-width : 768px) {
-    
+
     .button_group {
         flex-direction: column;
         gap: 2em;

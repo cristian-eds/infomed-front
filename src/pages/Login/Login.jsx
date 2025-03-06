@@ -6,6 +6,7 @@ import logo from '../../assets/react.svg'
 import styles from './Login.module.css'
 
 import ButtonGroup from '../../components/Button/ButtonGroup';
+import Button from '../../components/Button/Button';
 
 const Login = ({login}) => {
 
@@ -37,8 +38,8 @@ const Login = ({login}) => {
             {error && <p className={styles.error}>{error}</p>  }
             
             <ButtonGroup>
-              <input type="submit" value="Enter" />
-              <input type="button" value="Register" onClick={() => navigate("/register")}/>
+              <Button type="submit" value="Entrar" variant="button_confirm"/>
+              <Button type="button" value="Registrar" variant="button_cancel" onClick={() => navigate("/register")}/>
             </ButtonGroup>
             
             
