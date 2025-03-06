@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { use, useState } from 'react'
 
 
 import styles from './Home.module.css'
@@ -8,13 +8,16 @@ import { FaPlus } from "react-icons/fa";
 
 import Pagination from '../../components/Pagination/Pagination';
 import Navbar from '../../components/Navbar/Navbar'
+import Modal from '../../components/Modal/Modal';
 
 const Home = ({ logout }) => {
 
+  const [showModal, setShowModal] = useState(false);
   const date = new Date();
 
   return (
     <>
+      <Modal showModal={showModal} setShowModal={setShowModal}/>
       <Navbar logout={logout} />
       <main className={styles.container_main}>
         <header className={styles.header}>
@@ -28,7 +31,7 @@ const Home = ({ logout }) => {
           </form>
         </header>
         <div className={styles.container_caption}>
-          <button><FaPlus/></button>
+          <button onClick={() => setShowModal(true)}><FaPlus/></button>
         </div>
         <div className={styles.container_table}>
           <table className={styles.table}>
