@@ -28,7 +28,7 @@ const Login = ({ login }) => {
 
     const res = await login(user);
 
-    if (res.status) {
+    if (res && res.status) {
       toast(res.description);
     }
   }

@@ -19,7 +19,7 @@ export const AuthProvider = ({children}) => {
         try {
             const res = await fetch(url,config)
                                 .then(res => res.json());
-            console.log(res);
+ 
             if(res.token) {
                 setUser(userData.login);
                 localStorage.setItem("token",res.token);

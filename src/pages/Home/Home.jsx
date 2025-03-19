@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
@@ -10,14 +9,51 @@ import Pagination from '../../components/Pagination/Pagination';
 import Navbar from '../../components/Navbar/Navbar'
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMedicinesUser } from '../../slices/medicineSlice';
+
 const Home = ({ logout }) => {
 
+  const dispatch = useDispatch();
+
+  const { error, loading, medicines } = useSelector(state => state.medicine);
+
   const [showModal, setShowModal] = useState(false);
+
   const date = new Date();
+
+  useEffect(() => {
+    dispatch(fetchMedicinesUser());
+  }, [dispatch])
+
+  medicines && console.log(medicines);
+
+  if (loading) {
+    return <p>Carregando...</p>
+  }
+
+  const fillLineTable = (medicine) => {
+    return medicine.map((item) => {
+      return item.medicineItems.map(medicineItem => (
+          <tr key={medicineItem.id}>
+            <td>{item.name}</td>
+            <td>{medicineItem.medicineItemSequence}</td>
+            <td>{item.frequencyHours}/{item.frequencyHours} hours</td>
+            <td>{medicineItem.dayHour}</td>
+            <td> <input type="checkbox" name="" id=""  /> </td>
+            <td>Editar</td>
+          </tr>
+        )
+      );
+    }
+
+
+    )
+  }
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal}/>
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
       <Navbar logout={logout} />
       <main className={styles.container_main}>
         <header className={styles.header}>
@@ -27,11 +63,11 @@ const Home = ({ logout }) => {
           </div>
           <form className={styles.search_input}>
             <input type="text" placeholder='Pesquisar...' />
-            <FaSearch className={styles.search_input__icon} onClick={() => alert("clicou")}/>
+            <FaSearch className={styles.search_input__icon} onClick={() => alert("clicou")} />
           </form>
         </header>
         <div className={styles.container_caption}>
-          <button onClick={() => setShowModal(true)}><FaPlus/></button>
+          <button onClick={() => setShowModal(true)}><FaPlus /></button>
         </div>
         <div className={styles.container_table}>
           <table className={styles.table}>
@@ -46,26 +82,11 @@ const Home = ({ logout }) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Ibuprofeno</td>
-                <td>1/10</td>
-                <td>3-3 horas</td>
-                <td>16:30</td>
-                <td> <input type="checkbox" name="" id="" /> </td>
-                <td>Editar</td>
-              </tr>
-              <tr>
-                <td>Ibuprofeno</td>
-                <td>2/10</td>
-                <td>3-3 horas</td>
-                <td>19:30</td>
-                <td> <input type="checkbox" name="" id="" /> </td>
-                <td>Editar</td>
-              </tr>
+              {medicines && fillLineTable(medicines)}
             </tbody>
           </table>
         </div>
-        <Pagination/>
+        <Pagination />
       </main>
     </>
   )
