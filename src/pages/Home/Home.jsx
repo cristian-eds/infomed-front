@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
@@ -10,45 +10,55 @@ import Navbar from '../../components/Navbar/Navbar'
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMedicinesUser } from '../../slices/medicineSlice';
+import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { format } from 'date-fns';
 
 const Home = ({ logout }) => {
+
+  console.log("Recarregou")
 
   const dispatch = useDispatch();
 
   const { error, loading, medicines } = useSelector(state => state.medicine);
 
+  const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const date = new Date();
 
   useEffect(() => {
     dispatch(fetchMedicinesUser());
-  }, [dispatch])
+  }, [dispatch]);
 
-  medicines && console.log(medicines);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(searchMedicinesUser(search));
+  }
+
+  const formatDate = (date) => {
+    return format(date, 'dd/MM/yyyy HH:mm')
+  }
+
+  const fillRowTable = (medicine) => {
+    return medicine.map((item) => (
+      <Fragment key={item.id}>
+        {item.medicineItems.map((medicineItem) => (
+          <tr key={medicineItem.id}>
+            <td>{item.name}</td>
+            <td>{medicineItem.medicineItemSequence}/{item.medicineItems.length}</td>
+            <td>{item.frequencyHours}/{item.frequencyHours} hours</td>
+            <td>{formatDate(medicineItem.dayHour)}</td>
+            <td><input type="checkbox" name="" id="" /></td>
+            <td>Editar</td>
+          </tr>
+        ))}
+      </Fragment>
+    ));
+  }
+
 
   if (loading) {
     return <p>Carregando...</p>
-  }
-
-  const fillLineTable = (medicine) => {
-    return medicine.map((item) => {
-      return item.medicineItems.map(medicineItem => (
-          <tr key={medicineItem.id}>
-            <td>{item.name}</td>
-            <td>{medicineItem.medicineItemSequence}</td>
-            <td>{item.frequencyHours}/{item.frequencyHours} hours</td>
-            <td>{medicineItem.dayHour}</td>
-            <td> <input type="checkbox" name="" id=""  /> </td>
-            <td>Editar</td>
-          </tr>
-        )
-      );
-    }
-
-
-    )
   }
 
   return (
@@ -61,9 +71,11 @@ const Home = ({ logout }) => {
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
             <p>Próximo medicamento em 30 minutos...</p>
           </div>
-          <form className={styles.search_input}>
-            <input type="text" placeholder='Pesquisar...' />
-            <FaSearch className={styles.search_input__icon} onClick={() => alert("clicou")} />
+          <form className={styles.search_input} onSubmit={handleSearch}>
+            <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)}/>
+            <button type="submit">
+              <FaSearch className={styles.search_input__icon} />
+            </button>
           </form>
         </header>
         <div className={styles.container_caption}>
@@ -82,7 +94,7 @@ const Home = ({ logout }) => {
               </tr>
             </thead>
             <tbody>
-              {medicines && fillLineTable(medicines)}
+              {medicines && fillRowTable(medicines)}
             </tbody>
           </table>
         </div>

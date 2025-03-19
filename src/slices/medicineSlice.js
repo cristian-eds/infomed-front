@@ -22,7 +22,25 @@ export const fetchMedicinesUser = createAsyncThunk(
 
         return res;
     }
-) 
+)  
+
+export const searchMedicinesUser = createAsyncThunk(
+    'medicines/searchMedicines',
+    async (query) => {
+        const token = localStorage.getItem("token");
+        const config = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        const res = await fetch("http://localhost:8080/medicine?name="+query, config)
+                                .then(res => res.json());
+
+        return res;
+    }
+)  
 
 
 export const medicineSlice = createSlice({
@@ -38,7 +56,18 @@ export const medicineSlice = createSlice({
             state.medicines = action.payload;
         }).addCase(fetchMedicinesUser.rejected, (state, action) => {
             state.loading = false;
-            state.medicines = action.error.message;
+            state.error = action.error.message;
+        })
+        .addCase(searchMedicinesUser.pending,(state) => {
+            state.loading = true;
+        })
+        .addCase(searchMedicinesUser.fulfilled,(state,action) => {
+            state.loading = false;
+            state.medicines = action.payload;
+        })
+        .addCase(searchMedicinesUser.rejected,(state,action) => {
+            state.loading = false;
+            state.error = action.error.message;
         })
     }
 })
