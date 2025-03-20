@@ -11,7 +11,7 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
-import { format } from 'date-fns';
+import { differenceInMinutes, format, isAfter } from 'date-fns';
 
 const Home = ({ logout }) => {
 
@@ -38,6 +38,35 @@ const Home = ({ logout }) => {
   const formatDate = (date) => {
     return format(date, 'dd/MM/yyyy HH:mm')
   }
+
+  const verifyTimeToNextMedicine = () => {
+    if(medicines) {
+      const datesAfter = [];
+      medicines.forEach(medicine => {
+        medicine.medicineItems.forEach(item => {
+          if(isAfter(item.dayHour,date)){
+            datesAfter.push(item.dayHour);
+          }
+      })});
+    
+      const minutesDiff =  differenceInMinutes(datesAfter[0],date);
+      if(minutesDiff <= 60) {
+        return `Próximo medicamento em ${minutesDiff} minutos`;
+      } else {
+        return `Próximo medicamento em ${calculateHoursForNext(minutesDiff)}`;
+      }
+
+    }
+    return "Não há nenhum próximo medicamento...";
+}
+
+const calculateHoursForNext = (time) => {
+    const divisor = time / 60;
+    const hours = Math.floor(divisor);
+    const minutes = (divisor - hours) * 60;
+
+    return `${hours} horas e ${minutes.toFixed(0)} minutos`;
+}
 
   const fillRowTable = (medicine) => {
     return medicine.map((item) => (
@@ -69,7 +98,7 @@ const Home = ({ logout }) => {
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-            <p>Próximo medicamento em 30 minutos...</p>
+            <p>{verifyTimeToNextMedicine()}</p>
           </div>
           <form className={styles.search_input} onSubmit={handleSearch}>
             <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)}/>

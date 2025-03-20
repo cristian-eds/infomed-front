@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -7,6 +8,14 @@ export const AuthProvider = ({children}) => {
     const url = 'http://localhost:8080/auth/login';
 
     const [user, setUser] = useState(null);
+
+    useEffect(()=> {
+     var token = localStorage.getItem("token");
+     if(token) {
+        var payload = jwtDecode(token);
+        setUser(payload.sub);
+     }    
+    },[setUser])
 
     const login = async (userData) => {   
         const config = {
@@ -23,7 +32,7 @@ export const AuthProvider = ({children}) => {
             if(res.token) {
                 setUser(userData.login);
                 localStorage.setItem("token",res.token);
-                setUser(userData);
+                setUser(userData.email);
             } else {
                 return res;
             }
