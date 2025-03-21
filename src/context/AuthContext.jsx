@@ -13,8 +13,6 @@ export const AuthProvider = ({ children }) => {
         try {
             var token = localStorage.getItem("token");
             var payload = jwtDecode(token);
-            console.log(payload.exp);
-            console.log(Date.now() / 1000)
             if (token && payload.exp > Date.now() / 1000) {
                 setUser(payload.sub);
             } else {
