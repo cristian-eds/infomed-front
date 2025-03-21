@@ -19,7 +19,7 @@ const Home = ({ logout }) => {
 
   const dispatch = useDispatch();
 
-  const { error, loading, medicines } = useSelector(state => state.medicine);
+  const { loading, medicines } = useSelector(state => state.medicine);
 
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -53,14 +53,14 @@ const Home = ({ logout }) => {
       if(minutesDiff <= 60) {
         return `Próximo medicamento em ${minutesDiff} minutos`;
       } else if(medicines > 60){
-        return `Próximo medicamento em ${calculateHoursForNext(minutesDiff)}`;
+        return `Próximo medicamento em ${calculateTimeForNext(minutesDiff)}`;
       }
 
     }
     return "Não há nenhum próximo medicamento...";
 }
 
-const calculateHoursForNext = (time) => {
+const calculateTimeForNext = (time) => {
     const divisor = time / 60;
     const hours = Math.floor(divisor);
     const minutes = (divisor - hours) * 60;
@@ -68,20 +68,37 @@ const calculateHoursForNext = (time) => {
     return `${hours} horas e ${minutes.toFixed(0)} minutos`;
 }
 
-  const fillRowTable = (medicine) => {
-    return medicine.map((item) => (
-      <Fragment key={item.id}>
-        {item.medicineItems.map((medicineItem) => (
-          <tr key={medicineItem.id}>
-            <td>{item.name}</td>
-            <td>{medicineItem.medicineItemSequence}/{item.medicineItems.length}</td>
-            <td>{item.frequencyHours}/{item.frequencyHours} hours</td>
-            <td>{formatDate(medicineItem.dayHour)}</td>
+const generateObjectsForTableRow = (medicines) => {
+  const listObjects = [];
+  medicines.forEach( (medicine) => {
+      medicine.medicineItems.forEach(medicineItem => {
+          const item = {
+            medicineId: medicine.id,
+            medicineItemId: medicineItem.id,
+            name: medicine.name,
+            sequency: medicineItem.medicineItemSequence,
+            total: medicine.medicineItems.length,
+            frequency: medicine.frequencyHours,
+            dayHour: medicineItem.dayHour,
+            conclusion: medicineItem.conclusion
+          }
+          listObjects.push(item);
+      });
+  } )
+  return listObjects.sort((a,b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
+}
+
+  const fillRowTable = (medicines) => {
+    const listItens = generateObjectsForTableRow(medicines);
+    return listItens.map((medicine) => (
+          <tr key={medicine.medicineItemId}>
+            <td>{medicine.name}</td>
+            <td>{medicine.sequency}/{medicine.total}</td>
+            <td>{medicine.frequency}/{medicine.frequency} hours</td>
+            <td>{formatDate(medicine.dayHour)}</td>
             <td><input type="checkbox" name="" id="" /></td>
             <td>Editar</td>
           </tr>
-        ))}
-      </Fragment>
     ));
   }
 
