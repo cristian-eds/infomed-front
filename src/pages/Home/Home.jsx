@@ -52,7 +52,7 @@ const Home = ({ logout }) => {
       const minutesDiff =  differenceInMinutes(datesAfter[0],date);
       if(minutesDiff <= 60) {
         return `Próximo medicamento em ${minutesDiff} minutos`;
-      } else {
+      } else if(medicines > 60){
         return `Próximo medicamento em ${calculateHoursForNext(minutesDiff)}`;
       }
 
@@ -85,11 +85,6 @@ const calculateHoursForNext = (time) => {
     ));
   }
 
-
-  if (loading) {
-    return <p>Carregando...</p>
-  }
-
   return (
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
@@ -101,33 +96,35 @@ const calculateHoursForNext = (time) => {
             <p>{verifyTimeToNextMedicine()}</p>
           </div>
           <form className={styles.search_input} onSubmit={handleSearch}>
-            <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)}/>
-            <button type="submit">
+            <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)} disabled={loading}/>
+            <button type="submit" disabled={loading}>
               <FaSearch className={styles.search_input__icon} />
             </button>
           </form>
         </header>
-        <div className={styles.container_caption}>
-          <button onClick={() => setShowModal(true)}><FaPlus /></button>
-        </div>
-        <div className={styles.container_table}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Número</th>
-                <th>Frequência</th>
-                <th>Horário</th>
-                <th>Concluído</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {medicines && fillRowTable(medicines)}
-            </tbody>
-          </table>
-        </div>
-        <Pagination />
+        {loading ? <p>Loading...</p> : <>
+          <div className={styles.container_caption}>
+            <button onClick={() => setShowModal(true)}><FaPlus /></button>
+          </div>
+          <div className={styles.container_table}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Número</th>
+                  <th>Frequência</th>
+                  <th>Horário</th>
+                  <th>Concluído</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {medicines && fillRowTable(medicines)}
+              </tbody>
+            </table>
+          </div>
+          <Pagination />
+        </> }
       </main>
     </>
   )
