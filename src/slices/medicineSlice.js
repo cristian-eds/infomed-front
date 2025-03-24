@@ -18,11 +18,11 @@ export const fetchMedicinesUser = createAsyncThunk(
             }
         }
         const res = await fetch("http://localhost:8080/medicine", config)
-                                .then(res => res.json());
+            .then(res => res.json());
 
         return res;
     }
-)  
+)
 
 export const searchMedicinesUser = createAsyncThunk(
     'medicines/searchMedicines',
@@ -35,12 +35,12 @@ export const searchMedicinesUser = createAsyncThunk(
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await fetch("http://localhost:8080/medicine?name="+query, config)
-                                .then(res => res.json());
+        const res = await fetch("http://localhost:8080/medicine?name=" + query, config)
+            .then(res => res.json());
 
         return res;
     }
-)  
+)
 
 export const createMedicine = createAsyncThunk(
     'medicines/createMedicine',
@@ -56,11 +56,28 @@ export const createMedicine = createAsyncThunk(
             body: JSON.stringify(data)
         }
         const res = await fetch("http://localhost:8080/medicine", config)
-                                .then(res => res.json())
-                                .catch(err=> err);
+            .then(res => res.json())
+            .catch(err => err);
         return res;
     }
-) 
+)
+
+export const alterStatusMedicineItem = createAsyncThunk(
+    'medicines/alterStatus',
+    async (id) => {
+        const token = localStorage.getItem("token");
+        const config = {
+            method: 'PUT',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        const res = await fetch("http://localhost:8080/medicine/item/" + id + "/status", config)
+            .then(res => res.status)
+            .catch(err => err);
+        return id;
+    }
+)
 
 
 export const medicineSlice = createSlice({
@@ -71,35 +88,57 @@ export const medicineSlice = createSlice({
         builder.addCase(fetchMedicinesUser.pending, (state) => {
             state.loading = true;
         })
-        .addCase(fetchMedicinesUser.fulfilled, (state, action) => {
-            state.loading = false;
-            state.medicines = action.payload;
-        }).addCase(fetchMedicinesUser.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message;
-        })
-        .addCase(searchMedicinesUser.pending,(state) => {
-            state.loading = true;
-        })
-        .addCase(searchMedicinesUser.fulfilled,(state,action) => {
-            state.loading = false;
-            state.medicines = action.payload;
-        })
-        .addCase(searchMedicinesUser.rejected,(state,action) => {
-            state.loading = false;
-            state.error = action.error.message;
-        })
-        .addCase(createMedicine.pending, (state) => {
-            state.loading = true;
-        })
-        .addCase(createMedicine.fulfilled, (state, action) => {
-            state.loading = false;
-            state.medicines.unshift(action.payload)
-        })
-        .addCase(createMedicine.rejected, (state,action) => {
-            state.loading = false;
-            state.error = action.error.message;
-        });
+            .addCase(fetchMedicinesUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines = action.payload;
+            }).addCase(fetchMedicinesUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(searchMedicinesUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(searchMedicinesUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines = action.payload;
+                console.log(state.medicines)
+            })
+            .addCase(searchMedicinesUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(createMedicine.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createMedicine.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines.unshift(action.payload)
+            })
+            .addCase(createMedicine.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(alterStatusMedicineItem.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(alterStatusMedicineItem.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines = state.medicines.map(medicine => ({
+                    ...medicine,
+                    medicineItems: medicine.medicineItems.map(item => {
+                        if (item.id === action.payload) {
+                            return {
+                                ...item,
+                                conclusion: !item.conclusion
+                            };
+                        }
+                        return item;
+                    })
+                }))
+            })
+            .addCase(alterStatusMedicineItem.rejected, (state) => {
+                state.loading = false;
+            });
     }
 })
 

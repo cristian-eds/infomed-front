@@ -10,7 +10,6 @@ import Button from '../Button/Button'
 
 const ModalEditMedicineItem = ({ showModal, setShowModal, medicine }) => {
 
-    console.log(medicine);
 
     return (
         <>

@@ -11,7 +11,7 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
-import { differenceInMinutes, format, isAfter } from 'date-fns';
+import { differenceInMinutes, isAfter } from 'date-fns';
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
 
@@ -39,106 +39,106 @@ const Home = ({ logout }) => {
 
 
   const verifyTimeToNextMedicine = (medicines) => {
-    if(medicines.length === 0) return;
+    if (medicines.length === 0) return;
     const listItens = generateObjectsItensSortedByDate(medicines);
     const listItensAfter = listItens.filter((item) =>
       isAfter(item.dayHour, date)
     );
-    if(listItensAfter.length === 0 ) return `Sem próximo medicamento com os filtros e pesquisa.`;
+    if (listItensAfter.length === 0) return `Sem próximo medicamento com os filtros e pesquisa.`;
     const minutesDiff = differenceInMinutes(listItensAfter[0].dayHour, date);
     if (minutesDiff <= 60) {
       return `Próximo medicamento em ${minutesDiff} minutos`;
     } else if (minutesDiff > 60) {
       return `Próximo medicamento em ${calculateTimeForNext(minutesDiff)}`;
     }
-  
-  return "Não há nenhum próximo medicamento...";
-}
 
-const calculateTimeForNext = (time) => {
-  const divisor = time / 60;
-  const hours = Math.floor(divisor);
-  const minutes = (divisor - hours) * 60;
+    return "Não há nenhum próximo medicamento...";
+  }
 
-  return `${hours} horas e ${minutes.toFixed(0)} minutos`;
-}
+  const calculateTimeForNext = (time) => {
+    const divisor = time / 60;
+    const hours = Math.floor(divisor);
+    const minutes = (divisor - hours) * 60;
 
-const generateObjectsItensSortedByDate = (medicines) => {
-  const listObjects = [];
-  medicines.forEach((medicine) => {
-    medicine.medicineItems.forEach(medicineItem => {
-      const item = {
-        medicineId: medicine.id,
-        medicineItemId: medicineItem.id,
-        name: medicine.name,
-        sequency: medicineItem.medicineItemSequence,
-        total: medicine.medicineItems.length,
-        frequency: medicine.frequencyHours,
-        dayHour: medicineItem.dayHour,
-        conclusion: medicineItem.conclusion
-      }
-      listObjects.push(item);
-    });
-  })
-  return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
-}
+    return `${hours} horas e ${minutes.toFixed(0)} minutos`;
+  }
 
-const fillRowTable = (medicines) => {
-  const listItens = generateObjectsItensSortedByDate(medicines);
-  return listItens.map((medicine) => (
-    <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
-  ));
-}
+  const generateObjectsItensSortedByDate = (medicines) => {
+    const listObjects = [];
+    medicines.forEach((medicine) => {
+      medicine.medicineItems.forEach(medicineItem => {
+        const item = {
+          medicineId: medicine.id,
+          medicineItemId: medicineItem.id,
+          name: medicine.name,
+          sequency: medicineItem.medicineItemSequence,
+          total: medicine.medicineItems.length,
+          frequency: medicine.frequencyHours,
+          dayHour: medicineItem.dayHour,
+          conclusion: medicineItem.conclusion
+        }
+        listObjects.push(item);
+      });
+    })
+    return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
+  }
 
-const handleSetShowModalMedicineEditing = (medicine) => {
-  setMedicineEditing(medicine);
-  setShowModalEditMedicineItem(true);
-}
+  const fillRowTable = (medicines) => {
+    const listItens = generateObjectsItensSortedByDate(medicines);
+    return listItens.map((medicine) => (
+      <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
+    ));
+  }
 
-return (
-  <>
-    <ModalAddMedicine showModal={showModal}  setShowModal={setShowModal} />
-    <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />
-    <Navbar logout={logout} />
-    <main className={styles.container_main}>
-      <header className={styles.header}>
-        <div>
-          <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-          <p>{verifyTimeToNextMedicine(medicines)}</p>
-        </div>
-        <form className={styles.search_input} onSubmit={handleSearch}>
-          <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)} disabled={loading} />
-          <button type="submit" disabled={loading}>
-            <FaSearch className={styles.search_input__icon} />
-          </button>
-        </form>
-      </header>
-      {loading ? <p>Loading...</p> : <>
-        <div className={styles.container_caption}>
-          <button onClick={() => setShowModal(true)}><FaPlus /></button>
-        </div>
-        <div className={styles.container_table}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Número</th>
-                <th>Frequência</th>
-                <th>Horário</th>
-                <th>Concluído</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {medicines && fillRowTable(medicines)}
-            </tbody>
-          </table>
-        </div>
-        <Pagination />
-      </>}
-    </main>
-  </>
-)
+  const handleSetShowModalMedicineEditing = (medicine) => {
+    setMedicineEditing(medicine);
+    setShowModalEditMedicineItem(true);
+  }
+
+  return (
+    <>
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
+      <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />
+      <Navbar logout={logout} />
+      <main className={styles.container_main}>
+        <header className={styles.header}>
+          <div>
+            <h2>Hoje: {date && date.toLocaleDateString()}</h2>
+            <p>{verifyTimeToNextMedicine(medicines)}</p>
+          </div>
+          <form className={styles.search_input} onSubmit={handleSearch}>
+            <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)} disabled={loading} />
+            <button type="submit" disabled={loading}>
+              <FaSearch className={styles.search_input__icon} />
+            </button>
+          </form>
+        </header>
+        {loading ? <p>Loading...</p> : <>
+          <div className={styles.container_caption}>
+            <button onClick={() => setShowModal(true)}><FaPlus /></button>
+          </div>
+          <div className={styles.container_table}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Número</th>
+                  <th>Frequência</th>
+                  <th>Horário</th>
+                  <th>Concluído</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {medicines && fillRowTable(medicines)}
+              </tbody>
+            </table>
+          </div>
+          <Pagination />
+        </>}
+      </main>
+    </>
+  )
 }
 
 export default Home
