@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 
-import styles from './ModalAddMedicine.module.css'
+import styles from './Modal.module.css'
 
 import Modal from './Modal'
 import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
+
 import { useDispatch } from 'react-redux'
 import { createMedicine } from '../../slices/medicineSlice'
 import { format } from 'date-fns'

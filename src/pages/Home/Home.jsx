@@ -12,6 +12,8 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 import { differenceInMinutes, format, isAfter } from 'date-fns';
+import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
+import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
 
 const Home = ({ logout }) => {
 
@@ -21,6 +23,8 @@ const Home = ({ logout }) => {
 
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
+  const [medicineEditing, setMedicineEditing] = useState();
 
   const date = new Date();
 
@@ -33,9 +37,6 @@ const Home = ({ logout }) => {
     dispatch(searchMedicinesUser(search));
   }
 
-  const formatDate = (date) => {
-    return format(date, 'dd/MM/yyyy HH:mm')
-  }
 
   const verifyTimeToNextMedicine = (medicines) => {
     if(medicines.length === 0) return;
@@ -43,9 +44,8 @@ const Home = ({ logout }) => {
     const listItensAfter = listItens.filter((item) =>
       isAfter(item.dayHour, date)
     );
-    console.log(listItensAfter);
+    if(listItensAfter.length === 0 ) return `Sem próximo medicamento com os filtros e pesquisa.`;
     const minutesDiff = differenceInMinutes(listItensAfter[0].dayHour, date);
-    console.log(minutesDiff);
     if (minutesDiff <= 60) {
       return `Próximo medicamento em ${minutesDiff} minutos`;
     } else if (minutesDiff > 60) {
@@ -86,20 +86,19 @@ const generateObjectsItensSortedByDate = (medicines) => {
 const fillRowTable = (medicines) => {
   const listItens = generateObjectsItensSortedByDate(medicines);
   return listItens.map((medicine) => (
-    <tr key={medicine.medicineItemId}>
-      <td>{medicine.name}</td>
-      <td>{medicine.sequency}/{medicine.total}</td>
-      <td>{medicine.frequency}/{medicine.frequency} hours</td>
-      <td>{formatDate(medicine.dayHour)}</td>
-      <td><input type="checkbox" name="" id="" /></td>
-      <td>Editar</td>
-    </tr>
+    <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
   ));
+}
+
+const handleSetShowModalMedicineEditing = (medicine) => {
+  setMedicineEditing(medicine);
+  setShowModalEditMedicineItem(true);
 }
 
 return (
   <>
-    <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
+    <ModalAddMedicine showModal={showModal}  setShowModal={setShowModal} />
+    <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />
     <Navbar logout={logout} />
     <main className={styles.container_main}>
       <header className={styles.header}>
