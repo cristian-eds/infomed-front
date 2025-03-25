@@ -73,9 +73,9 @@ export const alterStatusMedicineItem = createAsyncThunk(
             }
         }
         const res = await fetch("http://localhost:8080/medicine/item/" + id + "/status", config)
-            .then(res => res.status)
+            .then(res => res.json())
             .catch(err => err);
-        return id;
+        return res;
     }
 )
 
@@ -146,10 +146,9 @@ export const medicineSlice = createSlice({
                 state.medicines = state.medicines.map(medicine => ({
                     ...medicine,
                     medicineItems: medicine.medicineItems.map(item => {
-                        if (item.id === action.payload) {
+                        if (item.id === action.payload.id) {
                             return {
-                                ...item,
-                                conclusion: !item.conclusion
+                                ...action.payload
                             };
                         }
                         return item;

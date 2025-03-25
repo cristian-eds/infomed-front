@@ -39,7 +39,7 @@ const Home = ({ logout }) => {
 
 
   const verifyTimeToNextMedicine = (medicines) => {
-    if (medicines.length === 0) return;
+    if (medicines.length === 0) return "Não há nenhum próximo medicamento...";
     const listItens = generateObjectsItensSortedByDate(medicines);
     const listItensAfter = listItens.filter((item) =>
       isAfter(item.dayHour, date)
@@ -75,7 +75,8 @@ const Home = ({ logout }) => {
           total: medicine.medicineItems.length,
           frequency: medicine.frequencyHours,
           dayHour: medicineItem.dayHour,
-          conclusion: medicineItem.conclusion
+          conclusion: medicineItem.conclusion,
+          conclusionDayHour: medicineItem.conclusionDayHour
         }
         listObjects.push(item);
       });
@@ -95,10 +96,15 @@ const Home = ({ logout }) => {
     setShowModalEditMedicineItem(true);
   }
 
+  const handleCloseModalMedicineEditing = () => {
+    setMedicineEditing(null);
+    setShowModalEditMedicineItem(false);
+  }
+
   return (
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
-      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />}
+      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
       <Navbar logout={logout} />
       <main className={styles.container_main}>
         <header className={styles.header}>

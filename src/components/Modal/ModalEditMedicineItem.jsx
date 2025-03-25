@@ -8,12 +8,15 @@ import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 import { useDispatch } from 'react-redux'
-import { updateMedicineItem } from '../../slices/medicineSlice'
 
-const ModalEditMedicineItem = ({ showModal, setShowModal, medicine }) => {
+import { updateMedicineItem } from '../../slices/medicineSlice'
+import { format } from 'date-fns'
+
+const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
 
     const [dayHour, setDayHour] = useState(medicine.dayHour);
-    const [conclusion, setConslusion] = useState(medicine.conclusion);
+    const [conclusion, setConclusion] = useState(medicine.conclusion);
+    const [conclusionDayHour, setConclusionDayHour] = useState(medicine.conclusionDayHour ? format(medicine.conclusionDayHour,'yyyy-MM-dd hh:mm') : "");
     
     const dispatch = useDispatch();
 
@@ -23,11 +26,21 @@ const ModalEditMedicineItem = ({ showModal, setShowModal, medicine }) => {
         const updatedData = {
             id: medicine.medicineItemId,
             conclusion,
-            dayHour
+            dayHour,
+            conclusionDayHour
         }
 
         dispatch(updateMedicineItem(updatedData));
-        setShowModal(false);
+        setCloseModal();
+    }
+
+    const handleAlterConclusion = (isConclusion) => {
+        if(isConclusion) {
+            setConclusionDayHour(format(Date.now(),'yyyy-MM-dd hh:mm'));
+        } else {
+            setConclusionDayHour("");
+        }
+        setConclusion(isConclusion);
     }
 
     return (
@@ -36,7 +49,7 @@ const ModalEditMedicineItem = ({ showModal, setShowModal, medicine }) => {
                 < Modal >
                     <div className={styles.modal_content}>
                         <header className={styles.modal_content_header}>
-                            <ArrowLeftButton actionClick={() => setShowModal(false)} />
+                            <ArrowLeftButton actionClick={() => setCloseModal()} />
                                 <div>
                                     <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                                     <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
@@ -47,21 +60,28 @@ const ModalEditMedicineItem = ({ showModal, setShowModal, medicine }) => {
                             <div className={styles.form_row}>
                                 <label htmlFor="nome">Data e hora:</label>
                                 <div className={styles.input_group}>
-                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)}/>
+                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} />
                                 </div>
                             </div>
 
                             <div className={styles.form_row}>
                                 <label htmlFor="frequencia">Concluído:</label>
                                 <div className={styles.input_group}>
-                                    <input type="checkbox" name="conclusion" id="conclusion" checked={conclusion} onChange={(e) => setConslusion(e.target.checked)} />
+                                    <input type="checkbox" name="conclusion" id="conclusion" checked={conclusion} onChange={(e) => handleAlterConclusion(e.target.checked)} />
                                     <span className="unit"></span>
+                                </div>
+                            </div>
+
+                            <div className={styles.form_row}>
+                                <label htmlFor="nome">Data e hora que foi tomado:</label>
+                                <div className={styles.input_group}>
+                                    <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)}/>
                                 </div>
                             </div>
 
                             <ButtonGroup>
                                 <Button value="Confirmar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={()=> setShowModal(false)} variant="button_cancel"/>
+                                <Button value="Cancelar" type="button" onClick={()=> setCloseModal()} variant="button_cancel"/>
                             </ButtonGroup>
                         </form>
                     </div>
