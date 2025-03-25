@@ -98,7 +98,7 @@ const Home = ({ logout }) => {
   return (
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
-      <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />
+      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setShowModal={setShowModalEditMedicineItem} medicine={medicineEditing} />}
       <Navbar logout={logout} />
       <main className={styles.container_main}>
         <header className={styles.header}>

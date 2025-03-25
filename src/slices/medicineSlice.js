@@ -81,16 +81,17 @@ export const alterStatusMedicineItem = createAsyncThunk(
 
 export const updateMedicineItem = createAsyncThunk(
     'medicines/updateMedicineItem',
-    async (id, data) => {
+    async (data) => {
         const token = localStorage.getItem("token");
         const config = {
             method: 'PUT',
             headers: {
+                "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(data)
         }
-        const res = await fetch("http://localhost:8080/medicine/item/" + id , config)
+        const res = await fetch("http://localhost:8080/medicine/item/" + data.id , config)
             .then(res => res.json())
             .catch(err => err);
 
