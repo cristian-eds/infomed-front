@@ -79,6 +79,25 @@ export const alterStatusMedicineItem = createAsyncThunk(
     }
 )
 
+export const updateMedicineItem = createAsyncThunk(
+    'medicines/updateMedicineItem',
+    async (id, data) => {
+        const token = localStorage.getItem("token");
+        const config = {
+            method: 'PUT',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(data)
+        }
+        const res = await fetch("http://localhost:8080/medicine/item/" + id , config)
+            .then(res => res.json())
+            .catch(err => err);
+
+        return res;
+    }
+)
+
 
 export const medicineSlice = createSlice({
     name: 'medicine',
@@ -137,6 +156,28 @@ export const medicineSlice = createSlice({
                 }))
             })
             .addCase(alterStatusMedicineItem.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(updateMedicineItem.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateMedicineItem.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines = state.medicines.map(
+                    medicine => ({
+                        ...medicine,
+                        medicineItems: medicine.medicineItems.map(
+                            item => {
+                                if(item.id === action.payload.id) {
+                                    return action.payload;
+                                }
+                                return item;
+                            }
+                        )
+                    })
+                )
+            })
+            .addCase(updateMedicineItem.rejected, (state) => {
                 state.loading = false;
             });
     }

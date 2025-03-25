@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
 import { format } from 'date-fns';
-
-import styles from './RowTableMedicineItem.module.css';
 import { useDispatch } from 'react-redux';
+
 import { alterStatusMedicineItem } from '../../slices/medicineSlice';
 
-const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
+import styles from './RowTableMedicineItem.module.css';
 
-    console.log(medicine.conclusion)
+const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
 
     const dispatch = useDispatch();
 
@@ -27,7 +26,7 @@ const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
         <tr >
             <td>{medicine.name}</td>
             <td>{medicine.sequency}/{medicine.total}</td>
-            <td>{medicine.frequency}/{medicine.frequency} hours</td>
+            <td>{medicine.frequency}/{medicine.frequency} horas</td>
             <td>{formatDate(medicine.dayHour)}</td>
             <td><input type="checkbox" name="conclusion" id="conclusion" checked={checked} onChange={handleAlterConclusionItem}/></td>
             <td onClick={() => setShowMedicineEditing(medicine)} className={styles.row_edit}>Editar</td>
