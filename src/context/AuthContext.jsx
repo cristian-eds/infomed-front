@@ -5,9 +5,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const url = 'http://localhost:8080/auth/login';
+    const url = 'http://localhost:8080/';
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading ] = useState(false);
 
     useEffect(() => {
         try {
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     }, [setUser])
 
     const login = async (userData) => {
+        setLoading(true);
         const config = {
             method: 'POST',
             body: JSON.stringify(userData),
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
             }
         }
         try {
-            const res = await fetch(url, config)
+            const res = await fetch(url+'auth/login', config)
                 .then(res => res.json());
 
             if (res.token) {
@@ -45,6 +47,33 @@ export const AuthProvider = ({ children }) => {
             }
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const register = async (userData) => {
+        setLoading(true);
+        const config = {
+            method: 'POST',
+            body: JSON.stringify(userData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        try {
+            const res = await fetch(url+'users', config)
+                .then(res => res.json());
+            
+            if(res.email) {
+                login(userData);
+            }
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -54,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, loading ,login, logout, register }}>
             {children}
         </AuthContext.Provider>
     )

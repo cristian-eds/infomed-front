@@ -10,14 +10,14 @@ import Home from './pages/Home/Home';
 
 function App() {
 
-  const {user, login, logout} = useContext(AuthContext);
+  const {user, loading ,login, logout, register} = useContext(AuthContext);
  
   return (
   <BrowserRouter>
     <Routes>
       <Route path='/' element={user ?  <Home logout={logout}/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
-      <Route path='/register' element={!user ?  <Register /> : <Navigate to="/"/>}/>
+      <Route path='/register' element={!user ?  <Register register={register} loading={loading}/> : <Navigate to="/"/>}/>
     </Routes>
   </BrowserRouter>
   )

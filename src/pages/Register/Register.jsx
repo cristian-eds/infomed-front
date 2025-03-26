@@ -8,7 +8,7 @@ import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
 
 
-const Register = () => {
+const Register = ({register, loading}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,8 +22,16 @@ const Register = () => {
         setError(null);
 
         if(password !== confirmPassword) {
-            setError("Passwords don't match.")
+            setError("Passwords don't match.");
+            return;
+        } 
+
+        const userData = {
+            email,
+            password
         }
+
+        register(userData);
 
     }
 
@@ -35,13 +43,13 @@ const Register = () => {
             <h2>Register</h2>
             <form className={styles.login} onSubmit={handleRegister}>
                 <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" name="password" id="" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input type="password" name="confirmPassword" id="" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <input type="password" name="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" name="confirmPassword" id="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 {error && <p className={styles.error}>{error}</p>  }
             
                 <ButtonGroup>
-                    <Button type="submit" value="Registrar" variant="button_confirm"/>
-                    <Button type="button" value="Entrar" variant="button_cancel" onClick={() => navigate("/login")}/>
+                    <Button type="submit" value="Registrar" variant="button_confirm" disabled={loading}/>
+                    <Button type="button" value="Entrar" variant="button_cancel" onClick={() => navigate("/login")} disabled={loading}/>
                 </ButtonGroup>
             </form>
         </div>
