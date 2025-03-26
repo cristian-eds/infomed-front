@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 import logo from '../../assets/react.svg'
 
@@ -29,25 +28,12 @@ const Login = ({ login }) => {
     const res = await login(user);
 
     if (res && res.status) {
-      toast(res.description);
+      setError(res.description);
     }
   }
 
   return (
     <div className={styles.container_login}>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="dark"
-        transition={Bounce}
-      />
       <div className="img">
         <img src={logo} alt="Image Logo" />
       </div>

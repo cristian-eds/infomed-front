@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const url = 'http://localhost:8080/';
 
     const [user, setUser] = useState(null);
-    const [loading, setLoading ] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         try {
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
             }
         }
         try {
-            const res = await fetch(url+'auth/login', config)
+            const res = await fetch(url + 'auth/login', config)
                 .then(res => res.json());
 
             if (res.token) {
@@ -63,12 +63,10 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-            const res = await fetch(url+'users', config)
+            const res = await fetch(url + 'users', config)
                 .then(res => res.json());
-            
-            if(res.email) {
-                login(userData);
-            }
+
+            return res;
 
         } catch (error) {
             console.error(error);
@@ -83,7 +81,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, loading ,login, logout, register }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     )
