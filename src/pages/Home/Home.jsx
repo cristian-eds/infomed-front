@@ -28,6 +28,8 @@ const Home = ({ logout }) => {
 
   const date = new Date();
 
+  console.log(medicines);
+
   useEffect(() => {
     dispatch(fetchMedicinesUser());
   }, [dispatch]);
@@ -63,29 +65,15 @@ const Home = ({ logout }) => {
     return `${hours} horas e ${minutes.toFixed(0)} minutos`;
   }
 
-  const generateObjectsItensSortedByDate = (medicines) => {
-    const listObjects = [];
-    medicines.forEach((medicine) => {
-      medicine.medicineItems.forEach(medicineItem => {
-        const item = {
-          medicineId: medicine.id,
-          medicineItemId: medicineItem.id,
-          name: medicine.name,
-          sequency: medicineItem.medicineItemSequence,
-          total: medicine.medicineItems.length,
-          frequency: medicine.frequencyHours,
-          dayHour: medicineItem.dayHour,
-          conclusion: medicineItem.conclusion,
-          conclusionDayHour: medicineItem.conclusionDayHour
-        }
-        listObjects.push(item);
-      });
-    })
+  const generateObjectsItensSortedByDate = (medicinesState) => {
+
+    const listObjects = [...medicinesState.content];
+   
     return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
   }
 
-  const fillRowTable = (medicines) => {
-    const listItens = generateObjectsItensSortedByDate(medicines);
+  const fillRowTable = (medicinesState) => {
+    const listItens = generateObjectsItensSortedByDate(medicinesState);
     return listItens.map((medicine) => (
       <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
     ));
@@ -136,7 +124,7 @@ const Home = ({ logout }) => {
                 </tr>
               </thead>
               <tbody>
-                {medicines && fillRowTable(medicines)}
+                {medicines.content && fillRowTable(medicines)}
               </tbody>
             </table>
           </div>

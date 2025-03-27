@@ -19,7 +19,6 @@ export const fetchMedicinesUser = createAsyncThunk(
         }
         const res = await fetch("http://localhost:8080/medicine", config)
             .then(res => res.json());
-
         return res;
     }
 )
@@ -121,7 +120,6 @@ export const medicineSlice = createSlice({
             .addCase(searchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.medicines = action.payload;
-                console.log(state.medicines)
             })
             .addCase(searchMedicinesUser.rejected, (state, action) => {
                 state.loading = false;
@@ -143,17 +141,16 @@ export const medicineSlice = createSlice({
             })
             .addCase(alterStatusMedicineItem.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines = state.medicines.map(medicine => ({
-                    ...medicine,
-                    medicineItems: medicine.medicineItems.map(item => {
-                        if (item.id === action.payload.id) {
-                            return {
-                                ...action.payload
-                            };
+                state.medicines.content = state.medicines.content.map(medicine => {
+                    if(medicine.medicineItemId === action.payload.id) {
+                        return {
+                            ...medicine,
+                            conclusion: action.payload.conclusion,
+                            conclusionDayHour: action.payload.conclusionDayHour
                         }
-                        return item;
-                    })
-                }))
+                    }
+                    return medicine;
+                })
             })
             .addCase(alterStatusMedicineItem.rejected, (state) => {
                 state.loading = false;
@@ -163,7 +160,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(updateMedicineItem.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines = state.medicines.map(
+                state.medicines.content = state.medicines.content.map(
                     medicine => ({
                         ...medicine,
                         medicineItems: medicine.medicineItems.map(
