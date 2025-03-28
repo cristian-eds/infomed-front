@@ -10,6 +10,7 @@ import Button from '../Button/Button'
 import { useDispatch } from 'react-redux'
 import { createMedicine } from '../../slices/medicineSlice'
 import { format } from 'date-fns'
+import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 
 const ModalAddMedicine = ({ showModal, setShowModal }) => {
@@ -27,7 +28,7 @@ const ModalAddMedicine = ({ showModal, setShowModal }) => {
             name,
             totalDays,
             frequencyHours: frequency,
-            initialDateTime: initialDate
+            initialDateTime: convertToPatternLocalDateTime(initialDate)
         }
 
         dispatch(createMedicine(newMedicine));

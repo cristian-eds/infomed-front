@@ -130,7 +130,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(createMedicine.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines.unshift(action.payload)
+                state.medicines.content.unshift(...action.payload);
             })
             .addCase(createMedicine.rejected, (state, action) => {
                 state.loading = false;
@@ -150,7 +150,7 @@ export const medicineSlice = createSlice({
                         }
                     }
                     return medicine;
-                })
+                });
             })
             .addCase(alterStatusMedicineItem.rejected, (state) => {
                 state.loading = false;
@@ -160,19 +160,17 @@ export const medicineSlice = createSlice({
             })
             .addCase(updateMedicineItem.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines.content = state.medicines.content.map(
-                    medicine => ({
-                        ...medicine,
-                        medicineItems: medicine.medicineItems.map(
-                            item => {
-                                if(item.id === action.payload.id) {
-                                    return action.payload;
-                                }
-                                return item;
-                            }
-                        )
-                    })
-                )
+                state.medicines.content = state.medicines.content.map(medicine => {
+                    if(medicine.medicineItemId === action.payload.id) {
+                        return {
+                            ...medicine,
+                            dayHour: action.payload.dayHour,
+                            conclusion: action.payload.conclusion,
+                            conclusionDayHour: action.payload.conclusionDayHour
+                        }
+                    }
+                    return medicine;
+                });
             })
             .addCase(updateMedicineItem.rejected, (state) => {
                 state.loading = false;

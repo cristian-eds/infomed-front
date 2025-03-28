@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 
 import { updateMedicineItem } from '../../slices/medicineSlice'
 import { format } from 'date-fns'
+import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
 
@@ -27,7 +28,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
             id: medicine.medicineItemId,
             conclusion,
             dayHour,
-            conclusionDayHour
+            conclusionDayHour: convertToPatternLocalDateTime(conclusionDayHour)
         }
 
         dispatch(updateMedicineItem(updatedData));

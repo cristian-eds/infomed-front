@@ -28,8 +28,6 @@ const Home = ({ logout }) => {
 
   const date = new Date();
 
-  console.log(medicines);
-
   useEffect(() => {
     dispatch(fetchMedicinesUser());
   }, [dispatch]);
