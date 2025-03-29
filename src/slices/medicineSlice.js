@@ -3,12 +3,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
     medicines: [],
     loading: false,
-    error: false
+    error: false,
+    page: {}
 }
 
 export const fetchMedicinesUser = createAsyncThunk(
     'medicines/fetchMedicines',
-    async () => {
+    async (pagination) => {
         const token = localStorage.getItem("token");
         const config = {
             method: 'GET',
@@ -17,7 +18,7 @@ export const fetchMedicinesUser = createAsyncThunk(
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await fetch("http://localhost:8080/medicine", config)
+        const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
         return res;
     }
@@ -25,7 +26,7 @@ export const fetchMedicinesUser = createAsyncThunk(
 
 export const searchMedicinesUser = createAsyncThunk(
     'medicines/searchMedicines',
-    async (query) => {
+    async (pagination) => {
         const token = localStorage.getItem("token");
         const config = {
             method: 'GET',
@@ -34,7 +35,7 @@ export const searchMedicinesUser = createAsyncThunk(
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await fetch("http://localhost:8080/medicine?name=" + query, config)
+        const res = await fetch(`http://localhost:8080/medicine?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
         return res;
@@ -109,7 +110,8 @@ export const medicineSlice = createSlice({
         })
             .addCase(fetchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines = action.payload;
+                state.medicines = action.payload.content;
+                state.page = action.payload.page;
             }).addCase(fetchMedicinesUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
@@ -119,7 +121,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(searchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines = action.payload;
+                state.medicines = action.payload.content;
             })
             .addCase(searchMedicinesUser.rejected, (state, action) => {
                 state.loading = false;
@@ -130,7 +132,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(createMedicine.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines.content.unshift(...action.payload);
+                state.medicines.unshift(...action.payload);
             })
             .addCase(createMedicine.rejected, (state, action) => {
                 state.loading = false;
@@ -141,7 +143,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(alterStatusMedicineItem.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines.content = state.medicines.content.map(medicine => {
+                state.medicines = state.medicines.map(medicine => {
                     if(medicine.medicineItemId === action.payload.id) {
                         return {
                             ...medicine,
@@ -160,7 +162,7 @@ export const medicineSlice = createSlice({
             })
             .addCase(updateMedicineItem.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicines.content = state.medicines.content.map(medicine => {
+                state.medicines = state.medicines.map(medicine => {
                     if(medicine.medicineItemId === action.payload.id) {
                         return {
                             ...medicine,

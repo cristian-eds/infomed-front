@@ -19,22 +19,33 @@ const Home = ({ logout }) => {
 
   const dispatch = useDispatch();
 
-  const { loading, medicines } = useSelector(state => state.medicine);
+  const { loading, medicines, page } = useSelector(state => state.medicine);
 
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
+  const [actualPage, setActualPage] = useState(0);
+  const [sizePage, setSizePage] = useState(6);
 
   const date = new Date();
 
   useEffect(() => {
-    dispatch(fetchMedicinesUser());
-  }, [dispatch]);
+    const pagination = {
+      actualPage,
+      sizePage
+    }
+    dispatch(fetchMedicinesUser(pagination));
+  }, [dispatch, actualPage,sizePage]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    dispatch(searchMedicinesUser(search));
+    const pagination = {
+      actualPage,
+      sizePage,
+      search
+    }
+    dispatch(searchMedicinesUser(pagination));
   }
 
 
@@ -65,7 +76,7 @@ const Home = ({ logout }) => {
 
   const generateObjectsItensSortedByDate = (medicinesState) => {
 
-    const listObjects = [...medicinesState.content];
+    const listObjects = [...medicinesState];
    
     return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
   }
@@ -122,11 +133,11 @@ const Home = ({ logout }) => {
                 </tr>
               </thead>
               <tbody>
-                {medicines.content && fillRowTable(medicines)}
+                {medicines.length > 0 && fillRowTable(medicines)}
               </tbody>
             </table>
           </div>
-          <Pagination />
+          <Pagination page={page} actualPage={actualPage} setActualPage={setActualPage}/>
         </>}
       </main>
     </>

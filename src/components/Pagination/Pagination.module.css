@@ -13,11 +13,21 @@
     border: 1px solid green;
     padding: .4em;
     color: white;
-    cursor: pointer;
+    background-color: rgb(36, 34, 34);
 }
 
-.pagination ul li:hover {
-    background-color: rgb(28, 28, 28);
+.pagination ul li:not(.disabled):not(.active):hover {
+    background-color: rgb(8, 8, 8);
+}
+
+.pagination ul li.disabled {
+    background-color: rgb(58, 58, 58);
+    pointer-events: none;
+    cursor: default;
+}
+
+.pagination ul li.active {
+    background-color: rgb(15, 14, 14);
 }
 
 .pagination ul li a{
