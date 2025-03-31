@@ -10,6 +10,8 @@
 }
 
 .search_input__icon {
+    border: none;
+    background-color: transparent;
     position: absolute;
     right: 8px;
     top: 50%;
