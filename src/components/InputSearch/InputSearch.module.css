@@ -1,0 +1,17 @@
+.search_input {
+    position: relative;
+}
+
+.search_input input {
+    height: 3em;
+    width: 22em;
+    border-radius: .7em;
+    padding: .5em .7em;
+}
+
+.search_input__icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}

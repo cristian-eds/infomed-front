@@ -6,7 +6,6 @@ import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 
 import Pagination from '../../components/Pagination/Pagination';
-import Navbar from '../../components/Navbar/Navbar'
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +13,9 @@ import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSl
 import { differenceInMinutes, isAfter } from 'date-fns';
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
+import InputSearch from '../../components/InputSearch/InputSearch';
 
-const Home = ({ logout }) => {
+const Home = () => {
 
   const dispatch = useDispatch();
 
@@ -102,19 +102,14 @@ const Home = ({ logout }) => {
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
-      <Navbar logout={logout} />
+      
       <main className={styles.container_main}>
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
             <p>{verifyTimeToNextMedicine(medicines)}</p>
           </div>
-          <form className={styles.search_input} onSubmit={handleSearch}>
-            <input type="text" placeholder='Pesquisar...' name='search' value={search} onChange={(e) => setSearch(e.target.value)} disabled={loading} />
-            <button type="submit" disabled={loading}>
-              <FaSearch className={styles.search_input__icon} />
-            </button>
-          </form>
+          <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch}/>
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
