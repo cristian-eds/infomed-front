@@ -103,7 +103,7 @@ const Home = () => {
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
       
-      <main className={styles.container_main}>
+      <main className="container_main">
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>

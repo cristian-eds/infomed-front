@@ -7,6 +7,8 @@ import './App.css'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
+import Medicines from './pages/Medicines/Medicines';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
 
@@ -14,10 +16,12 @@ function App() {
  
   return (
   <BrowserRouter>
+    <Navbar logout={logout} />
     <Routes>
-      <Route path='/' element={user ?  <Home logout={logout}/> : <Navigate to="/login"/>}/>
+      <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
       <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
+      <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
     </Routes>
   </BrowserRouter>
   )
