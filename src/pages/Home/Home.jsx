@@ -14,6 +14,7 @@ import { differenceInMinutes, isAfter } from 'date-fns';
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
 import InputSearch from '../../components/InputSearch/InputSearch';
+import Table from '../../components/Table/Table';
 
 const Home = () => {
 
@@ -36,7 +37,7 @@ const Home = () => {
       sizePage
     }
     dispatch(fetchMedicinesUser(pagination));
-  }, [dispatch, actualPage,sizePage]);
+  }, [dispatch, actualPage, sizePage]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -77,7 +78,7 @@ const Home = () => {
   const generateObjectsItensSortedByDate = (medicinesState) => {
 
     const listObjects = [...medicinesState];
-   
+
     return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
   }
 
@@ -102,37 +103,25 @@ const Home = () => {
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
-      
+
       <main className="container_main">
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
             <p>{verifyTimeToNextMedicine(medicines)}</p>
           </div>
-          <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch}/>
+          <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
             <button onClick={() => setShowModal(true)}><FaPlus /></button>
           </div>
           <div className={styles.container_table}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Número</th>
-                  <th>Frequência</th>
-                  <th>Horário</th>
-                  <th>Concluído</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {medicines.length > 0 && fillRowTable(medicines)}
-              </tbody>
-            </table>
+            <Table titles={["Nome", "Número", "Frequência", "Horário", "Concluído", "Ações"]}>
+              {medicines.length > 0 && fillRowTable(medicines)}
+            </Table>
           </div>
-          <Pagination page={page} actualPage={actualPage} setActualPage={setActualPage}/>
+          <Pagination page={page} actualPage={actualPage} setActualPage={setActualPage} />
         </>}
       </main>
     </>
