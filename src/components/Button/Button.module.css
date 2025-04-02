@@ -6,6 +6,11 @@
     transition: all .5s;
 }
 
+.button:not(.button_pagination) {
+    width: 2.5em;
+    height: 2.5em;
+}
+
 .button_group {
     display: flex;
     flex-direction: row;

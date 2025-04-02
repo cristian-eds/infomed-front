@@ -6,7 +6,6 @@ import Table from '../../components/Table/Table';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-
 import { fetchMedicinesUser } from '../../slices/medicineSlice';
 
 import styles from './Medicines.module.css';
@@ -18,8 +17,6 @@ const Medicines = () => {
 
     const { loading, medicines } = useSelector(state => state.medicine);
 
-    console.log(medicines);
-
     useEffect(() => {
         const pagination = {
             actualPage : '0',
@@ -28,15 +25,18 @@ const Medicines = () => {
         dispatch(fetchMedicinesUser(pagination))
     }, [dispatch])
 
+    const verifyConclusionMedicine = (medicine) => {
+        return medicine && medicine.medicineItems.every(item => item.conclusion === true);
+    }
+
     const generateRowsTableMedicine = (medicinesState) => {
-        console.log(medicinesState);
         return medicinesState.map(medicine => (
             <tr key={medicine.id}> 
                 <td>{medicine.name}</td>
                 <td>{formatDate(medicine.registrationDate)}</td>
                 <td>{medicine.frequencyHours}/{medicine.frequencyHours} horas</td>
                 <td>{medicine.totalDays} dias</td>
-                <td><input type="checkbox" name="conclusion" id="conclusion" /></td>
+                <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly/></td>
                 <td>
                     <MdEdit />
                     <MdDelete />

@@ -16,7 +16,9 @@
     display: flex;
     flex-direction: row;
     gap: 2em;
+
 }
+
 
 .navbar__itens a {
     color: rgb(231, 231, 231);
@@ -24,6 +26,7 @@
     font-weight: bold;
     cursor: pointer;
     transition: all .5s;
+    position: relative;
 }
 
 .navbar__itens a:hover, .navbar button:hover {

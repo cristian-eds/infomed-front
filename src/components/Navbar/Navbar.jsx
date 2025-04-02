@@ -9,9 +9,9 @@ const Navbar = ({logout}) => {
     <nav className={styles.navbar}>
       <span>InfoMed</span>
       <div className={styles.navbar__itens}>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/medicines">Medicamentos</NavLink>
-        <NavLink>Perfil</NavLink>
+        <NavLink to="/" activeClassName="active">Home</NavLink>
+        <NavLink to="/medicines" activeClassName="active">Medicamentos</NavLink>
+        <NavLink to="/perfil" activeClassName="active">Perfil</NavLink>
       </div>
       <button onClick={logout}>Logout</button>
     </nav>

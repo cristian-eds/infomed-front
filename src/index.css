@@ -30,3 +30,14 @@ input {
 a {
   text-decoration: none;
 }
+
+.active::after {
+  content: "";
+  width: 1.8em;
+  height: .4em;
+  background-color: rgb(231, 231, 231);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border-radius: .5em;
+}
