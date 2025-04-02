@@ -13,8 +13,18 @@
 }
 
 .table th, td {
-    padding: 8px;
+    padding: .5em .8em;
     text-align: left;
+}
+
+.table th:not(:first-child):not(:last-child),
+.table td:not(:first-child):not(:last-child) {
+    text-align: center;
+}
+
+.table th:last-child,
+.table td:last-child {
+    text-align: right;
 }
 
 .table td {
