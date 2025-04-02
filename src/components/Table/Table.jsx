@@ -8,7 +8,7 @@ const Table = ({titles, children}) => {
         <table className={styles.table}>
             <thead>
                 <tr>
-                    {titles.map(title => (<th>{title}</th>))}
+                    {titles.map((title,index) => (<th key={index}>{title}</th>))}
                 </tr>
             </thead>
             <tbody>

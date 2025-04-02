@@ -21,7 +21,7 @@ const Medicines = () => {
                         <td>01/02/2025 18:00</td>
                         <td>3-3horas</td>
                         <td>5 dias</td>
-                        <td>X</td>
+                        <td><input type="checkbox" name="conclusion" id="conclusion"/></td>
                         <td>
                             <MdEdit />
                             <MdDelete />

@@ -9,7 +9,7 @@ import Pagination from '../../components/Pagination/Pagination';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { fetchCustomMedicinesItemsUser, searchMedicinesUser } from '../../slices/medicineSlice';
 import { differenceInMinutes, isAfter } from 'date-fns';
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
@@ -20,7 +20,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, medicines, page } = useSelector(state => state.medicine);
+  const { loading, medicinesItems, page } = useSelector(state => state.medicine);
 
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -36,7 +36,7 @@ const Home = () => {
       actualPage,
       sizePage
     }
-    dispatch(fetchMedicinesUser(pagination));
+    dispatch(fetchCustomMedicinesItemsUser(pagination));
   }, [dispatch, actualPage, sizePage]);
 
   const handleSearch = (e) => {
@@ -76,7 +76,6 @@ const Home = () => {
   }
 
   const generateObjectsItensSortedByDate = (medicinesState) => {
-
     const listObjects = [...medicinesState];
 
     return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
@@ -108,7 +107,7 @@ const Home = () => {
         <header className={styles.header}>
           <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-            <p>{verifyTimeToNextMedicine(medicines)}</p>
+            <p>{verifyTimeToNextMedicine(medicinesItems)}</p>
           </div>
           <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
         </header>
@@ -118,7 +117,7 @@ const Home = () => {
           </div>
           <div className={styles.container_table}>
             <Table titles={["Nome", "Número", "Frequência", "Horário", "Concluído", "Ações"]}>
-              {medicines.length > 0 && fillRowTable(medicines)}
+              {medicinesItems.length > 0 && fillRowTable(medicinesItems)}
             </Table>
           </div>
           <Pagination page={page} actualPage={actualPage} setActualPage={setActualPage} />
