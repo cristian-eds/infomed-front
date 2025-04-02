@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
 
 import { alterStatusMedicineItem } from '../../slices/medicineSlice';
 
 import styles from './RowTableMedicineItem.module.css';
+import { formatDate } from '../../utils/formatterDates';
 
 const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
 
@@ -16,10 +16,6 @@ const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
     const handleAlterConclusionItem = (e) => {
         setChecked(e.target.checked);
         dispatch(alterStatusMedicineItem(medicine.medicineItemId));
-    }
-
-    const formatDate = (date) => {
-        return format(date, 'dd/MM/yyyy HH:mm')
     }
 
     return (<>
