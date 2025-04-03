@@ -29,7 +29,6 @@ export const fetchMedicinesUser = createAsyncThunk(
 export const fetchMoreMedicinesUser = createAsyncThunk(
     'medicines/fetchMoreMedicines',
     async (pagination) => {
-        console.log(pagination);
         const token = localStorage.getItem("token");
         const config = {
             method: 'GET',
@@ -41,7 +40,6 @@ export const fetchMoreMedicinesUser = createAsyncThunk(
         const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
-            console.log(res);
         return res;
     }
 )

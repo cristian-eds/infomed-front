@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import InputSearch from '../../components/InputSearch/InputSearch';
@@ -19,7 +19,7 @@ const Medicines = () => {
     const [actualPage, setActualPage] = useState(0);
     const { loading, medicines, medicinePage } = useSelector(state => state.medicine);
 
-
+    const containerTableRef = useRef(null);
 
     useEffect(() => {
         const pagination = {
@@ -27,7 +27,11 @@ const Medicines = () => {
             sizePage: '6'
         }
         dispatch(fetchMedicinesUser(pagination))
-    }, [])
+    }, [dispatch])
+
+    useEffect(() => {
+        if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
+    },[medicines])
 
     const handleFetchMoreMedicines = () => {
         setActualPage(actualPage + 1);
@@ -66,25 +70,24 @@ const Medicines = () => {
             <div>
                 {loading ? <p>Loading...</p> : <>
                     <h3>Histórico medicamentos...</h3>
-                    <div className={styles.container_table}>
+                    <div className={styles.container_table} ref={containerTableRef}>
                         <Table titles={["Nome", "Data criação", "Frequência", "Duração", "Concluído", "Ações"]}>
                             {medicines && generateRowsTableMedicine(medicines)}
                         </Table>
 
                     </div>
+                    <footer className={styles.footer_medicines}>
+                        {medicinePage.totalPages - 1 === actualPage ?
+                            <p>Todos elementos carregados...</p> :
+                            <>
+                                <p>Ver mais...</p>
+                                <ArrowDownButton actionClick={handleFetchMoreMedicines} />
+                            </>
+
+                        }
+                    </footer>
                 </>}
             </div>
-            <footer className={styles.footer_medicines}>
-                {medicinePage.totalPages - 1 === actualPage ?
-                    <p>Todos elementos carregados...</p> :
-                    <>
-                        <p>Ver mais...</p>
-                        <ArrowDownButton actionClick={handleFetchMoreMedicines} />
-                    </>
-
-                }
-
-            </footer>
         </main>
     )
 }
