@@ -5,7 +5,8 @@ const initialState = {
     medicines: [],
     loading: false,
     error: false,
-    page: {}
+    page: {},
+    medicinePage: {}
 }
 
 export const fetchMedicinesUser = createAsyncThunk(
@@ -24,6 +25,27 @@ export const fetchMedicinesUser = createAsyncThunk(
         return res;
     }
 )
+
+export const fetchMoreMedicinesUser = createAsyncThunk(
+    'medicines/fetchMoreMedicines',
+    async (pagination) => {
+        console.log(pagination);
+        const token = localStorage.getItem("token");
+        const config = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+            .then(res => res.json());
+
+            console.log(res);
+        return res;
+    }
+)
+
 
 export const fetchCustomMedicinesItemsUser = createAsyncThunk(
     'medicines/fetchCustomMedicinesItems',
@@ -142,8 +164,21 @@ export const medicineSlice = createSlice({
             .addCase(fetchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.medicines = action.payload.content;
+                state.medicinePage = action.payload.page;
             })
             .addCase(fetchMedicinesUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(fetchMoreMedicinesUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchMoreMedicinesUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicines.push(...action.payload.content);
+                state.medicinePage = action.payload.page;
+            })
+            .addCase(fetchMoreMedicinesUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             })

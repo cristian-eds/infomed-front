@@ -1,9 +1,21 @@
-.header_medicines { 
+.header_medicines,
+.footer_medicines { 
     padding-top: .8em;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .header_medicines form input {
     width: 45em;
+}
+
+.footer_medicines {
+    gap: 1em;
+    padding: 0 0 3em 0;
+}
+
+.container_table{
+    overflow-x: auto;
+    max-height: 25.5em;
 }
