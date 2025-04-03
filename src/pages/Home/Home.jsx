@@ -56,7 +56,7 @@ const Home = () => {
     const listItensAfter = listItens.filter((item) =>
       isAfter(item.dayHour, date)
     );
-    if (listItensAfter.length === 0) return `Sem próximo medicamento com os filtros e pesquisa.`;
+    if (listItensAfter.length === 0) return `Sem próximo medicamento definido com os filtros e pesquisa.`;
     const minutesDiff = differenceInMinutes(listItensAfter[0].dayHour, date);
     if (minutesDiff <= 60) {
       return `Próximo medicamento em ${minutesDiff} minutos`;
