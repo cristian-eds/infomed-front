@@ -44,6 +44,24 @@ export const fetchMoreMedicinesUser = createAsyncThunk(
     }
 )
 
+export const searchMedicinesUser = createAsyncThunk(
+    'medicines/searchMedicines',
+    async (pagination) => {
+        const token = localStorage.getItem("token");
+        const config = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        const res = await fetch(`http://localhost:8080/medicine?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+            .then(res => res.json());
+
+        return res;
+    }
+)
+
 
 export const fetchCustomMedicinesItemsUser = createAsyncThunk(
     'medicines/fetchCustomMedicinesItems',
@@ -62,8 +80,8 @@ export const fetchCustomMedicinesItemsUser = createAsyncThunk(
     }
 )
 
-export const searchMedicinesUser = createAsyncThunk(
-    'medicines/searchMedicines',
+export const searchCustomMedicinesItemUser = createAsyncThunk(
+    'medicines/searchCustomMedicinesItem',
     async (pagination) => {
         const token = localStorage.getItem("token");
         const config = {
@@ -185,9 +203,20 @@ export const medicineSlice = createSlice({
             })
             .addCase(searchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.medicinesItems = action.payload.content;
+                state.medicines = action.payload.content;
             })
             .addCase(searchMedicinesUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(searchCustomMedicinesItemUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(searchCustomMedicinesItemUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicinesItems = action.payload.content;
+            })
+            .addCase(searchCustomMedicinesItemUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             })
