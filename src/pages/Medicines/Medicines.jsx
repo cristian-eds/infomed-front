@@ -6,7 +6,7 @@ import Table from '../../components/Table/Table';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { fetchMedicinesUser, fetchMoreMedicinesUser } from '../../slices/medicineSlice';
+import { fetchMedicinesUser, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import styles from './Medicines.module.css';
 import { formatDate } from '../../utils/formatterDates';
@@ -18,6 +18,7 @@ const Medicines = () => {
 
     const [actualPage, setActualPage] = useState(0);
     const { loading, medicines, medicinePage } = useSelector(state => state.medicine);
+    const [searchText, setSearchText] = useState("");
 
     const containerTableRef = useRef(null);
 
@@ -40,6 +41,16 @@ const Medicines = () => {
             sizePage: '6'
         }
         dispatch(fetchMoreMedicinesUser(pagination))
+    }
+
+    const handleSearchMedicines = (e) => {
+        e.preventDefault();
+        const pagination = {
+            actualPage: 0,
+            sizePage: '6',
+            search: searchText
+        }
+        dispatch(searchMedicinesUser(pagination))
     }
 
     const verifyConclusionMedicine = (medicine) => {
@@ -65,7 +76,7 @@ const Medicines = () => {
     return (
         <main className="container_main">
             <header className={styles.header_medicines}>
-                <InputSearch />
+                <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading}/>
             </header>
             <div>
                 {loading ? <p>Loading...</p> : <>
