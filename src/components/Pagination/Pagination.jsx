@@ -24,7 +24,8 @@ const Pagination = ({ page, actualPage, setActualPage }) => {
   }
 
   const generateDinamicNumberItens = () => {
-    if (page.totalPages <= 5 || actualPage < 3) return generateItemsNumbers(0, 5);
+    if(page.totalPages < 5) return generateItemsNumbers(0, page.totalPages);
+    if (page.totalPages >= 5 && actualPage < 3) return generateItemsNumbers(0, 5);
     if (actualPage >= (page.totalPages - 2)) return generateItemsNumbers(page.totalPages - 5, page.totalPages);
     return (
       <>
