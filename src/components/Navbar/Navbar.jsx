@@ -11,7 +11,7 @@ const Navbar = ({logout}) => {
       <div className={styles.navbar__itens}>
         <NavLink to="/" activeClassName="active">Home</NavLink>
         <NavLink to="/medicines" activeClassName="active">Medicamentos</NavLink>
-        <NavLink to="/perfil" activeClassName="active">Perfil</NavLink>
+        <NavLink to="/profile" activeClassName="active">Perfil</NavLink>
       </div>
       <button onClick={logout}>Logout</button>
     </nav>

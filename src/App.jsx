@@ -9,6 +9,7 @@ import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Medicines from './pages/Medicines/Medicines';
 import Navbar from './components/Navbar/Navbar';
+import Profile from './pages/Profile/Profile';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
       <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
       <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
+      <Route path='/profile' element={!user ? <Login login={login}/> : <Profile/> }/>
     </Routes>
   </BrowserRouter>
   )

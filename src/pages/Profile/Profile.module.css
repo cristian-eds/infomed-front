@@ -1,0 +1,45 @@
+.header {
+    text-align: center;
+}
+
+.container_profile {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.container_info h3{
+    margin-bottom: 1.2em;
+}
+
+.form_row {
+    border: 1px solid green;
+    border-radius: .3em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: .8em;
+    height: 2.5em;
+    padding-left: .6em;
+}   
+
+.form_row input {
+    border-radius: .3em;
+    border: none;
+}
+
+.form_row input:focus {
+    outline: none;
+}
+
+.container_info_row {
+    display: flex;
+    width: 50%;
+    height: 100%;
+}
+
+.container_info_row input {
+    width: 100%;
+    padding: .2em .7em;
+}
