@@ -6,7 +6,7 @@ import PaginationButton from '../Button/PaginationButton';
 const Pagination = ({ page, actualPage, setActualPage }) => {
 
   const first = page.number === 0;
-  const last = page.number === page.totalPages - 1;
+  const last = page.number === page.totalPages - 1 || page.totalPages === 0;
 
   const handleAlterPage = (nextNumber) => {
     setActualPage(nextNumber);
