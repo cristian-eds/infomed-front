@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const Register = ({ register, loading }) => {
 
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
@@ -30,6 +31,7 @@ const Register = ({ register, loading }) => {
 
         const userData = {
             email,
+            name,
             password
         }
 
@@ -57,6 +59,7 @@ const Register = ({ register, loading }) => {
             <h2>Register</h2>
             <form className={styles.login} onSubmit={handleRegister}>
                 <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="text" name="name" id="name" placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} />
                 <input type="password" name="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input type="password" name="confirmPassword" id="confirmPassword" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 {error && <p className={styles.error}>{error}</p>}
