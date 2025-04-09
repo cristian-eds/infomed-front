@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
-import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 
 import Pagination from '../../components/Pagination/Pagination';

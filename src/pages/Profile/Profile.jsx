@@ -1,18 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './Profile.module.css'
 import Table from '../../components/Table/Table';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../slices/userSlice';
 
-const Profile = () => {
+const Profile = ({userContext}) => {
 
-    const email = "teste@teste.com.br";
+    const dispatch = useDispatch();
+
+    const {user, loading} = useSelector(state => state.user);
+
+    const email = user.email;
     const [password, setPassword] = useState("312321");
     const [confirmPassword, setConfirmPassword] = useState("32132");
+
+    useEffect(() => {
+        dispatch(fetchUser(userContext))
+    }, [dispatch, userContext])
+
 
     return (
         <div className='container_main'>
             <header className={styles.header}>
-                <h1>Ciclano da Silva</h1>
+                <h1>{user.name}</h1>
             </header>
             <section className={styles.container_profile}>
                 <h3>Informações da conta</h3>

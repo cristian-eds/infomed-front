@@ -23,7 +23,7 @@ function App() {
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
       <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
       <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
-      <Route path='/profile' element={!user ? <Login login={login}/> : <Profile/> }/>
+      <Route path='/profile' element={!user ? <Login login={login}/> : <Profile userContext={user}/> }/>
     </Routes>
   </BrowserRouter>
   )
