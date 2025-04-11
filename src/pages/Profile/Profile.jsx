@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { changeUserPassword, fetchUser } from '../../slices/userSlice';
+import { changeUserPassword, fetchUser, updateUser } from '../../slices/userSlice';
 
 import styles from './Profile.module.css'
 
@@ -14,7 +14,7 @@ const Profile = ({ userContext }) => {
 
     const dispatch = useDispatch();
 
-    const { user, success, error: serverError } = useSelector(state => state.user);
+    const { user, error: serverError } = useSelector(state => state.user);
 
     const email = userContext;
 
@@ -72,10 +72,9 @@ const Profile = ({ userContext }) => {
     )
 
 
-
     const handleChangePassword = (e) => {
         e.preventDefault();
-        
+
         const validationsErrors = validatePasswordChange(password, newPassword, confirmNewPassword);
         setError(validationsErrors);
 
@@ -83,8 +82,10 @@ const Profile = ({ userContext }) => {
 
         const data = {
             id: user.id,
-            currentPassword: password,
-            newPassword,
+            atualization: {
+                currentPassword: password,
+                newPassword,
+            },
             handleSuccessChangePassword
         }
         dispatch(changeUserPassword(data));
@@ -93,24 +94,53 @@ const Profile = ({ userContext }) => {
     const validatePasswordChange = (password, newPassword, confirmNewPassword) => {
         let errors = "";
         if (!password || !newPassword || !confirmNewPassword) {
-            errors = "Todos os campos são obrigatórios.";
+            errors = "All fields are required.";
         }
         if (newPassword !== confirmNewPassword) {
-            errors = "Nova senha não confere com a confirmação.";
+            errors = "New password doesn't match confirmation";
         }
         if (password?.length < 4 || newPassword?.length < 4 || confirmNewPassword?.length < 4) {
-            errors = "A senha deve conter ao menos 4 caracteres.";
+            errors = "Password must be at least four characters long.";
         }
         return errors;
     }
 
     const handleSuccessChangePassword = () => {
-        toast.success("Success.");
+        toast.success("Successfully changing password.");
         setEditing(false);
         setChangingPassword(false);
         setPassword("");
         setConfirmNewPassword("");
         setNewPassword("");
+    }
+
+    const handleSuccesUpdate = () => {
+        toast.success("Updating user successfully.");
+        setEditing(false);
+    }
+
+    const handleUpdateUser = (e) => {
+        e.preventDefault();
+        let validations = validateUpdateUser(name);
+
+        if (validations) return;
+
+        const data = {
+            id: user.id,
+            user: {
+                name,
+                email
+            },
+            handleSuccesUpdate
+        }
+
+        dispatch(updateUser(data));
+    }
+
+    const validateUpdateUser = (name) => {
+        let validationsErrors = "";
+        if (!name || name.length < 3) validationsErrors = "Name is required and must be at least three characters long";
+        return validationsErrors;
     }
 
     return (
@@ -136,7 +166,7 @@ const Profile = ({ userContext }) => {
                     </div>
                 </div>
                 {changingPassword && generateInputsChangingPassword()}
-                {editing && generateButtons(null, () => setEditing(false))}
+                {editing && generateButtons(handleUpdateUser, () => setEditing(false))}
                 {error && <p className={styles.container_profile_error}>{error}</p>}
                 {!editing && !changingPassword && <p onClick={() => setChangingPassword(true)}>Alterar senha</p>}
 
