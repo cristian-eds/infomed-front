@@ -4,16 +4,16 @@ import styles from './Home.module.css'
 
 import { FaPlus } from "react-icons/fa";
 
-import Pagination from '../../components/Pagination/Pagination';
-import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCustomMedicinesItemsUser, searchMedicinesUser } from '../../slices/medicineSlice';
 import { differenceInMinutes, isAfter } from 'date-fns';
+
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
+import Pagination from '../../components/Pagination/Pagination';
+import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 const Home = () => {
 
@@ -26,7 +26,7 @@ const Home = () => {
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
   const [actualPage, setActualPage] = useState(0);
-  const [sizePage, setSizePage] = useState(6);
+  const sizePage = 6;
 
   const date = new Date();
 

@@ -7,6 +7,21 @@
     margin: 0 auto;
 }
 
+.container_profile_title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container_profile p{
+    cursor: pointer;
+}
+
+.container_profile_error{
+    cursor: none;
+    color: red;
+    text-align: center;
+}
+
 .container_info h3{
     margin-bottom: 1.2em;
 }
