@@ -71,6 +71,39 @@ const Profile = ({ userContext }) => {
         </>
     )
 
+
+
+    const handleChangePassword = (e) => {
+        e.preventDefault();
+        
+        const validationsErrors = validatePasswordChange(password, newPassword, confirmNewPassword);
+        setError(validationsErrors);
+
+        if (validationsErrors) return;
+
+        const data = {
+            id: user.id,
+            currentPassword: password,
+            newPassword,
+            handleSuccessChangePassword
+        }
+        dispatch(changeUserPassword(data));
+    }
+
+    const validatePasswordChange = (password, newPassword, confirmNewPassword) => {
+        let errors = "";
+        if (!password || !newPassword || !confirmNewPassword) {
+            errors = "Todos os campos são obrigatórios.";
+        }
+        if (newPassword !== confirmNewPassword) {
+            errors = "Nova senha não confere com a confirmação.";
+        }
+        if (password?.length < 4 || newPassword?.length < 4 || confirmNewPassword?.length < 4) {
+            errors = "A senha deve conter ao menos 4 caracteres.";
+        }
+        return errors;
+    }
+
     const handleSuccessChangePassword = () => {
         toast.success("Success.");
         setEditing(false);
@@ -80,28 +113,10 @@ const Profile = ({ userContext }) => {
         setNewPassword("");
     }
 
-    const handleChangePassword = (e) => {
-        e.preventDefault();
-        let validateError = "";
-        if (newPassword !== confirmNewPassword) validateError = "Nova senha não confere com confirmação.";
-        if (password === null || newPassword === null || confirmNewPassword == null) validateError = "Os campos são obrigatórios.";
-        if (password.length < 4 || newPassword.length < 4 || confirmNewPassword.length < 4) validateError = "A senha deve conter ao menos 4 caracteres.";
-        setError(validateError);
-        if (validateError.length > 1) return;
-        const data = {
-            id: user.id,
-            currentPassword: password,
-            newPassword,
-            handleSuccessChangePassword
-        }
-        dispatch(changeUserPassword(data));
-  
-    }
-
     return (
         <div className='container_main'>
             <header className={styles.header}>
-                <h1>{name}</h1>
+                <h1>{user.name}</h1>
             </header>
             <form className={styles.container_profile}>
                 <div className={styles.container_profile_title}>
