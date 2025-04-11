@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 const initialState = {
     user: {},
     loading : false,
-    error: false
+    error: null,
+    success: null
 }
 
 export const fetchUser = createAsyncThunk(
@@ -24,6 +25,38 @@ export const fetchUser = createAsyncThunk(
         return res;
     }
 )
+
+export const changeUserPassword = createAsyncThunk(
+    'user/changePassword',
+    async (data,thunkApi) => {
+        const token = localStorage.getItem("token");
+        const passwords = {
+            currentPassword: data.currentPassword,
+            newPassword: data.newPassword
+        }
+        const config = {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(passwords)
+        }
+
+        const res = await fetch(`http://localhost:8080/users/${data.id}`, config)
+            .then(res => res);
+        
+        if(res.status == 400) {
+            let body = await res.json();
+            return thunkApi.rejectWithValue(body.description);
+        } 
+        
+        if(res.status == 200) data.handleSuccessChangePassword();
+
+        return res.status;
+    }
+)
+
 
 
 export const userSlice = createSlice({
@@ -49,6 +82,26 @@ export const userSlice = createSlice({
             (state) => {
                 state.loading = false;
                 state.error = true;
+            }
+        )
+        .addCase(
+            changeUserPassword.pending,
+            (state) => {
+                state.loading = true;
+                state.error = null;
+            }
+        )
+        .addCase(
+            changeUserPassword.fulfilled,
+            (state) => {
+                state.loading = false;
+            }   
+        )
+        .addCase(
+            changeUserPassword.rejected,
+            (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             }
         )
     }
