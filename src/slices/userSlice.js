@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { requestConfig } from "../utils/requests";
 
 const initialState = {
     user: {},
@@ -10,14 +11,7 @@ const initialState = {
 export const fetchUser = createAsyncThunk(
     'user/fetchByEmail',
     async (email) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
 
         const res = await fetch(`http://localhost:8080/users?email=${email}`, config)
             .then(res => res.json());
@@ -29,16 +23,9 @@ export const fetchUser = createAsyncThunk(
 export const changeUserPassword = createAsyncThunk(
     'user/changePassword',
     async (data, thunkApi) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(data.atualization)
-        }
-
+    
+        const config = requestConfig("PATCH", data.atualization);
+        
         const res = await fetch(`http://localhost:8080/users/${data.id}`, config)
             .then(res => res);
 
@@ -56,16 +43,7 @@ export const changeUserPassword = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'user/updateUser',
     async (data) => {
-        const token = localStorage.getItem("token");
-        console.log(data);
-        const config = {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(data.user)
-        }
+        const config = requestConfig("PUT",data.user);
 
         const res = await fetch(`http://localhost:8080/users/${data.id}`, config)
             .then(res => res);
@@ -75,8 +53,6 @@ export const updateUser = createAsyncThunk(
         return res.json();
     }
 )
-
-
 
 export const userSlice = createSlice({
     name: 'user',

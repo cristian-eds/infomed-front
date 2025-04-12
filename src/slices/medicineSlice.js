@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { requestConfig } from "../utils/requests";
 
 const initialState = {
     medicinesItems: [],
@@ -12,16 +13,11 @@ const initialState = {
 export const fetchMedicinesUser = createAsyncThunk(
     'medicines/fetchMedicines',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
+
         const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
+
         return res;
     }
 )
@@ -29,14 +25,7 @@ export const fetchMedicinesUser = createAsyncThunk(
 export const fetchMoreMedicinesUser = createAsyncThunk(
     'medicines/fetchMoreMedicines',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
         const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
@@ -47,14 +36,7 @@ export const fetchMoreMedicinesUser = createAsyncThunk(
 export const searchMedicinesUser = createAsyncThunk(
     'medicines/searchMedicines',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
         const res = await fetch(`http://localhost:8080/medicine?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
@@ -62,18 +44,10 @@ export const searchMedicinesUser = createAsyncThunk(
     }
 )
 
-
 export const fetchCustomMedicinesItemsUser = createAsyncThunk(
     'medicines/fetchCustomMedicinesItems',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
         const res = await fetch(`http://localhost:8080/medicine/item?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
         return res;
@@ -83,14 +57,7 @@ export const fetchCustomMedicinesItemsUser = createAsyncThunk(
 export const searchCustomMedicinesItemUser = createAsyncThunk(
     'medicines/searchCustomMedicinesItem',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
         const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
@@ -101,16 +68,7 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
 export const createMedicine = createAsyncThunk(
     'medicines/createMedicine',
     async (data) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-                'Accept': '*/*',
-            },
-            body: JSON.stringify(data)
-        }
+        const config = requestConfig("POST",data);
         const res = await fetch("http://localhost:8080/medicine", config)
             .then(res => res.json())
             .catch(err => err);
@@ -121,13 +79,7 @@ export const createMedicine = createAsyncThunk(
 export const alterStatusMedicineItem = createAsyncThunk(
     'medicines/alterStatus',
     async (id) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'PUT',
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+        const config = requestConfig("PUT");
         const res = await fetch("http://localhost:8080/medicine/item/" + id + "/status", config)
             .then(res => res.json())
             .catch(err => err);
@@ -138,15 +90,7 @@ export const alterStatusMedicineItem = createAsyncThunk(
 export const updateMedicineItem = createAsyncThunk(
     'medicines/updateMedicineItem',
     async (data) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify(data)
-        }
+        const config = requestConfig("PUT",data);
         const res = await fetch("http://localhost:8080/medicine/item/" + data.id, config)
             .then(res => res.json())
             .catch(err => err);
@@ -154,7 +98,6 @@ export const updateMedicineItem = createAsyncThunk(
         return res;
     }
 )
-
 
 export const medicineSlice = createSlice({
     name: 'medicine',

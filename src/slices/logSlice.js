@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { requestConfig } from "../utils/requests";
 
 const initialState = {
     logs: [],
@@ -10,18 +11,10 @@ const initialState = {
 export const fetchLogs = createAsyncThunk(
     'log/fetchLogs',
     async (pagination) => {
-        const token = localStorage.getItem("token");
-        const config = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
+        const config = requestConfig("GET");
 
         const res = await fetch(`http://localhost:8080/log?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
-
         return res;
     }
 )
