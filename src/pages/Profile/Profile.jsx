@@ -9,6 +9,7 @@ import Table from '../../components/Table/Table';
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
 import { toast, ToastContainer } from 'react-toastify';
+import HistoricLog from '../../components/HistoricLog/HistoricLog';
 
 const Profile = ({ userContext }) => {
 
@@ -173,19 +174,7 @@ const Profile = ({ userContext }) => {
             </form>
 
             <section className={styles.container_profile}>
-                <h3>Histórico</h3>
-                <Table titles={["Ação", "Descrição", "Data"]}>
-                    <tr>
-                        <td>Delete</td>
-                        <td>Deletado medicamento</td>
-                        <td>08/04/2025</td>
-                    </tr>
-                    <tr>
-                        <td>Delete</td>
-                        <td>Deletado medicamento</td>
-                        <td>08/04/2025</td>
-                    </tr>
-                </Table>
+                <HistoricLog />
             </section>
             <ToastContainer />
         </div>
