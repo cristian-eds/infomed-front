@@ -5,7 +5,7 @@ import styles from './Home.module.css'
 import { FaPlus } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCustomMedicinesItemsUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { fetchCustomMedicinesItemsUser, searchCustomMedicinesItemUser, searchMedicinesUser } from '../../slices/medicineSlice';
 import { differenceInMinutes, isAfter } from 'date-fns';
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
@@ -43,9 +43,9 @@ const Home = () => {
     const pagination = {
       actualPage,
       sizePage,
-      search
+      search 
     }
-    dispatch(searchMedicinesUser(pagination));
+    dispatch(searchCustomMedicinesItemUser(pagination));
   }
 
 
