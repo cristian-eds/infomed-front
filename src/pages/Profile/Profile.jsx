@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserPassword, fetchUser, updateUser } from '../../slices/userSlice';
 
-import styles from './Profile.module.css'
-
-import Table from '../../components/Table/Table';
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
 import { toast, ToastContainer } from 'react-toastify';
 import HistoricLog from '../../components/HistoricLog/HistoricLog';
+
+import styles from './Profile.module.css';
 
 const Profile = ({ userContext }) => {
 
@@ -28,6 +27,8 @@ const Profile = ({ userContext }) => {
 
     const [editing, setEditing] = useState(false);
     const [changingPassword, setChangingPassword] = useState(false);
+
+
 
     useEffect(() => {
         dispatch(fetchUser(userContext))
@@ -143,6 +144,8 @@ const Profile = ({ userContext }) => {
         if (!name || name.length < 3) validationsErrors = "Name is required and must be at least three characters long";
         return validationsErrors;
     }
+
+  
 
     return (
         <div className='container_main'>

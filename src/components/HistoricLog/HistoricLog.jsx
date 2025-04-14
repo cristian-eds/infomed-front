@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react'
-import Table from '../Table/Table'
+import React, { useEffect, useState } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchLogs } from '../../slices/logSlice';
 import { formatDate } from '../../utils/formatterDates';
+
+import { fetchLogs, fetchMoreLogs } from '../../slices/logSlice';
+
+import Table from '../Table/Table'
+import ArrowDownButton from '../Button/ArrowDownButton';
+
+import styles from './HistoricLog.module.css';
 
 const HistoricLog = () => {
 
     const dispatch = useDispatch();
 
-    const {logs, loading} = useSelector(state=> state.log);
+    const { logs, page, loading } = useSelector(state => state.log);
 
-    console.log(logs);
+    const [actualPage, setActualPage] = useState(0);
 
     useEffect(() => {
         const pagination = {
@@ -32,12 +38,30 @@ const HistoricLog = () => {
         )
     )
 
+    const handleFetchMoreLogs = () => {
+        setActualPage(actualPage + 1);
+        const pagination = {
+            actualPage: actualPage + 1,
+            sizePage: '8'
+        }
+        dispatch(fetchMoreLogs(pagination));
+    }
+
     return (
         <>
             <h3>Histórico</h3>
             <Table titles={["Ação", "Descrição", "Data"]}>
                 {generateRowsTableLogs()}
             </Table>
+            <div className={styles.historic_footer}>
+                {page.totalPages - 1 == actualPage ?
+                    <p>Todos elementos carregados...</p> :
+                    <>
+                        <p>Ver mais...</p>
+                        <ArrowDownButton actionClick={handleFetchMoreLogs} />
+                    </>
+                }
+            </div>
         </>
     )
 }
