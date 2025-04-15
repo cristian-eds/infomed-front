@@ -5,8 +5,9 @@ import styles from './Home.module.css'
 import { FaPlus } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCustomMedicinesItemsUser, searchCustomMedicinesItemUser, searchMedicinesUser } from '../../slices/medicineSlice';
 import { differenceInMinutes, isAfter } from 'date-fns';
+
+import { fetchCustomMedicinesItemsUser, searchCustomMedicinesItemUser } from '../../slices/medicineSlice';
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
@@ -14,6 +15,7 @@ import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
 import Pagination from '../../components/Pagination/Pagination';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
+import FilterHome from '../../components/FilterHome/FilterHome';
 
 const Home = () => {
 
@@ -112,6 +114,7 @@ const Home = () => {
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
+            <FilterHome />
             <button onClick={() => setShowModal(true)}><FaPlus /></button>
           </div>
           <div className={styles.container_table}>

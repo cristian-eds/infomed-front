@@ -14,7 +14,7 @@ const HistoricLog = () => {
 
     const dispatch = useDispatch();
 
-    const { logs, page, loading } = useSelector(state => state.log);
+    const { logs, page } = useSelector(state => state.log);
 
     const [actualPage, setActualPage] = useState(0);
 

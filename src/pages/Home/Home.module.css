@@ -7,9 +7,8 @@
 
 .container_caption {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
-    justify-content: end;
-    height: 1em;
 }
 
 .container_caption button {
@@ -32,15 +31,12 @@
     height: 90%;
 }
 
-
-
 @media (max-width: 1200px) {
     .container_main {
         padding: 1em 3em;
         width: 90%;
     }
 }
-
 
 @media (max-width: 992px) {
     .container_main {

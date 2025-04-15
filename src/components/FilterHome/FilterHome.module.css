@@ -1,0 +1,56 @@
+.caption_filter{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .2em;
+    width: 100%;
+}
+
+.caption_filter_header{
+    display: flex;
+    align-items: center;
+    gap: .2em;
+    cursor: pointer;
+}
+
+.container_accordion{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 90%;
+    border: 1px solid green;
+    border-radius: .3em;
+    background-color: rgba(68, 74, 67, 0.726);
+    padding: .2em;
+}
+
+.accordion_filters {
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+}
+
+.accordion_filters_itens{
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+
+.accordion_filters_itens input{
+    background-color: rgb(93, 93, 93);
+    margin-left: .2em;
+}
+
+.itens_caption {
+    cursor: pointer;
+    min-width: 5em;
+    background-color: rgb(105, 112, 96);
+    text-align: center;
+    font-size: .9em;
+    border-radius: .2em;
+    padding: .4em .4em;
+}
+
+.active{
+    background-color: rgb(97, 182, 81);
+}
+
