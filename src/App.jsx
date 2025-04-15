@@ -17,7 +17,7 @@ function App() {
  
   return (
   <BrowserRouter>
-    <Navbar logout={logout} />
+    {user &&  <Navbar logout={logout} />}
     <Routes>
       <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
