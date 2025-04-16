@@ -2,32 +2,61 @@ import React, { useState } from 'react';
 
 import styles from './FilterHome.module.css';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { LuFilterX } from "react-icons/lu";
 
-const FilterHome = () => {
+const statusValues = {
+    "TODOS": 'todos',
+    "PENDING": 'false',
+    "CONCLUDED": 'true'
+}
+
+const FilterHome = ({ handleSearch, filters }) => {
 
     const [showAccordionFilters, setShowAccordionFilters] = useState(false);
-    const [statusChecked, setStatusChecked] = useState('TODOS');
-    const [initialDate, setInitialDate] = useState("");
-    const [finalDate, setFinalDate] = useState("");
+    const [statusChecked, setStatusChecked] = useState(filters ? Object.keys(statusValues).find(chave => statusValues[chave] === filters.status) : "TODOS");
+    const [initialDate, setInitialDate] = useState(filters ? filters.initialDate : "");
+    const [finalDate, setFinalDate] = useState(filters ? filters.finalDate : "");
 
-    const handleFilter = () => {
+    const handleFilter = (e) => {
         const filters = {
-            statusChecked,
+            status: statusValues[statusChecked],
             initialDate,
             finalDate
-        }
-        console.log(filters);
+        };
+        handleSearch(e, filters)
+    }
+
+    const verifyFiltersOn = () => {
+        return statusChecked !== "TODOS" || initialDate || finalDate;
+    }
+
+    const handleCleanFilters = () => {
+        setInitialDate("");
+        setFinalDate("");
+        setStatusChecked("TODOS");
+        handleSearch();
     }
 
     return (
-        <div className={styles.caption_filter}>
-            <div className={styles.caption_filter_header} onClick={() => setShowAccordionFilters(!showAccordionFilters)} >
-                <p>Filtros</p>
-                {showAccordionFilters ?
-                    <IoIosArrowUp />
-                    :
-                    <IoIosArrowDown />
+        <form className={styles.caption_filter}>
+            <div className={styles.caption_filter_header} >
+                <div onClick={() => setShowAccordionFilters(!showAccordionFilters)} className={styles.control_accordion}>
+                    <p>Filtros</p>
+                    {showAccordionFilters ?
+                        <IoIosArrowUp />
+                        :
+                        <IoIosArrowDown />
+                    }
+
+                </div>
+                {
+                    verifyFiltersOn() &&
+                    <div className={styles.clean_filters} onClick={handleCleanFilters}>
+                        <p>Limpar filtros</p>
+                        <LuFilterX />
+                    </div>
                 }
+
             </div>
             {showAccordionFilters &&
                 <div className={styles.container_accordion}>
@@ -36,11 +65,11 @@ const FilterHome = () => {
                         <div className={styles.accordion_filters_itens}>
                             <div>
                                 Data inicial:
-                                <input type="datetime-local" id="initialDate" name="initialDate" value={initialDate} onChange={(e) => setInitialDate(e.target.value)}/>
+                                <input type="datetime-local" id="initialDate" name="initialDate" value={initialDate} onChange={(e) => setInitialDate(e.target.value)} />
                             </div>
                             <div>
                                 Data final:
-                                <input type="datetime-local" id="finalDate" name="finalDate" value={finalDate} onChange={(e) => setFinalDate(e.target.value)}/>
+                                <input type="datetime-local" id="finalDate" name="finalDate" value={finalDate} onChange={(e) => setFinalDate(e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -60,7 +89,7 @@ const FilterHome = () => {
                     </div>
                     <button onClick={handleFilter}>Filtrar</button>
                 </div>}
-        </div>
+        </form>
     )
 }
 

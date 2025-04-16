@@ -1,41 +1,56 @@
-.caption_filter{
+.caption_filter {
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: .2em;
+    gap: .3em;
     width: 100%;
 }
 
-.caption_filter_header{
+.caption_filter_header {
     display: flex;
     align-items: center;
-    gap: .2em;
+    flex-direction: row;
+    gap: 1em;
     cursor: pointer;
 }
 
-.container_accordion{
+.control_accordion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.clean_filters {
+    display: flex;
+    align-items: center;
+    font-size: .9em;
+    color: rgb(208, 42, 42);
+}
+
+.container_accordion {
     display: grid;
     grid-template-columns: 2fr 1fr;
     width: 90%;
     border: 1px solid green;
     border-radius: .3em;
     background-color: rgba(68, 74, 67, 0.726);
-    padding: .2em;
+    padding: .4em;
 }
 
 .accordion_filters {
     display: flex;
     flex-direction: column;
     gap: .2em;
+    padding-bottom: .4em;
 }
 
-.accordion_filters_itens{
+.accordion_filters_itens {
     display: flex;
     flex-direction: row;
     gap: .5em;
 }
 
-.accordion_filters_itens input{
+.accordion_filters_itens input {
     background-color: rgb(93, 93, 93);
     margin-left: .2em;
 }
@@ -50,7 +65,6 @@
     padding: .4em .4em;
 }
 
-.active{
+.active {
     background-color: rgb(97, 182, 81);
 }
-

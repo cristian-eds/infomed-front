@@ -24,6 +24,8 @@ const Home = () => {
   const { loading, medicinesItems, page } = useSelector(state => state.medicine);
 
   const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
@@ -40,16 +42,25 @@ const Home = () => {
     dispatch(fetchCustomMedicinesItemsUser(pagination));
   }, [dispatch, actualPage, sizePage]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = (e, filtersParam) => {
+    e && e.preventDefault();
     const pagination = {
       actualPage,
       sizePage,
-      search 
+      name: search
     }
+
+    if(filtersParam) {
+      setFilters(filtersParam);
+      pagination.initialDate = filtersParam.initialDate;
+      pagination.finalDate = filtersParam.finalDate;
+      pagination.status = filtersParam.status;
+    } else {
+      setFilters(null);
+    }
+
     dispatch(searchCustomMedicinesItemUser(pagination));
   }
-
 
   const verifyTimeToNextMedicine = (medicines) => {
     if (medicines.length === 0) return "Não há nenhum próximo medicamento...";
@@ -114,7 +125,7 @@ const Home = () => {
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
-            <FilterHome />
+            <FilterHome handleSearch={handleSearch} filters={filters}/>
             <button onClick={() => setShowModal(true)}><FaPlus /></button>
           </div>
           <div className={styles.container_table}>
