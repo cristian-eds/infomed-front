@@ -58,7 +58,14 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
     'medicines/searchCustomMedicinesItem',
     async (pagination) => {
         const config = requestConfig("GET");
-        const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+        let textFilter = "";
+        if(pagination.initialDate && pagination.finalDate) {
+            textFilter += "&initialDate="+pagination.initialDate+"&finalDate="+pagination.finalDate;
+        }
+        if(pagination.status && pagination?.status !== "TODOS") {
+            textFilter += "&conclusion="+pagination.status;
+        }
+        const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.name}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`+textFilter, config)
             .then(res => res.json());
 
         return res;
@@ -158,6 +165,7 @@ export const medicineSlice = createSlice({
             .addCase(searchCustomMedicinesItemUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.medicinesItems = action.payload.content;
+                state.page = action.payload.page;
             })
             .addCase(searchCustomMedicinesItemUser.rejected, (state, action) => {
                 state.loading = false;
