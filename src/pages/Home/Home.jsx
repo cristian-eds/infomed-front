@@ -47,7 +47,7 @@ const Home = () => {
     }
     
     dispatch(searchCustomMedicinesItemUser(pagination));
-  }, [dispatch, actualPage, sizePage, search,filters]);
+  }, [dispatch, actualPage, sizePage,filters]);
 
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();

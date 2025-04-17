@@ -6,7 +6,7 @@ import Table from '../../components/Table/Table';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { fetchMedicinesUser, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import styles from './Medicines.module.css';
 import { formatDate } from '../../utils/formatterDates';
@@ -25,9 +25,10 @@ const Medicines = () => {
     useEffect(() => {
         const pagination = {
             actualPage: 0,
-            sizePage: '6'
+            sizePage: '6',
+            search: searchText
         }
-        dispatch(fetchMedicinesUser(pagination))
+        dispatch(searchMedicinesUser(pagination))
     }, [dispatch])
 
     useEffect(() => {
