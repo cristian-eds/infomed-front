@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { differenceInMinutes, isAfter } from 'date-fns';
 
-import { fetchCustomMedicinesItemsUser, searchCustomMedicinesItemUser } from '../../slices/medicineSlice';
+import { searchCustomMedicinesItemUser } from '../../slices/medicineSlice';
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
@@ -37,29 +37,43 @@ const Home = () => {
   useEffect(() => {
     const pagination = {
       actualPage,
-      sizePage
-    }
-    dispatch(fetchCustomMedicinesItemsUser(pagination));
-  }, [dispatch, actualPage, sizePage]);
-
-  const handleSearch = (e, filtersParam) => {
-    e && e.preventDefault();
-    const pagination = {
-      actualPage,
       sizePage,
       name: search
     }
+    if(filters) {
+      pagination.initialDate = filters.initialDate;
+      pagination.finalDate = filters.finalDate;
+      pagination.status = filters.status;
+    }
+    
+    dispatch(searchCustomMedicinesItemUser(pagination));
+  }, [dispatch, actualPage, sizePage, search,filters]);
+
+  const handleSearch = (e, filtersParam) => {
+    e && e.preventDefault();
+    const pagination = generateDataAndPaginationToSearch(filtersParam);
 
     if(filtersParam) {
       setFilters(filtersParam);
-      pagination.initialDate = filtersParam.initialDate;
-      pagination.finalDate = filtersParam.finalDate;
-      pagination.status = filtersParam.status;
     } else {
       setFilters(null);
     }
 
     dispatch(searchCustomMedicinesItemUser(pagination));
+  }
+
+  const generateDataAndPaginationToSearch = (filtersParam) => {
+    const pagination = {
+      actualPage,
+      sizePage,
+      name: search
+    }
+    if(filtersParam) {
+      pagination.initialDate = filtersParam.initialDate;
+      pagination.finalDate = filtersParam.finalDate;
+      pagination.status = filtersParam.status;
+    }
+    return pagination;
   }
 
   const verifyTimeToNextMedicine = (medicines) => {

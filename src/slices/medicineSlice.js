@@ -44,16 +44,6 @@ export const searchMedicinesUser = createAsyncThunk(
     }
 )
 
-export const fetchCustomMedicinesItemsUser = createAsyncThunk(
-    'medicines/fetchCustomMedicinesItems',
-    async (pagination) => {
-        const config = requestConfig("GET");
-        const res = await fetch(`http://localhost:8080/medicine/item?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
-            .then(res => res.json());
-        return res;
-    }
-)
-
 export const searchCustomMedicinesItemUser = createAsyncThunk(
     'medicines/searchCustomMedicinesItem',
     async (pagination) => {
@@ -112,18 +102,6 @@ export const medicineSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCustomMedicinesItemsUser.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(fetchCustomMedicinesItemsUser.fulfilled, (state, action) => {
-                state.loading = false;
-                state.medicinesItems = action.payload.content;
-                state.page = action.payload.page;
-            })
-            .addCase(fetchCustomMedicinesItemsUser.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            })
             .addCase(fetchMedicinesUser.pending, (state) => {
                 state.loading = true;
             })
