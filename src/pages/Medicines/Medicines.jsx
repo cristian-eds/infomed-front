@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
+import ArrowDownButton from '../../components/Button/ArrowDownButton';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
 import { fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
-import styles from './Medicines.module.css';
 import { formatDate } from '../../utils/formatterDates';
-import ArrowDownButton from '../../components/Button/ArrowDownButton';
+
+import styles from './Medicines.module.css';
+
 
 const Medicines = () => {
 

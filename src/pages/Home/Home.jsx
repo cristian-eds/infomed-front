@@ -7,7 +7,6 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { differenceInMinutes, isAfter } from 'date-fns';
 
-import { searchCustomMedicinesItemUser } from '../../slices/medicineSlice';
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
@@ -17,11 +16,13 @@ import Pagination from '../../components/Pagination/Pagination';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
 
+import { searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
+
 const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, medicinesItems, page } = useSelector(state => state.medicine);
+  const { loading, medicinesItems, page } = useSelector(state => state.medicineItem);
 
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(null);

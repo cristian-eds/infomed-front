@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { alterStatusMedicineItem } from '../../slices/medicineSlice';
+import { alterStatusMedicineItem } from '../../slices/medicineItemSlice';
 
 import styles from './RowTableMedicineItem.module.css';
 import { formatDate } from '../../utils/formatterDates';

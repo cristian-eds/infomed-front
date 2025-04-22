@@ -9,7 +9,7 @@ import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 import { useDispatch } from 'react-redux'
 
-import { updateMedicineItem } from '../../slices/medicineSlice'
+import { updateMedicineItem } from '../../slices/medicineItemSlice'
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
