@@ -42,6 +42,19 @@ export const createMedicine = createAsyncThunk(
     }
 )
 
+export const deleteMedicine = createAsyncThunk(
+    'medicines/deleteMedicine',
+    async (id) => {
+        const config = requestConfig("DELETE");
+        const res = await fetch("http://localhost:8080/medicine/" + id, config)
+            .then(res => res);
+
+        if(res.status == 200) return id;
+        
+        return 0;
+    }
+)
+
 export const medicineSlice = createSlice({
     name: 'medicine',
     initialState,
@@ -66,6 +79,7 @@ export const medicineSlice = createSlice({
             .addCase(searchMedicinesUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.medicines = action.payload.content;
+                state.medicinePage = action.payload.page;
             })
             .addCase(searchMedicinesUser.rejected, (state, action) => {
                 state.loading = false;
@@ -81,6 +95,15 @@ export const medicineSlice = createSlice({
             .addCase(createMedicine.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+            .addCase(deleteMedicine.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(deleteMedicine.fulfilled, (state, action) => {
+                state.medicines = state.medicines.filter(
+                    medicine => medicine.id !== action.payload
+                )
+                state.loading = false;
             })
     }
 })

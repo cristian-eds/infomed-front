@@ -12,17 +12,24 @@ import { fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medici
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
+import ModalConfirmDeleteMedicine from '../../components/Modal/ModalConfirmDeleteMedicine';
 
 
 const Medicines = () => {
 
     const dispatch = useDispatch();
+    
+    const { loading, medicines, medicinePage } = useSelector(state => state.medicine);
 
     const [actualPage, setActualPage] = useState(0);
-    const { loading, medicines, medicinePage } = useSelector(state => state.medicine);
     const [searchText, setSearchText] = useState("");
+    const [medicineToDelete, setMedicineToDelete] = useState(null);
+
+    const [showModalDelete, setShowModalDelete] = useState(false);
 
     const containerTableRef = useRef(null);
+
+    console.log(medicinePage);
 
     useEffect(() => {
         const pagination = {
@@ -36,6 +43,16 @@ const Medicines = () => {
     useEffect(() => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
     },[medicines])
+
+    const handleDeleteMedicine = (medicine) => {
+        setMedicineToDelete(medicine);
+        setShowModalDelete(true);
+    }
+
+    const handleHiddenDeleteModal = () =>{
+        setMedicineToDelete(null);
+        setShowModalDelete(false);
+    }
 
     const handleFetchMoreMedicines = () => {
         setActualPage(actualPage + 1);
@@ -69,8 +86,8 @@ const Medicines = () => {
                 <td>{medicine.totalDays} dias</td>
                 <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly /></td>
                 <td>
-                    <MdEdit />
-                    <MdDelete />
+                    <MdEdit size={20}/>
+                    <MdDelete size={20} onClick={() => handleDeleteMedicine(medicine)}/>
                 </td>
             </tr>
         ))
@@ -91,7 +108,7 @@ const Medicines = () => {
 
                     </div>
                     <footer className={styles.footer_medicines}>
-                        {medicinePage.totalPages - 1 === actualPage ?
+                        {medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0?
                             <p>Todos elementos carregados...</p> :
                             <>
                                 <p>Ver mais...</p>
@@ -102,6 +119,7 @@ const Medicines = () => {
                     </footer>
                 </>}
             </div>
+            {showModalDelete && <ModalConfirmDeleteMedicine medicine={medicineToDelete} hiddenModal={handleHiddenDeleteModal} />}
         </main>
     )
 }

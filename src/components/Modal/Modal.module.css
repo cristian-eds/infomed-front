@@ -16,6 +16,13 @@
     background-color: #252424f7;
 }
 
+.modal_content_minor {
+    margin: 5% auto;
+    height: 50%;
+    width: 55%;
+    background-color: #252424f7;
+} 
+
 .modal_content * {
     color: rgb(255, 255, 255);
 }
@@ -26,6 +33,7 @@
     align-items: center;
     padding: 1em;
     background-color: #016704d8;
+    text-align: center;
 }
 
 .modal_content_header_text {

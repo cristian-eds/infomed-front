@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export const searchCustomMedicinesItemUser = createAsyncThunk(
-    'medicines/searchCustomMedicinesItem',
+    'medicineItems/searchCustomMedicinesItem',
     async (pagination) => {
         const config = requestConfig("GET");
         let textFilter = "";
@@ -27,7 +27,7 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
 )
 
 export const alterStatusMedicineItem = createAsyncThunk(
-    'medicines/alterStatus',
+    'medicineItems/alterStatus',
     async (id) => {
         const config = requestConfig("PUT");
         const res = await fetch("http://localhost:8080/medicine/item/" + id + "/status", config)
@@ -38,7 +38,7 @@ export const alterStatusMedicineItem = createAsyncThunk(
 )
 
 export const updateMedicineItem = createAsyncThunk(
-    'medicines/updateMedicineItem',
+    'medicineItems/updateMedicineItem',
     async (data) => {
         const config = requestConfig("PUT", data);
         const res = await fetch("http://localhost:8080/medicine/item/" + data.id, config)

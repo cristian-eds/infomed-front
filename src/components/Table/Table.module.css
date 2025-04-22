@@ -39,3 +39,7 @@
 .table th {
     background-color: #0a5810;
 }
+
+.table td svg {
+    cursor: pointer;
+}
