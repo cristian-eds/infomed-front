@@ -4,6 +4,7 @@ import { requestConfig } from "../utils/requests";
 const initialState = {
     medicinesItems: [],
     page: {},
+    nextMedicineItem: {},
     loading: false,
     error: false
 }
@@ -45,6 +46,17 @@ export const updateMedicineItem = createAsyncThunk(
             .then(res => res.json())
             .catch(err => err);
 
+        return res;
+    }
+)
+
+export const getNextMedicineItem = createAsyncThunk(
+    'medicinesItems/nextMedicineItem',
+    async () => {
+        const config = requestConfig("GET");
+        const res = await fetch("http://localhost:8080/medicine/item/next", config)
+            .then(res => res.json());
+            
         return res;
     }
 )
@@ -106,9 +118,9 @@ export const medicineItemSlice = createSlice({
             .addCase(updateMedicineItem.rejected, (state) => {
                 state.loading = false;
             })
-            
-            ;
-            
+            .addCase(getNextMedicineItem.fulfilled, (state, action) => {
+                state.nextMedicineItem = action.payload && action.payload;
+            });
     }
 })
 
