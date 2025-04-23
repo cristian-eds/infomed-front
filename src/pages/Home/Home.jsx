@@ -5,7 +5,6 @@ import styles from './Home.module.css'
 import { FaPlus } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { differenceInMinutes, isAfter } from 'date-fns';
 
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
@@ -17,6 +16,8 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
 
 import { searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
+import NextMedicine from '../../components/NextMedicine/NextMedicine';
+import { ordenateListItensSortedByDate } from '../../utils/formatterLists';
 
 const Home = () => {
 
@@ -32,8 +33,6 @@ const Home = () => {
   const [medicineEditing, setMedicineEditing] = useState();
   const [actualPage, setActualPage] = useState(0);
   const sizePage = 6;
-
-  const date = new Date();
 
   useEffect(() => {
     const pagination = {
@@ -77,39 +76,8 @@ const Home = () => {
     return pagination;
   }
 
-  const verifyTimeToNextMedicine = (medicines) => {
-    if (medicines.length === 0) return "Não há nenhum próximo medicamento...";
-    const listItens = generateObjectsItensSortedByDate(medicines);
-    const listItensAfter = listItens.filter((item) =>
-      isAfter(item.dayHour, date)
-    );
-    if (listItensAfter.length === 0) return `Sem próximo medicamento definido com os filtros e pesquisa.`;
-    const minutesDiff = differenceInMinutes(listItensAfter[0].dayHour, date);
-    if (minutesDiff <= 60) {
-      return `Próximo medicamento em ${minutesDiff} minutos`;
-    } else if (minutesDiff > 60) {
-      return `Próximo medicamento em ${calculateTimeForNext(minutesDiff)}`;
-    }
-
-    return "Não há nenhum próximo medicamento...";
-  }
-
-  const calculateTimeForNext = (time) => {
-    const divisor = time / 60;
-    const hours = Math.floor(divisor);
-    const minutes = (divisor - hours) * 60;
-
-    return `${hours} horas e ${minutes.toFixed(0)} minutos`;
-  }
-
-  const generateObjectsItensSortedByDate = (medicinesState) => {
-    const listObjects = [...medicinesState];
-
-    return listObjects.sort((a, b) => new Date(a.dayHour).getTime() - new Date(b.dayHour).getTime());
-  }
-
   const fillRowTable = (medicinesState) => {
-    const listItens = generateObjectsItensSortedByDate(medicinesState);
+    const listItens = ordenateListItensSortedByDate(medicinesState);
     return listItens.map((medicine) => (
       <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
     ));
@@ -132,10 +100,7 @@ const Home = () => {
 
       <main className="container_main">
         <header className={styles.header}>
-          <div>
-            <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-            <p>{verifyTimeToNextMedicine(medicinesItems)}</p>
-          </div>
+          <NextMedicine medicinesItems={medicinesItems}/>
           <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
         </header>
         {loading ? <p>Loading...</p> : <>
