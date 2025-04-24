@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNextMedicineItem } from '../../slices/medicineItemSlice';
 import { differenceInMinutes } from 'date-fns';
 
-const NextMedicine = () => {
+const NextMedicine = ({medicinesItems}) => {
 
     const dispatch = useDispatch();
 
@@ -13,11 +13,10 @@ const NextMedicine = () => {
 
     useEffect(() => {
         dispatch(getNextMedicineItem());
-    }, [dispatch])
-
+    }, [dispatch, medicinesItems])
 
     const verifyTimeToNextMedicine = (medicine) => {
-        let textToShow = "Não há nenhum próximo medicamento...";
+        let textToShow = "";
         const laterDate = new Date(medicine.dayHour);
         const minutesDiff = differenceInMinutes(laterDate, date);
         if (minutesDiff <= 60) {
@@ -25,7 +24,6 @@ const NextMedicine = () => {
         } else if (minutesDiff > 60) {
             textToShow = `Próximo medicamento em ${calculateTimeForNext(minutesDiff)}`;
         }
-        console.log(minutesDiff);
         return textToShow;
     }
 
@@ -41,8 +39,9 @@ const NextMedicine = () => {
     return (
         <div>
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
-            {Object.keys(nextMedicineItem).length > 0 &&
-                <p>{verifyTimeToNextMedicine(nextMedicineItem)}</p>}
+            {Object.keys(nextMedicineItem).length > 0 ?
+                <p>{verifyTimeToNextMedicine(nextMedicineItem)}</p>: 
+                <p>Não há nenhum próximo medicamento...</p> }
         </div>
     )
 }
