@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { requestConfig } from "../utils/requests";
 
 const initialState = {
-    medicinesItems: [],
     medicines: [],
     loading: false,
     error: false,
@@ -27,17 +26,6 @@ export const searchMedicinesUser = createAsyncThunk(
         const res = await fetch(`http://localhost:8080/medicine?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
-        return res;
-    }
-)
-
-export const createMedicine = createAsyncThunk(
-    'medicines/createMedicine',
-    async (data) => {
-        const config = requestConfig("POST",data);
-        const res = await fetch("http://localhost:8080/medicine", config)
-            .then(res => res.json())
-            .catch(err => err);
         return res;
     }
 )
@@ -82,17 +70,6 @@ export const medicineSlice = createSlice({
                 state.medicinePage = action.payload.page;
             })
             .addCase(searchMedicinesUser.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
-            })
-            .addCase(createMedicine.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(createMedicine.fulfilled, (state, action) => {
-                state.loading = false;
-                state.medicinesItems.unshift(...action.payload);
-            })
-            .addCase(createMedicine.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             })

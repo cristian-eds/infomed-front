@@ -27,6 +27,17 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
     }
 )
 
+export const createMedicine = createAsyncThunk(
+    'medicines/createMedicine',
+    async (data) => {
+        const config = requestConfig("POST", data);
+        const res = await fetch("http://localhost:8080/medicine", config)
+            .then(res => res.json())
+            .catch(err => err);
+        return res;
+    }
+)
+
 export const alterStatusMedicineItem = createAsyncThunk(
     'medicineItems/alterStatus',
     async (id) => {
@@ -55,9 +66,11 @@ export const getNextMedicineItem = createAsyncThunk(
     async () => {
         const config = requestConfig("GET");
         const res = await fetch("http://localhost:8080/medicine/item/next", config)
-            .then(res => res.json());
-            
-        return res;
+            .then(res => res);
+
+        if(res.status === 204) return null;
+
+        return res.json();
     }
 )
 
@@ -119,7 +132,18 @@ export const medicineItemSlice = createSlice({
                 state.loading = false;
             })
             .addCase(getNextMedicineItem.fulfilled, (state, action) => {
-                state.nextMedicineItem = action.payload && action.payload;
+                state.nextMedicineItem = action.payload ? action.payload : {};
+            })
+            .addCase(createMedicine.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createMedicine.fulfilled, (state, action) => {
+                state.loading = false;
+                state.medicinesItems.unshift(...action.payload);
+            })
+            .addCase(createMedicine.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
             });
     }
 })
