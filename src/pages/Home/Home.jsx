@@ -63,8 +63,9 @@ const Home = () => {
   }
 
   const generateDataAndPaginationToSearch = (filtersParam) => {
+    setActualPage(0);
     const pagination = {
-      actualPage,
+      actualPage : 0,
       sizePage,
       name: search
     }
@@ -78,7 +79,7 @@ const Home = () => {
 
   const fillRowTable = (medicinesState) => {
     const listItens = ordenateListItensSortedByDate(medicinesState);
-    return listItens.map((medicine) => (
+    return listItens.slice(0,sizePage).map((medicine) => (
       <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
     ));
   }
@@ -95,12 +96,12 @@ const Home = () => {
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} />
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} dispatch={dispatch}/>
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
 
       <main className="container_main">
         <header className={styles.header}>
-          <NextMedicine medicinesItems={medicinesItems}/>
+          <NextMedicine medicinesItems={medicinesItems} />
           <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
         </header>
         {loading ? <p>Loading...</p> : <>

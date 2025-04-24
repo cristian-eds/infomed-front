@@ -7,20 +7,17 @@ import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 
-import { useDispatch } from 'react-redux'
-import { createMedicine } from '../../slices/medicineSlice'
+import { createMedicine } from '../../slices/medicineItemSlice'
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 
-const ModalAddMedicine = ({ showModal, setShowModal }) => {
+const ModalAddMedicine = ({ showModal, setShowModal, dispatch }) => {
 
     const [name, setName] = useState("");
     const [frequency, setFrequency] = useState("");
     const [totalDays, setTotalDays] = useState("");
     const [initialDate, setInitialDate] = useState(format(new Date(),'yyyy-MM-dd hh:mm'));
-
-    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();

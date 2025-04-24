@@ -29,8 +29,6 @@ const Medicines = () => {
 
     const containerTableRef = useRef(null);
 
-    console.log(medicinePage);
-
     useEffect(() => {
         const pagination = {
             actualPage: 0,
@@ -58,7 +56,7 @@ const Medicines = () => {
         setActualPage(actualPage + 1);
         const pagination = {
             actualPage: actualPage + 1,
-            sizePage: '6'
+            sizePage: 6
         }
         dispatch(fetchMoreMedicinesUser(pagination))
     }
@@ -67,7 +65,7 @@ const Medicines = () => {
         e.preventDefault();
         const pagination = {
             actualPage: 0,
-            sizePage: '6',
+            sizePage: 6,
             search: searchText
         }
         dispatch(searchMedicinesUser(pagination))
