@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
 import ArrowDownButton from '../../components/Button/ArrowDownButton';
+import ModalConfirmDeleteMedicine from '../../components/Modal/ModalConfirmDeleteMedicine';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
@@ -12,7 +13,6 @@ import { fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medici
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
-import ModalConfirmDeleteMedicine from '../../components/Modal/ModalConfirmDeleteMedicine';
 
 
 const Medicines = () => {

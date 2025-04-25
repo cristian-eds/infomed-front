@@ -6,7 +6,6 @@ import { FaPlus } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem';
 import InputSearch from '../../components/InputSearch/InputSearch';
@@ -14,16 +13,23 @@ import Table from '../../components/Table/Table';
 import Pagination from '../../components/Pagination/Pagination';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
+import NextMedicine from '../../components/NextMedicine/NextMedicine';
 
 import { searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
-import NextMedicine from '../../components/NextMedicine/NextMedicine';
-import { ordenateListItensSortedByDate } from '../../utils/formatterLists';
+
+const titles = [
+  {name: "Nome", field: "NAME"}, 
+  {name: "Número", field: "NUMBER"}, 
+  {name: "Frequência",field: "FREQUENCE"}, 
+  {name:"Horário",field: "DAY_HOUR"}, 
+  {name:"Concluído",field: "CONCLUSION"}, 
+  {name:"Ações",}];
 
 const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, medicinesItems, page } = useSelector(state => state.medicineItem);
+  const { loading, medicinesItems, page, sort } = useSelector(state => state.medicineItem);
 
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(null);
@@ -47,7 +53,7 @@ const Home = () => {
     }
     
     dispatch(searchCustomMedicinesItemUser(pagination));
-  }, [dispatch, actualPage, sizePage,filters]);
+  }, [dispatch, actualPage, sizePage,filters, sort]);
 
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();
@@ -78,8 +84,8 @@ const Home = () => {
   }
 
   const fillRowTable = (medicinesState) => {
-    const listItens = ordenateListItensSortedByDate(medicinesState);
-    return listItens.slice(0,sizePage).map((medicine) => (
+    const listItens = medicinesState.slice(0, sizePage);
+    return listItens.map((medicine) => (
       <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
     ));
   }
@@ -110,7 +116,7 @@ const Home = () => {
             <button onClick={() => setShowModal(true)}><FaPlus /></button>
           </div>
           <div className={styles.container_table}>
-            <Table titles={["Nome", "Número", "Frequência", "Horário", "Concluído", "Ações"]}>
+            <Table titles={titles} dispatch={dispatch}>
               {medicinesItems.length > 0 && fillRowTable(medicinesItems)}
             </Table>
           </div>
