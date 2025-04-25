@@ -4,6 +4,10 @@ import { requestConfig } from "../utils/requests";
 const initialState = {
     medicinesItems: [],
     page: {},
+    sort: {
+        fieldSort: "DAY_HOUR",
+        typeSort: "ASC"
+    },
     nextMedicineItem: {},
     loading: false,
     error: false
@@ -11,7 +15,7 @@ const initialState = {
 
 export const searchCustomMedicinesItemUser = createAsyncThunk(
     'medicineItems/searchCustomMedicinesItem',
-    async (pagination) => {
+    async (pagination, {getState}) => {
         const config = requestConfig("GET");
         let textFilter = "";
         if (pagination.initialDate && pagination.finalDate) {
@@ -20,7 +24,9 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
         if (pagination.status && pagination?.status !== "TODOS") {
             textFilter += "&conclusion=" + pagination.status;
         }
-        const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.name}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}` + textFilter, config)
+        const sort = getState().medicineItem.sort;
+        const textSort = "&fieldSort=" + sort.fieldSort + "&typeSort="+ sort.typeSort;
+        const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.name}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}` + textFilter + textSort, config)
             .then(res => res.json());
 
         return res;
@@ -68,7 +74,7 @@ export const getNextMedicineItem = createAsyncThunk(
         const res = await fetch("http://localhost:8080/medicine/item/next", config)
             .then(res => res);
 
-        if(res.status === 204) return null;
+        if (res.status === 204) return null;
 
         return res.json();
     }
@@ -77,7 +83,15 @@ export const getNextMedicineItem = createAsyncThunk(
 export const medicineItemSlice = createSlice({
     name: 'medicineItems',
     initialState,
-    reducers: {},
+    reducers: {
+        changeFieldSort: (state, action) => {
+            state.sort.fieldSort = action.payload;
+            state.sort.typeSort = "ASC";
+        },
+        changeTypeSort: (state) => {
+            state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(searchCustomMedicinesItemUser.pending, (state) => {
@@ -147,5 +161,10 @@ export const medicineItemSlice = createSlice({
             });
     }
 })
+
+export const {
+    changeFieldSort,
+    changeTypeSort
+} = medicineItemSlice.actions;
 
 export default medicineItemSlice.reducer;
