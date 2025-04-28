@@ -44,6 +44,8 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
         setConclusion(isConclusion);
     }
 
+   
+
     return (
         <>
             {showModal && medicine &&(
