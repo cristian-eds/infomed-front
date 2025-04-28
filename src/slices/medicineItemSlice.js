@@ -67,6 +67,20 @@ export const updateMedicineItem = createAsyncThunk(
     }
 )
 
+export const deleteMedicineItem = createAsyncThunk(
+    'medicineItems/deleteMedicineItem',
+    async (id) => {
+        const config = requestConfig("DELETE");
+        const res = await fetch("http://localhost:8080/medicine/item/"+id, config)
+            .then(res => res);
+
+        if(res.status === 204) {
+            return id;
+        }
+        return null;
+    }
+)
+
 export const getNextMedicineItem = createAsyncThunk(
     'medicinesItems/nextMedicineItem',
     async () => {
@@ -158,7 +172,15 @@ export const medicineItemSlice = createSlice({
             .addCase(createMedicine.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-            });
+            })
+            .addCase(deleteMedicineItem.fulfilled, (state, action) => {
+                if(action.payload) {
+                    state.medicinesItems = state.medicinesItems.filter(
+                        medicine => medicine.medicineItemId !== action.payload
+                    )
+                }
+            })
+            ;
     }
 })
 
