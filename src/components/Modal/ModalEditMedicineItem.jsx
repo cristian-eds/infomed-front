@@ -7,20 +7,19 @@ import DeleteButton from '../Button/DeleteButton'
 import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
-import { useDispatch } from 'react-redux'
 
-import { updateMedicineItem } from '../../slices/medicineItemSlice'
+import { deleteMedicineItem, updateMedicineItem } from '../../slices/medicineItemSlice'
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
+import ModalConfirmDelete from './ModalConfirmDelete'
 
-const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
+const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
 
     const [dayHour, setDayHour] = useState(medicine.dayHour);
     const [conclusion, setConclusion] = useState(medicine.conclusion);
-    const [conclusionDayHour, setConclusionDayHour] = useState(medicine.conclusionDayHour ? format(medicine.conclusionDayHour,'yyyy-MM-dd hh:mm') : "");
-    
-    const dispatch = useDispatch();
+    const [conclusionDayHour, setConclusionDayHour] = useState(medicine.conclusionDayHour ? format(medicine.conclusionDayHour, 'yyyy-MM-dd hh:mm') : "");
 
+    const [showModalDelete, setShowModalDelete] = useState(false);
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -36,28 +35,36 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
     }
 
     const handleAlterConclusion = (isConclusion) => {
-        if(isConclusion) {
-            setConclusionDayHour(format(Date.now(),'yyyy-MM-dd hh:mm'));
+        if (isConclusion) {
+            setConclusionDayHour(format(Date.now(), 'yyyy-MM-dd hh:mm'));
         } else {
             setConclusionDayHour("");
         }
         setConclusion(isConclusion);
     }
 
-   
+    const handleHiddenModalDelete = () => {
+        setShowModalDelete(false);
+    }
+
+    const handleDelete = (id) => {
+        handleHiddenModalDelete();
+        dispatch(deleteMedicineItem(id));
+        setCloseModal();
+    }
 
     return (
         <>
-            {showModal && medicine &&(
+            {showModal && medicine && (
                 < Modal >
                     <div className={styles.modal_content}>
                         <header className={styles.modal_content_header}>
                             <ArrowLeftButton actionClick={() => setCloseModal()} />
-                                <div>
-                                    <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
-                                    <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
-                                </div>
-                            <DeleteButton />
+                            <div>
+                                <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
+                                <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
+                            </div>
+                            <DeleteButton actionClick={() => setShowModalDelete(true)}/>
                         </header>
                         <form className={styles.medication_form} onSubmit={handleEdit}>
                             <div className={styles.form_row}>
@@ -78,16 +85,23 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine }) => {
                             <div className={styles.form_row}>
                                 <label htmlFor="nome">Data e hora que foi tomado:</label>
                                 <div className={styles.input_group}>
-                                    <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)}/>
+                                    <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
                                 </div>
                             </div>
 
                             <ButtonGroup>
                                 <Button value="Confirmar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={()=> setCloseModal()} variant="button_cancel"/>
+                                <Button value="Cancelar" type="button" onClick={() => setCloseModal()} variant="button_cancel" />
                             </ButtonGroup>
                         </form>
                     </div>
+                    {showModalDelete &&
+                        <ModalConfirmDelete
+                            object={medicine}
+                            handleDelete={handleDelete}
+                            text={"Confima a exclusão do medicamento?"}
+                            handleHiddenModalDelete={handleHiddenModalDelete}
+                        />}
                 </ Modal >
             )
             }

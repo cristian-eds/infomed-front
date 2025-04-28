@@ -6,7 +6,7 @@ import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 
-const ModalConfirmDelete = ({ object, text, handleDeleteMedicine, handleHiddenModalDelete }) => {
+const ModalConfirmDelete = ({ object, text, handleDelete, handleHiddenModalDelete }) => {
 
   return (
     <Modal>
@@ -18,7 +18,7 @@ const ModalConfirmDelete = ({ object, text, handleDeleteMedicine, handleHiddenMo
         <div className={styles.modal_content_header_text} style={{padding: '2em'}}>
           <h2>{text}</h2>
           <ButtonGroup>
-            <Button value="Confirmar" type="submit" variant="button_confirm" onClick={() => handleDeleteMedicine(object.id)}/>
+            <Button value="Confirmar" type="submit" variant="button_confirm" onClick={() => handleDelete(object.medicineItemId)}/>
             <Button value="Cancelar" type="button" onClick={handleHiddenModalDelete} variant="button_cancel" />
           </ButtonGroup>
         </div>

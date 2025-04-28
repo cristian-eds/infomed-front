@@ -133,7 +133,7 @@ const Medicines = () => {
             {showModalDelete && 
                 <ModalConfirmDelete 
                     object={medicineToDelete} 
-                    handleDeleteMedicine={handleDeleteMedicine} 
+                    handleDelete={handleDeleteMedicine} 
                     text={"Confima a exclusão do medicamento?"}
                     handleHiddenModalDelete={handleHiddenModalDelete}
                     />}

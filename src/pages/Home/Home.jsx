@@ -38,6 +38,7 @@ const Home = () => {
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
   const [actualPage, setActualPage] = useState(0);
+
   const sizePage = 6;
 
   useEffect(() => {
@@ -53,7 +54,8 @@ const Home = () => {
     }
     
     dispatch(searchCustomMedicinesItemUser(pagination));
-  }, [dispatch, actualPage, sizePage,filters, sort]);
+    return () => {} 
+  }, [dispatch, actualPage, sizePage,filters, sort ]);
 
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();
@@ -70,11 +72,13 @@ const Home = () => {
 
   const generateDataAndPaginationToSearch = (filtersParam) => {
     setActualPage(0);
+
     const pagination = {
       actualPage : 0,
       sizePage,
       name: search
     }
+    
     if(filtersParam) {
       pagination.initialDate = filtersParam.initialDate;
       pagination.finalDate = filtersParam.finalDate;
@@ -103,7 +107,7 @@ const Home = () => {
   return (
     <>
       <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} dispatch={dispatch}/>
-      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} />}
+      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch}/>}
 
       <main className="container_main">
         <header className={styles.header}>
