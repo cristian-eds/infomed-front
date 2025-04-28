@@ -4,16 +4,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
 import ArrowDownButton from '../../components/Button/ArrowDownButton';
-import ModalConfirmDeleteMedicine from '../../components/Modal/ModalConfirmDeleteMedicine';
+import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
 
+const titles = [
+    {name: "Nome", field: "NAME"}, 
+    {name: "Data criação", field: "REGISTRATION_DATE"}, 
+    {name: "Frequência",field: "FREQUENCE"}, 
+    {name:"Duração",field: "TOTAL_DAYS"}, 
+    {name:"Concluído",field: "CONCLUSION"}, 
+    {name:"Ações",}
+]
 
 const Medicines = () => {
 
@@ -42,14 +50,19 @@ const Medicines = () => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
     },[medicines])
 
-    const handleDeleteMedicine = (medicine) => {
+    const handleShowModalDelete = (medicine) => {
         setMedicineToDelete(medicine);
         setShowModalDelete(true);
     }
 
-    const handleHiddenDeleteModal = () =>{
+    const handleHiddenModalDelete = () => {
         setMedicineToDelete(null);
         setShowModalDelete(false);
+    }
+
+    const handleDeleteMedicine = (id) =>{
+        handleHiddenModalDelete();
+        dispatch(deleteMedicine(id));
     }
 
     const handleFetchMoreMedicines = () => {
@@ -85,7 +98,7 @@ const Medicines = () => {
                 <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly /></td>
                 <td>
                     <MdEdit size={20}/>
-                    <MdDelete size={20} onClick={() => handleDeleteMedicine(medicine)}/>
+                    <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)}/>
                 </td>
             </tr>
         ))
@@ -100,7 +113,7 @@ const Medicines = () => {
                 {loading ? <p>Loading...</p> : <>
                     <h3>Histórico medicamentos...</h3>
                     <div className={styles.container_table} ref={containerTableRef}>
-                        <Table titles={["Nome", "Data criação", "Frequência", "Duração", "Concluído", "Ações"]}>
+                        <Table titles={titles}>
                             {medicines && generateRowsTableMedicine(medicines)}
                         </Table>
 
@@ -117,7 +130,13 @@ const Medicines = () => {
                     </footer>
                 </>}
             </div>
-            {showModalDelete && <ModalConfirmDeleteMedicine medicine={medicineToDelete} hiddenModal={handleHiddenDeleteModal} />}
+            {showModalDelete && 
+                <ModalConfirmDelete 
+                    object={medicineToDelete} 
+                    handleDeleteMedicine={handleDeleteMedicine} 
+                    text={"Confima a exclusão do medicamento?"}
+                    handleHiddenModalDelete={handleHiddenModalDelete}
+                    />}
         </main>
     )
 }

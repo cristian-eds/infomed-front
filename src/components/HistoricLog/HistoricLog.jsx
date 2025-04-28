@@ -10,6 +10,12 @@ import ArrowDownButton from '../Button/ArrowDownButton';
 
 import styles from './HistoricLog.module.css';
 
+const titles = [
+    {name: "Ação", field: "ACTION"},
+    {name: "Descrição", field: "DESCRIPTION"},
+    {name: "Data", fiedl: "DATE"}
+]
+
 const HistoricLog = () => {
 
     const dispatch = useDispatch();
@@ -50,7 +56,7 @@ const HistoricLog = () => {
     return (
         <>
             <h3>Histórico</h3>
-            <Table titles={["Ação", "Descrição", "Data"]}>
+            <Table titles={titles}>
                 {generateRowsTableLogs()}
             </Table>
             <div className={styles.historic_footer}>
