@@ -8,18 +8,18 @@ import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { changeFieldSort, changeTypeSort, deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
 
 const titles = [
-    {name: "Nome", field: "NAME"}, 
-    {name: "Data criação", field: "REGISTRATION_DATE"}, 
-    {name: "Frequência",field: "FREQUENCE"}, 
-    {name:"Duração",field: "TOTAL_DAYS"}, 
-    {name:"Concluído",field: "CONCLUSION"}, 
+    {name: "Nome", field: "name"}, 
+    {name: "Data criação", field: "registrationDate"}, 
+    {name: "Frequência",field: "frequencyHours"}, 
+    {name:"Duração",field: "totalDays"}, 
+    {name:"Concluído",field: "conclusion"}, 
     {name:"Ações",}
 ]
 
@@ -27,7 +27,7 @@ const Medicines = () => {
 
     const dispatch = useDispatch();
     
-    const { loading, medicines, medicinePage } = useSelector(state => state.medicine);
+    const { loading, sort, medicines, medicinePage } = useSelector(state => state.medicine);
 
     const [actualPage, setActualPage] = useState(0);
     const [searchText, setSearchText] = useState("");
@@ -44,7 +44,7 @@ const Medicines = () => {
             search: searchText
         }
         dispatch(searchMedicinesUser(pagination))
-    }, [dispatch])
+    }, [dispatch, sort])
 
     useEffect(() => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
@@ -84,12 +84,51 @@ const Medicines = () => {
         dispatch(searchMedicinesUser(pagination))
     }
 
+    const handleSort = (field) => {
+        if (field === sort.fieldSort) {
+          dispatch(changeTypeSort());
+        } else {
+          dispatch(changeFieldSort(field));
+        }
+      }
+
     const verifyConclusionMedicine = (medicine) => {
         return medicine && medicine.medicineItems.every(item => item.conclusion === true);
     }
 
+    const sortList = (medicinesState) => {
+        let listOrdened = [...medicinesState];
+        return listOrdened.sort(
+            (a,b) => {
+                let valueA;
+                let valueB;
+               
+                valueA = a[sort.fieldSort];
+                valueB = b[sort.fieldSort];
+
+                if(sort.fieldSort === "registrationDate") {
+                    valueA = new Date(a.registrationDate).getTime();
+                    valueB = new Date(b.registrationDate).getTime();
+                }
+
+                if(sort.fieldSort === "name"  ) {
+                    if(sort.typeSort === "ASC") {
+                        return valueA.localeCompare(valueB);
+                    } else {
+                        return valueB.localeCompare(valueA);
+                    }
+                } 
+
+                if(sort.typeSort === "ASC") return valueA - valueB;
+
+                return valueB - valueA;
+            }
+        )
+    }
+
     const generateRowsTableMedicine = (medicinesState) => {
-        return medicinesState.map(medicine => (
+        const listOrdened = sortList(medicinesState);
+        return listOrdened.map(medicine => (
             <tr key={medicine.id}>
                 <td>{medicine.name}</td>
                 <td>{formatDate(medicine.registrationDate)}</td>
@@ -113,7 +152,7 @@ const Medicines = () => {
                 {loading ? <p>Loading...</p> : <>
                     <h3>Histórico medicamentos...</h3>
                     <div className={styles.container_table} ref={containerTableRef}>
-                        <Table titles={titles}>
+                        <Table titles={titles} sort={sort} handleSort={handleSort}>
                             {medicines && generateRowsTableMedicine(medicines)}
                         </Table>
 
