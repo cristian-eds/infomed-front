@@ -20,7 +20,7 @@ const HistoricLog = () => {
 
     const dispatch = useDispatch();
 
-    const { logs, page } = useSelector(state => state.log);
+    const { logs, page, sort } = useSelector(state => state.log);
 
     const [actualPage, setActualPage] = useState(0);
 
@@ -56,7 +56,7 @@ const HistoricLog = () => {
     return (
         <>
             <h3>Histórico</h3>
-            <Table titles={titles}>
+            <Table titles={titles} sort={sort}>
                 {generateRowsTableLogs()}
             </Table>
             <div className={styles.historic_footer}>

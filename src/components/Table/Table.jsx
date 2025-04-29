@@ -2,30 +2,16 @@ import React from 'react'
 
 import styles from './Table.module.css'
 
-import { changeFieldSort, changeTypeSort } from '../../slices/medicineItemSlice'
-
-import { useSelector } from 'react-redux';
-
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const Table = ({ titles, dispatch, children }) => {
-
-    const { sort } = useSelector(state => state.medicineItem);
-
-    const handleSort = (field) => {
-        if (field === sort.fieldSort) {
-            dispatch(changeTypeSort());
-        } else {
-            dispatch(changeFieldSort(field));
-        }
-    }
+const Table = ({ sort, titles, handleSort, children }) => {
 
     const verifyIconSortActive = (field) => {
         if (field === sort.fieldSort) {
             if(sort.typeSort === "ASC") {
-                return <IoIosArrowDown />
-            } else {
                 return <IoIosArrowUp />
+            } else {
+                return <IoIosArrowDown />
             }
         }
     }

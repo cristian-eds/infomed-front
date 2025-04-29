@@ -15,15 +15,15 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
 import NextMedicine from '../../components/NextMedicine/NextMedicine';
 
-import { searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
+import { changeFieldSort, changeTypeSort, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
 
 const titles = [
-  {name: "Nome", field: "NAME"}, 
-  {name: "Número", field: "NUMBER"}, 
-  {name: "Frequência",field: "FREQUENCE"}, 
-  {name:"Horário",field: "DAY_HOUR"}, 
-  {name:"Concluído",field: "CONCLUSION"}, 
-  {name:"Ações",}];
+  { name: "Nome", field: "NAME" },
+  { name: "Número", field: "NUMBER" },
+  { name: "Frequência", field: "FREQUENCE" },
+  { name: "Horário", field: "DAY_HOUR" },
+  { name: "Concluído", field: "CONCLUSION" },
+  { name: "Ações", }];
 
 const Home = () => {
 
@@ -47,21 +47,21 @@ const Home = () => {
       sizePage,
       name: search
     }
-    if(filters) {
+    if (filters) {
       pagination.initialDate = filters.initialDate;
       pagination.finalDate = filters.finalDate;
       pagination.status = filters.status;
     }
-    
+
     dispatch(searchCustomMedicinesItemUser(pagination));
-    return () => {} 
-  }, [dispatch, actualPage, sizePage,filters, sort ]);
+    return () => { }
+  }, [dispatch, actualPage, sizePage, filters, sort]);
 
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();
     const pagination = generateDataAndPaginationToSearch(filtersParam);
 
-    if(filtersParam) {
+    if (filtersParam) {
       setFilters(filtersParam);
     } else {
       setFilters(null);
@@ -74,12 +74,12 @@ const Home = () => {
     setActualPage(0);
 
     const pagination = {
-      actualPage : 0,
+      actualPage: 0,
       sizePage,
       name: search
     }
-    
-    if(filtersParam) {
+
+    if (filtersParam) {
       pagination.initialDate = filtersParam.initialDate;
       pagination.finalDate = filtersParam.finalDate;
       pagination.status = filtersParam.status;
@@ -104,10 +104,18 @@ const Home = () => {
     setShowModalEditMedicineItem(false);
   }
 
+  const handleSort = (field) => {
+    if (field === sort.fieldSort) {
+      dispatch(changeTypeSort());
+    } else {
+      dispatch(changeFieldSort(field));
+    }
+  }
+
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} dispatch={dispatch}/>
-      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch}/>}
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} dispatch={dispatch} />
+      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
 
       <main className="container_main">
         <header className={styles.header}>
@@ -116,11 +124,11 @@ const Home = () => {
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
-            <FilterHome handleSearch={handleSearch} filters={filters}/>
+            <FilterHome handleSearch={handleSearch} filters={filters} />
             <button onClick={() => setShowModal(true)}><FaPlus /></button>
           </div>
           <div className={styles.container_table}>
-            <Table titles={titles} dispatch={dispatch}>
+            <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>
               {medicinesItems.length > 0 && fillRowTable(medicinesItems)}
             </Table>
           </div>
