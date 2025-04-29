@@ -6,7 +6,11 @@ const initialState = {
     loading: false,
     page: {},
     error: null,
-    success: null
+    success: null,
+    sort: {
+        fieldSort: "registrationDate",
+        typeSort: "ASC"
+    }
 }
 
 export const fetchLogs = createAsyncThunk(

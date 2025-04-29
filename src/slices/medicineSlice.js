@@ -5,7 +5,11 @@ const initialState = {
     medicines: [],
     loading: false,
     error: false,
-    medicinePage: {}
+    medicinePage: {},
+    sort: {
+        fieldSort: "registrationDate",
+        typeSort: "ASC"
+    }
 }
 
 export const fetchMoreMedicinesUser = createAsyncThunk(
@@ -37,8 +41,8 @@ export const deleteMedicine = createAsyncThunk(
         const res = await fetch("http://localhost:8080/medicine/" + id, config)
             .then(res => res);
 
-        if(res.status == 200) return id;
-        
+        if (res.status == 200) return id;
+
         return 0;
     }
 )
@@ -46,7 +50,15 @@ export const deleteMedicine = createAsyncThunk(
 export const medicineSlice = createSlice({
     name: 'medicine',
     initialState,
-    reducers: {},
+    reducers: {
+        changeFieldSort: (state, action) => {
+            state.sort.fieldSort = action.payload;
+            state.sort.typeSort = "ASC";
+        },
+        changeTypeSort: (state) => {
+            state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMoreMedicinesUser.pending, (state) => {
@@ -85,4 +97,9 @@ export const medicineSlice = createSlice({
     }
 })
 
+export const {
+    changeFieldSort,
+    changeTypeSort,
+    ordenadeItems
+} = medicineSlice.actions;
 export default medicineSlice.reducer;
