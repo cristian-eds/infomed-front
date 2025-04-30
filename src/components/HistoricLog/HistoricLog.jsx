@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDate } from '../../utils/formatterDates';
 
-import { fetchLogs, fetchMoreLogs } from '../../slices/logSlice';
+import { changeFieldSort, changeTypeSort, fetchLogs, fetchMoreLogs } from '../../slices/logSlice';
 
 import Table from '../Table/Table'
 import ArrowDownButton from '../Button/ArrowDownButton';
@@ -11,9 +11,9 @@ import ArrowDownButton from '../Button/ArrowDownButton';
 import styles from './HistoricLog.module.css';
 
 const titles = [
-    {name: "Ação", field: "ACTION"},
-    {name: "Descrição", field: "DESCRIPTION"},
-    {name: "Data", fiedl: "DATE"}
+    { name: "Ação", field: "action" },
+    { name: "Descrição", field: "description" },
+    { name: "Data", field: "dateHour" }
 ]
 
 const HistoricLog = () => {
@@ -32,8 +32,34 @@ const HistoricLog = () => {
         dispatch(fetchLogs(pagination))
     }, [dispatch])
 
-    const generateRowsTableLogs = () => (
-        logs && logs.map(
+    const sortList = () => { 
+        return [...logs].sort(
+            (a,b) => {
+                let valueA = a[sort.fieldSort];
+                let valueB = b[sort.fieldSort];
+
+                if (sort.fieldSort === "dateHour") {
+                    valueA = new Date(a.dateHour).getTime();
+                    valueB = new Date(b.dateHour).getTime();
+
+                    if(sort.typeSort === "ASC") {
+                        return valueA - valueB;
+                    }
+                    return valueB - valueA;
+                }
+
+                if (sort.typeSort === "ASC") {
+                    return valueA.localeCompare(valueB);
+                }
+
+                return valueB.localeCompare(valueA);
+            }
+        )
+    }
+
+    const generateRowsTableLogs = () => {
+        const listSorted = sortList();
+        return listSorted.map(
             log => (
                 <tr key={log.id}>
                     <td>{log.action}</td>
@@ -42,7 +68,7 @@ const HistoricLog = () => {
                 </tr>
             )
         )
-    )
+    }
 
     const handleFetchMoreLogs = () => {
         setActualPage(actualPage + 1);
@@ -53,11 +79,21 @@ const HistoricLog = () => {
         dispatch(fetchMoreLogs(pagination));
     }
 
+    const handleSort = (field) => {
+        if (field === sort.fieldSort) {
+            dispatch(changeTypeSort());
+        } else {
+            dispatch(changeFieldSort(field));
+        }
+    }
+
+  
+
     return (
         <>
             <h3>Histórico</h3>
-            <Table titles={titles} sort={sort}>
-                {generateRowsTableLogs()}
+            <Table titles={titles} sort={sort} handleSort={handleSort}>
+                {logs && generateRowsTableLogs()}
             </Table>
             <div className={styles.historic_footer}>
                 {page.totalPages - 1 == actualPage ?

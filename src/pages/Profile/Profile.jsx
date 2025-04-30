@@ -18,7 +18,7 @@ const Profile = ({ userContext }) => {
 
     const email = userContext;
 
-    const [name, setName] = useState(user.name)
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -28,14 +28,14 @@ const Profile = ({ userContext }) => {
     const [editing, setEditing] = useState(false);
     const [changingPassword, setChangingPassword] = useState(false);
 
-
-
     useEffect(() => {
         dispatch(fetchUser(userContext))
     }, [dispatch, userContext])
 
     useEffect(() => {
-        setName(user.name);
+        if(user.name) {
+            setName(user.name);
+        }
     }, [user])
 
     useEffect(() => {
@@ -160,7 +160,7 @@ const Profile = ({ userContext }) => {
                 <div className={styles.form_row}>
                     <label htmlFor="name">Nome:</label>
                     <div className={styles.container_info_row}>
-                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={changingPassword || !editing} />
+                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={changingPassword || !editing}  />
                     </div>
                 </div>
                 <div className={styles.form_row}>

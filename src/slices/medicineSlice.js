@@ -99,7 +99,7 @@ export const medicineSlice = createSlice({
 
 export const {
     changeFieldSort,
-    changeTypeSort,
-    ordenadeItems
+    changeTypeSort
 } = medicineSlice.actions;
+
 export default medicineSlice.reducer;

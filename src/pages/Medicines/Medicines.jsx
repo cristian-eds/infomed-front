@@ -43,8 +43,8 @@ const Medicines = () => {
             sizePage: '6',
             search: searchText
         }
-        dispatch(searchMedicinesUser(pagination))
-    }, [dispatch, sort])
+        dispatch(searchMedicinesUser(pagination));
+    }, [dispatch])
 
     useEffect(() => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
@@ -90,7 +90,7 @@ const Medicines = () => {
         } else {
           dispatch(changeFieldSort(field));
         }
-      }
+    }
 
     const verifyConclusionMedicine = (medicine) => {
         return medicine && medicine.medicineItems.every(item => item.conclusion === true);
@@ -100,15 +100,17 @@ const Medicines = () => {
         let listOrdened = [...medicinesState];
         return listOrdened.sort(
             (a,b) => {
-                let valueA;
-                let valueB;
-               
-                valueA = a[sort.fieldSort];
-                valueB = b[sort.fieldSort];
+                let valueA = a[sort.fieldSort];
+                let valueB = b[sort.fieldSort];
 
                 if(sort.fieldSort === "registrationDate") {
                     valueA = new Date(a.registrationDate).getTime();
                     valueB = new Date(b.registrationDate).getTime();
+                }
+
+                if(sort.fieldSort === "conclusion") {
+                    valueA = verifyConclusionMedicine(a);
+                    valueB = verifyConclusionMedicine(b);
                 }
 
                 if(sort.fieldSort === "name"  ) {
