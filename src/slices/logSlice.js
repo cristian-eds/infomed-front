@@ -8,7 +8,7 @@ const initialState = {
     error: null,
     success: null,
     sort: {
-        fieldSort: "registrationDate",
+        fieldSort: "dateHour",
         typeSort: "ASC"
     }
 }
@@ -40,7 +40,15 @@ export const fetchMoreLogs = createAsyncThunk(
 export const logSlice = createSlice({
     name: 'log',
     initialState,
-    reducers: {},
+    reducers: {
+        changeFieldSort: (state, action) => {
+            state.sort.fieldSort = action.payload;
+            state.sort.typeSort = "ASC";
+        },
+        changeTypeSort: (state) => {
+            state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(
@@ -74,5 +82,9 @@ export const logSlice = createSlice({
     }
 })
 
+export const {
+    changeFieldSort,
+    changeTypeSort
+} = logSlice.actions;
 
 export default logSlice.reducer
