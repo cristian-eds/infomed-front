@@ -47,9 +47,9 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
         setShowModalDelete(false);
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = () => {
         handleHiddenModalDelete();
-        dispatch(deleteMedicineItem(id));
+        dispatch(deleteMedicineItem(medicine.medicineItemId));
         setCloseModal();
     }
 

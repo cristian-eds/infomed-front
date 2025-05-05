@@ -33,6 +33,8 @@ const Medicines = () => {
     const [searchText, setSearchText] = useState("");
     const [medicineToDelete, setMedicineToDelete] = useState(null);
 
+    console.log(medicineToDelete);
+
     const [showModalDelete, setShowModalDelete] = useState(false);
 
     const containerTableRef = useRef(null);
@@ -60,9 +62,9 @@ const Medicines = () => {
         setShowModalDelete(false);
     }
 
-    const handleDeleteMedicine = (id) =>{
+    const handleDeleteMedicine = () =>{
         handleHiddenModalDelete();
-        dispatch(deleteMedicine(id));
+        dispatch(deleteMedicine(medicineToDelete.id));
     }
 
     const handleFetchMoreMedicines = () => {

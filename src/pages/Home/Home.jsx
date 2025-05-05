@@ -31,6 +31,8 @@ const Home = () => {
 
   const { loading, medicinesItems, page, sort } = useSelector(state => state.medicineItem);
 
+  console.log(medicinesItems);
+
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(null);
 
