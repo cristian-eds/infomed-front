@@ -33,8 +33,6 @@ const Medicines = () => {
     const [searchText, setSearchText] = useState("");
     const [medicineToDelete, setMedicineToDelete] = useState(null);
 
-    console.log(medicineToDelete);
-
     const [showModalDelete, setShowModalDelete] = useState(false);
 
     const containerTableRef = useRef(null);

@@ -3,25 +3,30 @@ import React, { useState } from 'react';
 import styles from './FilterHome.module.css';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { LuFilterX } from "react-icons/lu";
+import { useDispatch } from 'react-redux';
+import { resetFilters } from '../../slices/medicineItemSlice';
 
 const statusValues = {
-    "TODOS": 'todos',
+    "TODOS": 'TODOS',
     "PENDING": 'false',
     "CONCLUDED": 'true'
 }
 
 const FilterHome = ({ handleSearch, filters }) => {
 
+    const dispatch = useDispatch();
+
     const [showAccordionFilters, setShowAccordionFilters] = useState(false);
-    const [statusChecked, setStatusChecked] = useState(filters ? Object.keys(statusValues).find(chave => statusValues[chave] === filters.status) : "TODOS");
-    const [initialDate, setInitialDate] = useState(filters ? filters.initialDate : "");
-    const [finalDate, setFinalDate] = useState(filters ? filters.finalDate : "");
+    const [statusChecked, setStatusChecked] = useState(filters.conclusion);
+    const [initialDate, setInitialDate] = useState(filters.initialDate);
+    const [finalDate, setFinalDate] = useState(filters.finalDate);
 
     const handleFilter = (e) => {
         const filters = {
-            status: statusValues[statusChecked],
+            conclusion: statusValues[statusChecked],
             initialDate,
-            finalDate
+            finalDate,
+            actualPage: 0
         };
         handleSearch(e, filters)
     }
@@ -34,6 +39,7 @@ const FilterHome = ({ handleSearch, filters }) => {
         setInitialDate("");
         setFinalDate("");
         setStatusChecked("TODOS");
+        dispatch(resetFilters());
         handleSearch();
     }
 

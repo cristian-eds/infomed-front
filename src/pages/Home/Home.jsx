@@ -15,7 +15,7 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
 import NextMedicine from '../../components/NextMedicine/NextMedicine';
 
-import { changeFieldSort, changeTypeSort, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
+import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
 
 const titles = [
   { name: "Nome", field: "NAME" },
@@ -29,64 +29,36 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, medicinesItems, page, sort } = useSelector(state => state.medicineItem);
+  const { loading, medicinesItems, page, sort, filters } = useSelector(state => state.medicineItem);
 
-  console.log(medicinesItems);
-
-  const [search, setSearch] = useState("");
-  const [filters, setFilters] = useState(null);
+  const [search, setSearch] = useState(filters.name);
 
   const [showModal, setShowModal] = useState(false);
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
-  const [actualPage, setActualPage] = useState(0);
 
   const sizePage = 6;
 
   useEffect(() => {
-    const pagination = {
-      actualPage,
-      sizePage,
-      name: search
-    }
-    if (filters) {
-      pagination.initialDate = filters.initialDate;
-      pagination.finalDate = filters.finalDate;
-      pagination.status = filters.status;
-    }
-
-    dispatch(searchCustomMedicinesItemUser(pagination));
+    dispatch(searchCustomMedicinesItemUser(filters));
     return () => { }
-  }, [dispatch, actualPage, sizePage, filters, sort]);
+  }, [dispatch, filters, sort]);
+
+  console.log(filters);
 
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();
-    const pagination = generateDataAndPaginationToSearch(filtersParam);
-
     if (filtersParam) {
-      setFilters(filtersParam);
-    } else {
-      setFilters(null);
+      dispatch(changeValuesFilter(filtersParam));
+      return;
     }
 
-    dispatch(searchCustomMedicinesItemUser(pagination));
-  }
-
-  const generateDataAndPaginationToSearch = (filtersParam) => {
-    setActualPage(0);
-
-    const pagination = {
-      actualPage: 0,
-      sizePage,
-      name: search
+    const filterName = {
+      field: "name",
+      value: search
     }
+    dispatch(changeValueFieldFilter(filterName))
 
-    if (filtersParam) {
-      pagination.initialDate = filtersParam.initialDate;
-      pagination.finalDate = filtersParam.finalDate;
-      pagination.status = filtersParam.status;
-    }
-    return pagination;
   }
 
   const fillRowTable = (medicinesState) => {
@@ -134,7 +106,7 @@ const Home = () => {
               {medicinesItems.length > 0 && fillRowTable(medicinesItems)}
             </Table>
           </div>
-          <Pagination page={page} actualPage={actualPage} setActualPage={setActualPage} />
+          <Pagination page={page} />
         </>}
       </main>
     </>

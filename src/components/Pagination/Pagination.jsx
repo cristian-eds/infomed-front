@@ -2,14 +2,24 @@ import React from 'react'
 
 import styles from './Pagination.module.css'
 import PaginationButton from '../Button/PaginationButton';
+import { useDispatch } from 'react-redux';
+import { changeValueFieldFilter } from '../../slices/medicineItemSlice';
 
-const Pagination = ({ page, actualPage, setActualPage }) => {
+const Pagination = ({ page }) => {
+
+  const dispatch = useDispatch();
+
+  const actualPage = page.number;
 
   const first = page.number === 0;
   const last = page.number === page.totalPages - 1 || page.totalPages === 0;
 
   const handleAlterPage = (nextNumber) => {
-    setActualPage(nextNumber);
+    const nextPage = {
+      field: "actualPage",
+      value: nextNumber
+    }
+    dispatch(changeValueFieldFilter(nextPage));
   }
 
   const generateItemsNumbers = (initialNumber, finalNumber) => {

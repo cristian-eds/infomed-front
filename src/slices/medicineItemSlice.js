@@ -3,7 +3,20 @@ import { requestConfig } from "../utils/requests";
 
 const initialState = {
     medicinesItems: [],
-    page: {},
+    filters: {
+        name: "",
+        initialDate: "",
+        finalDate: "",
+        conclusion: "TODOS",
+        actualPage: 0,
+        sizePage: 6
+    },
+    page: {
+        number: 0,
+        size: 6,
+        totalElements: null,
+        totalPages: null
+    },
     sort: {
         fieldSort: "DAY_HOUR",
         typeSort: "ASC"
@@ -15,18 +28,21 @@ const initialState = {
 
 export const searchCustomMedicinesItemUser = createAsyncThunk(
     'medicineItems/searchCustomMedicinesItem',
-    async (pagination, {getState}) => {
+    async (pagination, { getState }) => {
         const config = requestConfig("GET");
-        let textFilter = "";
-        if (pagination.initialDate && pagination.finalDate) {
-            textFilter += "&initialDate=" + pagination.initialDate + "&finalDate=" + pagination.finalDate;
-        }
-        if (pagination.status && pagination?.status !== "TODOS") {
-            textFilter += "&conclusion=" + pagination.status;
-        }
+
         const sort = getState().medicineItem.sort;
-        const textSort = "&fieldSort=" + sort.fieldSort + "&typeSort="+ sort.typeSort;
-        const res = await fetch(`http://localhost:8080/medicine/item?name=${pagination.name}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}` + textFilter + textSort, config)
+        const textSort = new URLSearchParams(sort).toString();
+
+        const searchParam = new URLSearchParams();
+        for (const key in pagination) {
+            const value = pagination[key];
+            if (value !== '' && value !== null && value !== undefined) {
+                searchParam.append(key, value);
+            }
+        }
+
+        const res = await fetch(`http://localhost:8080/medicine/item?` + searchParam.toString() + "&" + textSort, config)
             .then(res => res.json());
 
         return res;
@@ -71,10 +87,10 @@ export const deleteMedicineItem = createAsyncThunk(
     'medicineItems/deleteMedicineItem',
     async (id) => {
         const config = requestConfig("DELETE");
-        const res = await fetch("http://localhost:8080/medicine/item/"+id, config)
+        const res = await fetch("http://localhost:8080/medicine/item/" + id, config)
             .then(res => res);
 
-        if(res.status === 204) {
+        if (res.status === 204) {
             return id;
         }
         return null;
@@ -104,6 +120,22 @@ export const medicineItemSlice = createSlice({
         },
         changeTypeSort: (state) => {
             state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
+        },
+        changeValueFieldFilter: (state, action) => {
+            state.filters[action.payload.field] = action.payload.value;
+        },
+        changeValuesFilter: (state, action) => {
+            state.filters = { ...state.filters, ...action.payload }
+        },
+        resetFilters: (state) => {
+            state.filters = {
+                name: "",
+                initialDate: "",
+                finalDate: "",
+                conclusion: "TODOS",
+                actualPage: 0,
+                sizePage: 6
+            }
         }
     },
     extraReducers: (builder) => {
@@ -112,9 +144,9 @@ export const medicineItemSlice = createSlice({
                 state.loading = true;
             })
             .addCase(searchCustomMedicinesItemUser.fulfilled, (state, action) => {
-                state.loading = false;
                 state.medicinesItems = action.payload.content;
                 state.page = action.payload.page;
+                state.loading = false;
             })
             .addCase(searchCustomMedicinesItemUser.rejected, (state, action) => {
                 state.loading = false;
@@ -124,7 +156,6 @@ export const medicineItemSlice = createSlice({
                 state.loading = true;
             })
             .addCase(alterStatusMedicineItem.fulfilled, (state, action) => {
-                state.loading = false;
                 state.medicinesItems = state.medicinesItems.map(medicine => {
                     if (medicine.medicineItemId === action.payload.id) {
                         return {
@@ -135,6 +166,7 @@ export const medicineItemSlice = createSlice({
                     }
                     return medicine;
                 });
+                state.loading = false;
             })
             .addCase(alterStatusMedicineItem.rejected, (state) => {
                 state.loading = false;
@@ -174,7 +206,7 @@ export const medicineItemSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(deleteMedicineItem.fulfilled, (state, action) => {
-                if(action.payload) {
+                if (action.payload) {
                     state.medicinesItems = state.medicinesItems.filter(
                         medicine => medicine.medicineItemId !== action.payload
                     )
@@ -186,7 +218,10 @@ export const medicineItemSlice = createSlice({
 
 export const {
     changeFieldSort,
-    changeTypeSort
+    changeTypeSort,
+    changeValueFieldFilter,
+    changeValuesFilter,
+    resetFilters
 } = medicineItemSlice.actions;
 
 export default medicineItemSlice.reducer;
