@@ -85,12 +85,13 @@ export const updateMedicineItem = createAsyncThunk(
 
 export const deleteMedicineItem = createAsyncThunk(
     'medicineItems/deleteMedicineItem',
-    async (id) => {
+    async (id, {getState, dispatch}) => {
         const config = requestConfig("DELETE");
         const res = await fetch("http://localhost:8080/medicine/item/" + id, config)
             .then(res => res);
 
         if (res.status === 204) {
+            dispatch(searchCustomMedicinesItemUser(getState().medicineItem.filters));
             return id;
         }
         return null;

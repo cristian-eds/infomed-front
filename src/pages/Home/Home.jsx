@@ -44,8 +44,6 @@ const Home = () => {
     return () => { }
   }, [dispatch, filters, sort]);
 
-  console.log(filters);
-
   const handleSearch = (e, filtersParam) => {
     e && e.preventDefault();
     if (filtersParam) {
