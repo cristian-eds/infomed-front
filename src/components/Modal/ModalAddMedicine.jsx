@@ -7,12 +7,11 @@ import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 
-import { createMedicine } from '../../slices/medicineItemSlice'
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 
-const ModalAddMedicine = ({ showModal, setShowModal, dispatch }) => {
+const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch,dispatch }) => {
 
     const [name, setName] = useState("");
     const [frequency, setFrequency] = useState("");
@@ -28,7 +27,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, dispatch }) => {
             initialDateTime: convertToPatternLocalDateTime(initialDate)
         }
 
-        dispatch(createMedicine(newMedicine));
+        dispatch(actionToDispatch(newMedicine));
         setShowModal(false);
     }
 

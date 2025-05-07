@@ -59,12 +59,16 @@ export const deleteMedicine = createAsyncThunk(
 
 export const createMedicine = createAsyncThunk(
     'medicine/createMedicine',
-    async (data) => {
+    async (data, {getState, dispatch}) => {
         const config = requestConfig("POST", data);
         const res = await fetch("http://localhost:8080/medicine", config)
-            .then(res => res.json())
+            .then(res => res)
             .catch(err => err);
-        return res;
+
+        if(res.status === 201) {
+            dispatch(searchMedicinesUser(getState().medicine.filters));
+        }
+        return res.json();
     }
 )
 
@@ -122,7 +126,7 @@ export const medicineSlice = createSlice({
                 state.loading = true;
             })
             .addCase(createMedicine.fulfilled, (state, action) => {
-                console.log(action.payload)
+                state.loading = false;
             })
     }
 })

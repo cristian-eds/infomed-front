@@ -8,7 +8,7 @@ import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { changeFieldSort, changeTypeSort, changeValueFieldFilter, deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { changeFieldSort, changeTypeSort, changeValueFieldFilter, createMedicine, deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import { formatDate } from '../../utils/formatterDates';
 
@@ -140,7 +140,7 @@ const Medicines = () => {
 
     return (
         <main className="container_main">
-            <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} dispatch={dispatch} />
+            <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} actionToDispatch={createMedicine} dispatch={dispatch} />
             <header className={styles.header_medicines}>
                 <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading}/>
             </header>

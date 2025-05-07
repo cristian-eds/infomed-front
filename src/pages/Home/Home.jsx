@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
-import { FaPlus } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,9 +13,9 @@ import Pagination from '../../components/Pagination/Pagination';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import FilterHome from '../../components/FilterHome/FilterHome';
 import NextMedicine from '../../components/NextMedicine/NextMedicine';
-
-import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
 import ButtonPlus from '../../components/Button/ButtonPlus';
+
+import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, createMedicine, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
 
 const titles = [
   { name: "Nome", field: "NAME" },
@@ -87,7 +86,7 @@ const Home = () => {
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} dispatch={dispatch} />
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} actionToDispatch={createMedicine}  dispatch={dispatch} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
 
       <main className="container_main">
