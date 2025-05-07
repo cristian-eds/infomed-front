@@ -50,13 +50,18 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
 )
 
 export const createMedicine = createAsyncThunk(
-    'medicines/createMedicine',
-    async (data) => {
+    'medicineItems/createMedicine',
+    async (data, {getState, dispatch}) => {
         const config = requestConfig("POST", data);
-        const res = await fetch("http://localhost:8080/medicine", config)
-            .then(res => res.json())
-            .catch(err => err);
-        return res;
+        const res = await fetch("http://localhost:8080/medicine/item", config)
+            .then(res => res)
+            .catch(err => err)
+
+        if(res.status === 201) {
+            dispatch(searchCustomMedicinesItemUser(getState().medicineItem.filters));
+        }
+
+        return res.json();
     }
 )
 
