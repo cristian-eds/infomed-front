@@ -16,6 +16,7 @@ import FilterHome from '../../components/FilterHome/FilterHome';
 import NextMedicine from '../../components/NextMedicine/NextMedicine';
 
 import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
+import ButtonPlus from '../../components/Button/ButtonPlus';
 
 const titles = [
   { name: "Nome", field: "NAME" },
@@ -97,7 +98,7 @@ const Home = () => {
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
             <FilterHome handleSearch={handleSearch} filters={filters} />
-            <button onClick={() => setShowModal(true)}><FaPlus /></button>
+            <ButtonPlus action={() => setShowModal(true)}/>
           </div>
           <div className={styles.container_table}>
             <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>

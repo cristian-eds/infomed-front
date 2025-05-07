@@ -6,6 +6,11 @@
     align-items: center;
 }
 
+.container_flex {
+    display: flex;
+    justify-content: space-between;
+}
+
 .header_medicines form input {
     width: 45em;
 }

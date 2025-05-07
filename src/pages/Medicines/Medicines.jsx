@@ -13,6 +13,9 @@ import { changeFieldSort, changeTypeSort, deleteMedicine, fetchMoreMedicinesUser
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
+import { FaPlus } from 'react-icons/fa';
+import ButtonPlus from '../../components/Button/ButtonPlus';
+import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 const titles = [
     {name: "Nome", field: "name"}, 
@@ -34,6 +37,7 @@ const Medicines = () => {
     const [medicineToDelete, setMedicineToDelete] = useState(null);
 
     const [showModalDelete, setShowModalDelete] = useState(false);
+    const [showModalNewMedicine, setShowModalNewMedicine] = useState(false);
 
     const containerTableRef = useRef(null);
 
@@ -147,12 +151,17 @@ const Medicines = () => {
 
     return (
         <main className="container_main">
+            <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} dispatch={dispatch} />
             <header className={styles.header_medicines}>
                 <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading}/>
             </header>
             <div>
                 {loading ? <p>Loading...</p> : <>
-                    <h3>Histórico medicamentos...</h3>
+                    
+                    <div className={styles.container_flex}>
+                        <h3>Histórico medicamentos...</h3>
+                        <ButtonPlus action={() => setShowModalNewMedicine(true)}/>
+                    </div>
                     <div className={styles.container_table} ref={containerTableRef}>
                         <Table titles={titles} sort={sort} handleSort={handleSort}>
                             {medicines && generateRowsTableMedicine(medicines)}
