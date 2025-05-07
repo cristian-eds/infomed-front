@@ -8,12 +8,11 @@ import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
-import { changeFieldSort, changeTypeSort, deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
+import { changeFieldSort, changeTypeSort, changeValueFieldFilter, deleteMedicine, fetchMoreMedicinesUser, searchMedicinesUser } from '../../slices/medicineSlice';
 
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
-import { FaPlus } from 'react-icons/fa';
 import ButtonPlus from '../../components/Button/ButtonPlus';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
@@ -30,7 +29,7 @@ const Medicines = () => {
 
     const dispatch = useDispatch();
     
-    const { loading, sort, medicines, medicinePage } = useSelector(state => state.medicine);
+    const { loading, sort, medicines, filters, medicinePage } = useSelector(state => state.medicine);
 
     const [actualPage, setActualPage] = useState(0);
     const [searchText, setSearchText] = useState("");
@@ -42,13 +41,8 @@ const Medicines = () => {
     const containerTableRef = useRef(null);
 
     useEffect(() => {
-        const pagination = {
-            actualPage: 0,
-            sizePage: '6',
-            search: searchText
-        }
-        dispatch(searchMedicinesUser(pagination));
-    }, [dispatch])
+        dispatch(searchMedicinesUser(filters));
+    }, [dispatch, filters])
 
     useEffect(() => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
@@ -80,12 +74,7 @@ const Medicines = () => {
 
     const handleSearchMedicines = (e) => {
         e.preventDefault();
-        const pagination = {
-            actualPage: 0,
-            sizePage: 6,
-            search: searchText
-        }
-        dispatch(searchMedicinesUser(pagination))
+       dispatch(changeValueFieldFilter({field:"name", value: searchText }))
     }
 
     const handleSort = (field) => {

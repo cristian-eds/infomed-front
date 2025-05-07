@@ -5,15 +5,25 @@ const initialState = {
     medicines: [],
     loading: false,
     error: false,
-    medicinePage: {},
+    filters: {
+        name: "",
+        actualPage: 0,
+        sizePage: 6
+    },
+    medicinePage: {
+        number: 0,
+        size: 6,
+        totalElements: null,
+        totalPages: null
+    },
     sort: {
         fieldSort: "registrationDate",
-        typeSort: "ASC"
+        typeSort: "DESC"
     }
 }
 
 export const fetchMoreMedicinesUser = createAsyncThunk(
-    'medicines/fetchMoreMedicines',
+    'medicine/fetchMoreMedicines',
     async (pagination) => {
         const config = requestConfig("GET");
         const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
@@ -24,10 +34,10 @@ export const fetchMoreMedicinesUser = createAsyncThunk(
 )
 
 export const searchMedicinesUser = createAsyncThunk(
-    'medicines/searchMedicines',
-    async (pagination) => {
+    'medicine/searchMedicines',
+    async (filters) => {
         const config = requestConfig("GET");
-        const res = await fetch(`http://localhost:8080/medicine?name=${pagination.search}&actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+        const res = await fetch(`http://localhost:8080/medicine?name=${filters.name}&actualPage=${filters.actualPage}&sizePage=${filters.sizePage}`, config)
             .then(res => res.json());
 
         return res;
@@ -35,7 +45,7 @@ export const searchMedicinesUser = createAsyncThunk(
 )
 
 export const deleteMedicine = createAsyncThunk(
-    'medicines/deleteMedicine',
+    'medicine/deleteMedicine',
     async (id) => {
         const config = requestConfig("DELETE");
         const res = await fetch("http://localhost:8080/medicine/" + id, config)
@@ -44,6 +54,17 @@ export const deleteMedicine = createAsyncThunk(
         if (res.status == 200) return id;
 
         return 0;
+    }
+)
+
+export const createMedicine = createAsyncThunk(
+    'medicine/createMedicine',
+    async (data) => {
+        const config = requestConfig("POST", data);
+        const res = await fetch("http://localhost:8080/medicine", config)
+            .then(res => res.json())
+            .catch(err => err);
+        return res;
     }
 )
 
@@ -57,7 +78,10 @@ export const medicineSlice = createSlice({
         },
         changeTypeSort: (state) => {
             state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
-        }
+        },
+        changeValueFieldFilter: (state, action) => {
+            state.filters[action.payload.field] = action.payload.value;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -94,12 +118,19 @@ export const medicineSlice = createSlice({
                 )
                 state.loading = false;
             })
+            .addCase(createMedicine.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createMedicine.fulfilled, (state, action) => {
+                console.log(action.payload)
+            })
     }
 })
 
 export const {
     changeFieldSort,
-    changeTypeSort
+    changeTypeSort,
+    changeValueFieldFilter
 } = medicineSlice.actions;
 
 export default medicineSlice.reducer;
