@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getNextMedicineItem } from '../../slices/medicineItemSlice';
 import { differenceInMinutes } from 'date-fns';
 
-const NextMedicine = ({medicinesItems}) => {
+import ModalEditMedicineItem from '../Modal/ModalEditMedicineItem';
+
+const NextMedicine = ({ medicinesItems }) => {
 
     const dispatch = useDispatch();
 
-    const date = new Date()
+    const date = new Date();
+    const [showModalEditItem, setShowModalEditItem] = useState(false);
 
     const { nextMedicineItem } = useSelector(state => state.medicineItem);
+
+    const customNextMedicineItem = medicinesItems && medicinesItems.find(
+        medicineItem =>  medicineItem.medicineItemId === nextMedicineItem.id
+    );
 
     useEffect(() => {
         dispatch(getNextMedicineItem());
@@ -20,9 +28,9 @@ const NextMedicine = ({medicinesItems}) => {
         const laterDate = new Date(medicine.dayHour);
         const minutesDiff = differenceInMinutes(laterDate, date);
         if (minutesDiff <= 60) {
-            textToShow = `Próximo medicamento em ${minutesDiff} minutos`;
+            textToShow = `Próximo medicamento: ${nextMedicineItem.name} em ${minutesDiff} minutos`;
         } else if (minutesDiff > 60) {
-            textToShow = `Próximo medicamento em ${calculateTimeForNext(minutesDiff)}`;
+            textToShow = `Próximo medicamento: ${nextMedicineItem.name} em ${calculateTimeForNext(minutesDiff)}`;
         }
         return textToShow;
     }
@@ -38,10 +46,15 @@ const NextMedicine = ({medicinesItems}) => {
 
     return (
         <div>
+            {customNextMedicineItem &&  <ModalEditMedicineItem dispatch={dispatch} medicine={customNextMedicineItem} showModal={showModalEditItem} setCloseModal={()=> setShowModalEditItem(false)}/> }
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
             {Object.keys(nextMedicineItem).length > 0 ?
-                <p>{verifyTimeToNextMedicine(nextMedicineItem)}</p>: 
-                <p>Não há nenhum próximo medicamento...</p> }
+                <div onClick={() => setShowModalEditItem(true)} style={{cursor: 'pointer'}}>
+                    <p>{verifyTimeToNextMedicine(nextMedicineItem)}</p>
+
+                </div>
+                :
+                <p>Não há nenhum próximo medicamento...</p>}
         </div>
     )
 }
