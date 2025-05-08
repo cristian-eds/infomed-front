@@ -8,7 +8,7 @@
 
 .container_login h2 {
     text-align: left;
-    padding: 2em .5em 0;
+    padding: 1.5em .5em 0;
     font-size: 1.7em;
 }
 
@@ -17,6 +17,16 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+
+.img {
+    text-align: center;
+}
+
+.img img {
+    background-color: rgb(224, 233, 222);
+    border-radius: 60%;
+    height: 180px;
 }
 
 .login > input[type="text"], .login input[type="password"] {

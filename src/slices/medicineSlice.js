@@ -125,7 +125,7 @@ export const medicineSlice = createSlice({
             .addCase(createMedicine.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(createMedicine.fulfilled, (state, action) => {
+            .addCase(createMedicine.fulfilled, (state) => {
                 state.loading = false;
             })
     }

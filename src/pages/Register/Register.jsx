@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 
-import logo from '../../assets/react.svg'
+import logo from '../../assets/Infomed.png'
 
 import styles from '../Login/Login.module.css'
 import ButtonGroup from '../../components/Button/ButtonGroup';
@@ -52,7 +52,7 @@ const Register = ({ register, loading }) => {
 
     return (
         <div className={styles.container_login}>
-            <div className="img">
+            <div className={styles.img}>
                 <img src={logo} alt="Image Logo" />
             </div>
             <h2>Register</h2>

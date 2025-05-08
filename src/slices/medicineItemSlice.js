@@ -70,9 +70,10 @@ export const alterStatusMedicineItem = createAsyncThunk(
     async (id) => {
         const config = requestConfig("PUT");
         const res = await fetch("http://localhost:8080/medicine/item/" + id + "/status", config)
-            .then(res => res.json())
+            .then(res => res)
             .catch(err => err);
-        return res;
+
+        return res.json();
     }
 )
 
