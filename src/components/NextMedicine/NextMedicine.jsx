@@ -15,10 +15,6 @@ const NextMedicine = ({ medicinesItems }) => {
 
     const { nextMedicineItem } = useSelector(state => state.medicineItem);
 
-    const customNextMedicineItem = medicinesItems && medicinesItems.find(
-        medicineItem =>  medicineItem.medicineItemId === nextMedicineItem.id
-    );
-
     useEffect(() => {
         dispatch(getNextMedicineItem());
     }, [dispatch, medicinesItems])
@@ -46,7 +42,7 @@ const NextMedicine = ({ medicinesItems }) => {
 
     return (
         <div>
-            {customNextMedicineItem &&  <ModalEditMedicineItem dispatch={dispatch} medicine={customNextMedicineItem} showModal={showModalEditItem} setCloseModal={()=> setShowModalEditItem(false)}/> }
+            {nextMedicineItem && <ModalEditMedicineItem dispatch={dispatch} medicine={nextMedicineItem} showModal={showModalEditItem} setCloseModal={()=> setShowModalEditItem(false)}/>}
             <h2>Hoje: {date && date.toLocaleDateString()}</h2>
             {Object.keys(nextMedicineItem).length > 0 ?
                 <div onClick={() => setShowModalEditItem(true)} style={{cursor: 'pointer'}}>

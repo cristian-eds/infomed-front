@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from './Modal'
 
 import styles from './Modal.module.css'
@@ -20,6 +20,12 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
     const [conclusionDayHour, setConclusionDayHour] = useState(medicine.conclusionDayHour ? format(medicine.conclusionDayHour, 'yyyy-MM-dd hh:mm') : "");
 
     const [showModalDelete, setShowModalDelete] = useState(false);
+
+
+    useEffect(() => {
+        setDayHour(medicine.dayHour);
+        setConclusion(medicine.conclusion)
+    },[medicine])
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -70,7 +76,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             <div className={styles.form_row}>
                                 <label htmlFor="nome">Data e hora:</label>
                                 <div className={styles.input_group}>
-                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} />
+                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} disabled />
                                 </div>
                             </div>
 
