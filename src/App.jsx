@@ -13,7 +13,7 @@ import Profile from './pages/Profile/Profile';
 
 function App() {
 
-  const {user, loading , error, login, logout, register} = useContext(AuthContext);
+  const {user, loading , role, error, login, logout, register} = useContext(AuthContext);
  
   return (
   <BrowserRouter>

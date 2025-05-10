@@ -8,12 +8,12 @@
 
 .container_login h2 {
     text-align: left;
-    padding: 1.5em .5em 0;
+    padding: 1em .5em 0;
     font-size: 1.7em;
 }
 
 .login {
-    padding-top: 2em;
+    padding-top: 1.5em;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -26,11 +26,11 @@
 .img img {
     background-color: rgb(224, 233, 222);
     border-radius: 60%;
-    height: 180px;
+    height: 150px;
 }
 
-.login > input[type="text"], .login input[type="password"] {
-    height: 2.5em;
+.login > input[type="text"], .login input[type="password"], select {
+    height: 2.2em;
     border-bottom: 1px solid white;
     border-radius: .3em;
     padding: .2em .7em;
@@ -45,6 +45,35 @@
     padding: 0;
 }
 
+.roles {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: .4em;
+    justify-content: center;
+}
+
+.roles_itens {
+    border: 1px solid black;
+    border-radius: .3em;
+    width: 35%;
+    text-align: center;
+    cursor: pointer;
+    padding: .2em .1em;
+    background-color: rgb(151, 151, 151);
+}
+
+.roles_itens:first-child {
+    border-right:  none;
+    border-radius: .3em 0 0 .3em;
+}
+
+.roles_itens:last-child {
+    border-radius: 0 .3em .3em 0;
+}
+
+.roles_itens__active {
+    background-color: green;
+}
 
 
 @media (max-width: 1200px) {

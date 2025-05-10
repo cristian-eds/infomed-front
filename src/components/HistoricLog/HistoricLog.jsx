@@ -96,7 +96,7 @@ const HistoricLog = () => {
                 {logs && generateRowsTableLogs()}
             </Table>
             <div className={styles.historic_footer}>
-                {page.totalPages - 1 == actualPage ?
+                {page.totalPages - 1 == actualPage || logs.length === 0?
                     <p>Todos elementos carregados...</p> :
                     <>
                         <p>Ver mais...</p>

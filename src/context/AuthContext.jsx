@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
+import { requestConfig } from "../utils/requests";
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,8 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [role, setRole] = useState("");
+    
 
     useEffect(() => {
         try {
@@ -16,6 +19,7 @@ export const AuthProvider = ({ children }) => {
             var payload = jwtDecode(token);
             if (token && payload.exp > Date.now() / 1000) {
                 setUser(payload.sub);
+                setRole(payload.role);
             } else {
                 localStorage.removeItem("token");
             }
@@ -27,13 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         setLoading(true);
-        const config = {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
+        const config = requestConfig("POST", userData);
         try {
             const res = await fetch(url + 'auth/login', config)
                 .then(res => res.json());
@@ -53,13 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         setLoading(true);
-        const config = {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
+        const config = requestConfig("POST", userData);
 
         try {
             const res = await fetch(url + 'users', config)
@@ -76,11 +68,12 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
+        setRole(null);
         localStorage.removeItem("token");
     }
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+        <AuthContext.Provider value={{ user, role, loading, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     )

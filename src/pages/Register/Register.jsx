@@ -14,6 +14,8 @@ const Register = ({ register, loading }) => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState("USER");
+
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
     const [redirecting, setRedirecting] = useState(false);
@@ -29,10 +31,16 @@ const Register = ({ register, loading }) => {
             return;
         }
 
+        if(password.length <= 3) {
+            setError("Password must be at least four characters long.")
+            return;
+        }
+
         const userData = {
             email,
             name,
-            password
+            password,
+            role
         }
 
         const res = await register(userData);
@@ -57,6 +65,10 @@ const Register = ({ register, loading }) => {
             </div>
             <h2>Register</h2>
             <form className={styles.login} onSubmit={handleRegister}>
+                <div className={styles.roles}>
+                    <div className={`${role === "USER" && styles.roles_itens__active} ${styles.roles_itens}`} onClick={() => setRole("USER")}>Usuário normal</div>
+                    <div className={`${role === "ADMIN" && styles.roles_itens__active} ${styles.roles_itens}`} onClick={() => setRole("ADMIN")}>Usuário administrador</div>
+                </div>
                 <input type="text" name="name" id="name" placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} />
                 <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" name="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
