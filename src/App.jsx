@@ -10,6 +10,7 @@ import Home from './pages/Home/Home';
 import Medicines from './pages/Medicines/Medicines';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
+import Person from './pages/Person/Person';
 
 function App() {
 
@@ -17,13 +18,14 @@ function App() {
  
   return (
   <BrowserRouter>
-    {user &&  <Navbar logout={logout} />}
+    {user &&  <Navbar logout={logout} role={role} />}
     <Routes>
       <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
       <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
       <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
       <Route path='/profile' element={!user ? <Login login={login}/> : <Profile userContext={user}/> }/>
+      <Route path='/person' element={!user ? <Login login={login} /> : role === "ADMIN" && <Person />} />
     </Routes>
   </BrowserRouter>
   )
