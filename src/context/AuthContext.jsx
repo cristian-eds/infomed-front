@@ -38,6 +38,8 @@ export const AuthProvider = ({ children }) => {
 
             if (res.token) {
                 localStorage.setItem("token", res.token);
+                var payload = jwtDecode(res.token);
+                setRole(payload.role);
                 setUser(userData.email);
             } else {
                 return res;
