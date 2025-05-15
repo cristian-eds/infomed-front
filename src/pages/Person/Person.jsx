@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import InputSearch from '../../components/InputSearch/InputSearch'
 import ButtonPlus from '../../components/Button/ButtonPlus'
@@ -7,6 +7,8 @@ import Table from '../../components/Table/Table'
 import { MdDelete, MdEdit } from 'react-icons/md'
 
 import styles from './Person.module.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPerson } from '../../slices/personSlice'
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -18,15 +20,19 @@ const titles = [
 
 const Person = () => {
 
-    const sort = {
-        fieldSort: "name",
-        typeSort: "ASC"
-    }
+    const dispatch = useDispatch();
+
+    const { personList, sort, loading} = useSelector(state => state.person); 
+
+    useEffect(() => {
+        dispatch(fetchPerson());
+    }, [dispatch, sort])
+
 
     const generateItems = () => {
-        return (
-            <tr>
-                <td>Fulano</td>
+        return personList.map((person) => (
+            <tr key={person.id}>
+                <td>{person.name}</td>
                 <td>4</td>
                 <td>2</td>
                 <td>13/05/2025</td>
@@ -35,8 +41,10 @@ const Person = () => {
                     <MdDelete size={20} />
                 </td>
             </tr>
-        )
+        ) )
     }
+
+    if(loading) return <p>Carregando...</p>
 
     return (
         <div className="container_main">

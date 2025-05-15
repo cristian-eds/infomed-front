@@ -4,7 +4,8 @@
 
 .search_input input {
     height: 3em;
-    width: 22em;
+    width: 100%;
+    min-width: 22em;
     border-radius: .7em;
     padding: .5em .7em;
 }

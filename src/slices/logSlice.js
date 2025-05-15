@@ -9,7 +9,7 @@ const initialState = {
     success: null,
     sort: {
         fieldSort: "dateHour",
-        typeSort: "ASC"
+        typeSort: "DESC"
     }
 }
 
