@@ -74,7 +74,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                         </header>
                         <form className={styles.medication_form} onSubmit={handleEdit}>
                             <div className={styles.form_row}>
-                                <label htmlFor="nome">Data e hora:</label>
+                                <label htmlFor="dayHour">Data e hora:</label>
                                 <div className={styles.input_group}>
                                     <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} disabled />
                                 </div>
@@ -89,7 +89,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             </div>
 
                             <div className={styles.form_row}>
-                                <label htmlFor="nome">Data e hora que foi tomado:</label>
+                                <label htmlFor="conclusionDayHour">Data e hora que foi tomado:</label>
                                 <div className={styles.input_group}>
                                     <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
                                 </div>

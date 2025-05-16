@@ -80,7 +80,8 @@
 
 .input_group input[type="text"],
 .input_group input[type="number"],
-.input_group input[type="datetime-local"] {
+.input_group input[type="datetime-local"],
+.input_group input[type="date"] {
     border: none;
     background-color: transparent;
     width: 100%;

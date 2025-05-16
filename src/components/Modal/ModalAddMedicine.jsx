@@ -43,16 +43,16 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch,dispatch }
 
                         <form className={styles.medication_form} onSubmit={handleSubmit}> 
                             <div className={styles.form_row}>
-                                <label htmlFor="nome">Nome:</label>
+                                <label htmlFor="name">Nome:</label>
                                 <div className={styles.input_group}>
-                                    <input type="text" id="nome" name="nome" value={name} onChange={(e) => setName(e.target.value)}/>
+                                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)}/>
                                 </div>
                             </div>
 
                             <div className={styles.form_row}>
-                                <label htmlFor="frequencia">Frequência:</label>
+                                <label htmlFor="frequence">Frequência:</label>
                                 <div className={styles.input_group}>
-                                    <input type="number" id="frequencia" name="frequencia" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
+                                    <input type="number" id="frequence" name="frequence" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
                                     <span className="unit">hrs</span>
                                 </div>
                             </div>

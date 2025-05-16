@@ -27,6 +27,10 @@ input {
   border: none;
 }
 
+input::placeholder {
+  color: #b3b0b0;
+}
+
 a {
   text-decoration: none;
 }
