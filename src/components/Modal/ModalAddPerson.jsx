@@ -7,6 +7,8 @@ import ArrowLeftButton from '../Button/ArrowLeftButton';
 import Button from '../Button/Button';
 import ButtonGroup from '../Button/ButtonGroup';
 
+import { createPerson } from '../../slices/personSlice';
+
 const ModalAddPerson = ({ setShowModal, dispatch }) => {
 
     const [name, setName] = useState("");
@@ -15,7 +17,13 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
 
     const handleConfirm = (e) => {
         e.preventDefault();
-
+        const data = {
+            name,
+            phone,
+            birthDate
+        }
+        dispatch(createPerson(data));
+        setShowModal(false);
     }
 
     return (
@@ -27,7 +35,7 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                         <h2 className={styles.modal_content_header_text}>Cadastrar Pessoa</h2>
                     </div>
                 </header>
-                <form className={styles.medication_form}>
+                <form className={styles.medication_form} onSubmit={handleConfirm}>
                     <div className={styles.form_row}>
                         <label htmlFor="name">Nome:</label>
                         <div className={styles.input_group}>
