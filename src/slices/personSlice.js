@@ -22,6 +22,18 @@ export const fetchPerson = createAsyncThunk(
     }
 )
 
+export const createPerson = createAsyncThunk(
+    'person/create',
+    async (data) => {
+        const config = requestConfig("POST", data);
+
+        const res = await fetch(`http://localhost:8080/person`, config)
+            .then(res => res.json());
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -34,6 +46,13 @@ export const personSlice = createSlice({
             .addCase(fetchPerson.fulfilled, (state, action) => {
                 state.loading = false;
                 state.personList = action.payload.content;
+            })
+            .addCase(createPerson.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createPerson.fulfilled, (state, action) => {
+                state.loading = false;
+                state.personList.push(action.payload);
             })
     }
 })
