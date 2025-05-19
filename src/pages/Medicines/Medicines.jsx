@@ -18,6 +18,7 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 
 const titles = [
     {name: "Nome", field: "name"}, 
+    {name: "Pessoa", field : "personName"},
     {name: "Data criação", field: "registrationDate"}, 
     {name: "Frequência",field: "frequencyHours"}, 
     {name:"Duração",field: "totalDays"}, 
@@ -31,12 +32,15 @@ const Medicines = () => {
     
     const { loading, sort, medicines, filters, medicinePage } = useSelector(state => state.medicine);
 
+    console.log(medicines);
+
     const [actualPage, setActualPage] = useState(0);
     const [searchText, setSearchText] = useState("");
     const [medicineToDelete, setMedicineToDelete] = useState(null);
 
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalNewMedicine, setShowModalNewMedicine] = useState(false);
+
 
     const containerTableRef = useRef(null);
 
@@ -126,6 +130,7 @@ const Medicines = () => {
         return listOrdened.map(medicine => (
             <tr key={medicine.id}>
                 <td>{medicine.name}</td>
+                <td>{medicine.person?.name}</td>
                 <td>{formatDate(medicine.registrationDate)}</td>
                 <td>{medicine.frequencyHours}/{medicine.frequencyHours} horas</td>
                 <td>{medicine.totalDays} dias</td>

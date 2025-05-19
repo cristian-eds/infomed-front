@@ -19,7 +19,8 @@ import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFi
 
 const titles = [
   { name: "Nome", field: "NAME" },
-  { name: "Número", field: "NUMBER" },
+  { name: "Pessoa", field: "PERSON" },
+  { name: "N°", field: "NUMBER" },
   { name: "Frequência", field: "FREQUENCE" },
   { name: "Horário", field: "DAY_HOUR" },
   { name: "Concluído", field: "CONCLUSION" },
@@ -86,7 +87,7 @@ const Home = () => {
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} actionToDispatch={createMedicine}  dispatch={dispatch} />
+      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} actionToDispatch={createMedicine} dispatch={dispatch} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
 
       <main className="container_main">
@@ -97,7 +98,7 @@ const Home = () => {
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
             <FilterHome handleSearch={handleSearch} filters={filters} />
-            <ButtonPlus action={() => setShowModal(true)}/>
+            <ButtonPlus action={() => setShowModal(true)} />
           </div>
           <div className={styles.container_table}>
             <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>

@@ -18,9 +18,12 @@ const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
         dispatch(alterStatusMedicineItem(medicine.medicineItemId));
     }
 
+    console.log(medicine);
+
     return (<>
         <tr >
             <td>{medicine.name}</td>
+            <td>{medicine.personName}</td>
             <td>{medicine.sequency}/{medicine.total}</td>
             <td>{medicine.frequency}/{medicine.frequency} horas</td>
             <td>{formatDate(medicine.dayHour)}</td>
