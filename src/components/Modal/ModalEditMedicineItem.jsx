@@ -11,6 +11,7 @@ import Button from '../Button/Button'
 import { deleteMedicineItem, updateMedicineItem } from '../../slices/medicineItemSlice'
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
+
 import ModalConfirmDelete from './ModalConfirmDelete'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
@@ -21,6 +22,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
 
     const [showModalDelete, setShowModalDelete] = useState(false);
 
+    console.log(medicine);
 
     useEffect(() => {
         setDayHour(medicine.dayHour);
@@ -73,6 +75,12 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             <DeleteButton actionClick={() => setShowModalDelete(true)}/>
                         </header>
                         <form className={styles.medication_form} onSubmit={handleEdit}>
+                            <div className={styles.form_row}>
+                                <label htmlFor="personName">Pessoa:</label>
+                                <div className={styles.input_group}>
+                                    <input type="text" id="personName" name="personName" value={medicine.personName} disabled />
+                                </div>
+                            </div>
                             <div className={styles.form_row}>
                                 <label htmlFor="dayHour">Data e hora:</label>
                                 <div className={styles.input_group}>

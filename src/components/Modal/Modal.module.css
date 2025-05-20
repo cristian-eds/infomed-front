@@ -71,6 +71,7 @@
     background-color: #1c8a25;
     border-radius: .4em;
     padding: .3em;
+    min-height: 40px;
 }
 
 .input_group input[type="checkbox"] {
