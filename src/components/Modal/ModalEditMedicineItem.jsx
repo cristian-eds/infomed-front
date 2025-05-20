@@ -22,7 +22,6 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
 
     const [showModalDelete, setShowModalDelete] = useState(false);
 
-    console.log(medicine);
 
     useEffect(() => {
         setDayHour(medicine.dayHour);

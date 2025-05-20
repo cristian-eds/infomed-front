@@ -15,6 +15,7 @@ import { formatDate } from '../../utils/formatterDates';
 import styles from './Medicines.module.css';
 import ButtonPlus from '../../components/Button/ButtonPlus';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
+import ModalEditMedicine from '../../components/Modal/ModalEditMedicine';
 
 const titles = [
     {name: "Nome", field: "name"}, 
@@ -37,9 +38,11 @@ const Medicines = () => {
     const [actualPage, setActualPage] = useState(0);
     const [searchText, setSearchText] = useState("");
     const [medicineToDelete, setMedicineToDelete] = useState(null);
+    const [medicineToEdit, setMedicineToEdit] = useState(null);
 
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalNewMedicine, setShowModalNewMedicine] = useState(false);
+    const [showModalEditMedicine, setShowModalEditMedicine] = useState(false);
 
 
     const containerTableRef = useRef(null);
@@ -65,6 +68,16 @@ const Medicines = () => {
     const handleDeleteMedicine = () =>{
         handleHiddenModalDelete();
         dispatch(deleteMedicine(medicineToDelete.id));
+    }
+
+    const handleShowModalEdit = (medicine) => {
+        setMedicineToEdit(medicine);
+        setShowModalEditMedicine(true);
+    }
+
+    const handleHiddenModalEdit = () => {
+        setMedicineToEdit(null);
+        setShowModalEditMedicine(false);
     }
 
     const handleFetchMoreMedicines = () => {
@@ -136,7 +149,7 @@ const Medicines = () => {
                 <td>{medicine.totalDays} dias</td>
                 <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly /></td>
                 <td>
-                    <MdEdit size={20}/>
+                    <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)}/>
                     <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)}/>
                 </td>
             </tr>
@@ -146,6 +159,7 @@ const Medicines = () => {
     return (
         <main className="container_main">
             <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} actionToDispatch={createMedicine} dispatch={dispatch} />
+            <ModalEditMedicine showModal={showModalEditMedicine} hiddenModal={handleHiddenModalEdit} medicine={medicineToEdit}/>
             <header className={styles.header_medicines}>
                 <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading}/>
             </header>
