@@ -13,6 +13,11 @@ import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 import ModalConfirmDelete from './ModalConfirmDelete'
+import ModalContent from './FormModal/ModalContent'
+import ModalHeader from './ModalHeader'
+import FormModal from './FormModal/FormModal'
+import FormModalRow from './FormModal/FormModalRow'
+import FormInputGroup from './FormModal/FormInputGroup'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
 
@@ -26,7 +31,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
     useEffect(() => {
         setDayHour(medicine.dayHour);
         setConclusion(medicine.conclusion)
-    },[medicine])
+    }, [medicine])
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -64,50 +69,51 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
         <>
             {showModal && medicine && (
                 < Modal >
-                    <div className={styles.modal_content}>
-                        <header className={styles.modal_content_header}>
+                    <ModalContent>
+                        <ModalHeader>
                             <ArrowLeftButton actionClick={() => setCloseModal()} />
                             <div>
                                 <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                                 <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
                             </div>
-                            <DeleteButton actionClick={() => setShowModalDelete(true)}/>
-                        </header>
-                        <form className={styles.medication_form} onSubmit={handleEdit}>
-                            <div className={styles.form_row}>
+                            <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                        </ModalHeader>
+                        <FormModal action={handleEdit}>
+                            <FormModalRow>
                                 <label htmlFor="personName">Pessoa:</label>
-                                <div className={styles.input_group}>
+                                <FormInputGroup>
                                     <input type="text" id="personName" name="personName" value={medicine.personName} disabled />
-                                </div>
-                            </div>
-                            <div className={styles.form_row}>
+                                </FormInputGroup>
+                            </FormModalRow>
+                            <FormModalRow>
                                 <label htmlFor="dayHour">Data e hora:</label>
-                                <div className={styles.input_group}>
+                                <FormInputGroup>
                                     <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} disabled />
-                                </div>
-                            </div>
+                                </FormInputGroup>
+                            </FormModalRow>
 
-                            <div className={styles.form_row}>
+                            <FormModalRow>
                                 <label htmlFor="frequencia">Concluído:</label>
-                                <div className={styles.input_group}>
+                                <FormInputGroup>
                                     <input type="checkbox" name="conclusion" id="conclusion" checked={conclusion} onChange={(e) => handleAlterConclusion(e.target.checked)} />
                                     <span className="unit"></span>
-                                </div>
-                            </div>
+                                </FormInputGroup>
+                            </FormModalRow>
 
-                            <div className={styles.form_row}>
+                            <FormModalRow>
                                 <label htmlFor="conclusionDayHour">Data e hora que foi tomado:</label>
-                                <div className={styles.input_group}>
+                                <FormInputGroup>
                                     <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
-                                </div>
-                            </div>
+                                </FormInputGroup>
+                            </FormModalRow>
 
                             <ButtonGroup>
                                 <Button value="Confirmar" type="submit" variant="button_confirm" />
                                 <Button value="Cancelar" type="button" onClick={() => setCloseModal()} variant="button_cancel" />
                             </ButtonGroup>
-                        </form>
-                    </div>
+                        </FormModal>
+                    </ModalContent>
+
                     {showModalDelete &&
                         <ModalConfirmDelete
                             object={medicine}
