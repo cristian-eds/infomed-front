@@ -4,6 +4,7 @@ import { requestConfig } from "../utils/requests";
 const initialState = {
     medicines: [],
     loading: false,
+    success: false,
     error: false,
     filters: {
         name: "",
@@ -72,6 +73,17 @@ export const createMedicine = createAsyncThunk(
     }
 )
 
+export const updateMedicine = createAsyncThunk(
+    'medicine/updateMedicine',
+    async (data) => {
+        const config = requestConfig("PUT",data);
+        const res = await fetch("http://localhost:8080/medicine/" + data.id,config)
+            .then(res=>res)
+
+        return res.json();
+    }
+)
+
 export const medicineSlice = createSlice({
     name: 'medicine',
     initialState,
@@ -86,6 +98,9 @@ export const medicineSlice = createSlice({
         changeValueFieldFilter: (state, action) => {
             state.filters[action.payload.field] = action.payload.value;
         },
+        resetSuccess: (state) => {
+            state.success = false;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -128,13 +143,25 @@ export const medicineSlice = createSlice({
             .addCase(createMedicine.fulfilled, (state) => {
                 state.loading = false;
             })
+            .addCase(updateMedicine.fulfilled, (state, action) => {
+                state.medicines = state.medicines.map(
+                    medicine => {
+                        if(medicine.id === action.payload.id) {
+                            return action.payload;
+                        }
+                        return medicine;
+                    }
+                )
+                state.success = true;
+            })
     }
 })
 
 export const {
     changeFieldSort,
     changeTypeSort,
-    changeValueFieldFilter
+    changeValueFieldFilter,
+    resetSuccess
 } = medicineSlice.actions;
 
 export default medicineSlice.reducer;
