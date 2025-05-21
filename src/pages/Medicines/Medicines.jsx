@@ -18,22 +18,20 @@ import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import ModalEditMedicine from '../../components/Modal/ModalEditMedicine';
 
 const titles = [
-    {name: "Nome", field: "name"}, 
-    {name: "Pessoa", field : "personName"},
-    {name: "Data criação", field: "registrationDate"}, 
-    {name: "Frequência",field: "frequencyHours"}, 
-    {name:"Duração",field: "totalDays"}, 
-    {name:"Concluído",field: "conclusion"}, 
-    {name:"Ações",}
+    { name: "Nome", field: "name" },
+    { name: "Pessoa", field: "personName" },
+    { name: "Data criação", field: "registrationDate" },
+    { name: "Frequência", field: "frequencyHours" },
+    { name: "Duração", field: "totalDays" },
+    { name: "Concluído", field: "conclusion" },
+    { name: "Ações", }
 ]
 
 const Medicines = () => {
 
     const dispatch = useDispatch();
-    
-    const { loading, sort, medicines, filters, medicinePage } = useSelector(state => state.medicine);
 
-    console.log(medicines);
+    const { loading, sort, medicines, filters, medicinePage, success } = useSelector(state => state.medicine);
 
     const [actualPage, setActualPage] = useState(0);
     const [searchText, setSearchText] = useState("");
@@ -44,7 +42,6 @@ const Medicines = () => {
     const [showModalNewMedicine, setShowModalNewMedicine] = useState(false);
     const [showModalEditMedicine, setShowModalEditMedicine] = useState(false);
 
-
     const containerTableRef = useRef(null);
 
     useEffect(() => {
@@ -53,7 +50,7 @@ const Medicines = () => {
 
     useEffect(() => {
         if (containerTableRef.current) containerTableRef.current.scrollTop = containerTableRef.current.scrollHeight;
-    },[medicines])
+    }, [medicines])
 
     const handleShowModalDelete = (medicine) => {
         setMedicineToDelete(medicine);
@@ -65,7 +62,7 @@ const Medicines = () => {
         setShowModalDelete(false);
     }
 
-    const handleDeleteMedicine = () =>{
+    const handleDeleteMedicine = () => {
         handleHiddenModalDelete();
         dispatch(deleteMedicine(medicineToDelete.id));
     }
@@ -91,14 +88,14 @@ const Medicines = () => {
 
     const handleSearchMedicines = (e) => {
         e.preventDefault();
-       dispatch(changeValueFieldFilter({field:"name", value: searchText }))
+        dispatch(changeValueFieldFilter({ field: "name", value: searchText }))
     }
 
     const handleSort = (field) => {
         if (field === sort.fieldSort) {
-          dispatch(changeTypeSort());
+            dispatch(changeTypeSort());
         } else {
-          dispatch(changeFieldSort(field));
+            dispatch(changeFieldSort(field));
         }
     }
 
@@ -109,29 +106,29 @@ const Medicines = () => {
     const sortList = (medicinesState) => {
         let listOrdened = [...medicinesState];
         return listOrdened.sort(
-            (a,b) => {
+            (a, b) => {
                 let valueA = a[sort.fieldSort];
                 let valueB = b[sort.fieldSort];
 
-                if(sort.fieldSort === "registrationDate") {
+                if (sort.fieldSort === "registrationDate") {
                     valueA = new Date(a.registrationDate).getTime();
                     valueB = new Date(b.registrationDate).getTime();
                 }
 
-                if(sort.fieldSort === "conclusion") {
+                if (sort.fieldSort === "conclusion") {
                     valueA = verifyConclusionMedicine(a);
                     valueB = verifyConclusionMedicine(b);
                 }
 
-                if(sort.fieldSort === "name"  ) {
-                    if(sort.typeSort === "ASC") {
+                if (sort.fieldSort === "name") {
+                    if (sort.typeSort === "ASC") {
                         return valueA.localeCompare(valueB);
                     } else {
                         return valueB.localeCompare(valueA);
                     }
-                } 
+                }
 
-                if(sort.typeSort === "ASC") return valueA - valueB;
+                if (sort.typeSort === "ASC") return valueA - valueB;
 
                 return valueB - valueA;
             }
@@ -149,8 +146,8 @@ const Medicines = () => {
                 <td>{medicine.totalDays} dias</td>
                 <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly /></td>
                 <td>
-                    <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)}/>
-                    <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)}/>
+                    <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)} />
+                    <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)} />
                 </td>
             </tr>
         ))
@@ -159,16 +156,15 @@ const Medicines = () => {
     return (
         <main className="container_main">
             <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} actionToDispatch={createMedicine} dispatch={dispatch} />
-            <ModalEditMedicine showModal={showModalEditMedicine} hiddenModal={handleHiddenModalEdit} medicine={medicineToEdit}/>
+
             <header className={styles.header_medicines}>
-                <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading}/>
+                <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading} />
             </header>
             <div>
                 {loading ? <p>Loading...</p> : <>
-                    
                     <div className={styles.container_flex}>
                         <h3>Histórico medicamentos...</h3>
-                        <ButtonPlus action={() => setShowModalNewMedicine(true)}/>
+                        <ButtonPlus action={() => setShowModalNewMedicine(true)} />
                     </div>
                     <div className={styles.container_table} ref={containerTableRef}>
                         <Table titles={titles} sort={sort} handleSort={handleSort}>
@@ -177,7 +173,7 @@ const Medicines = () => {
 
                     </div>
                     <footer className={styles.footer_medicines}>
-                        {medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0?
+                        {medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0 ?
                             <p>Todos elementos carregados...</p> :
                             <>
                                 <p>Ver mais...</p>
@@ -188,13 +184,23 @@ const Medicines = () => {
                     </footer>
                 </>}
             </div>
-            {showModalDelete && 
-                <ModalConfirmDelete 
-                    object={medicineToDelete} 
-                    handleDelete={handleDeleteMedicine} 
+
+            {showModalEditMedicine && 
+                <ModalEditMedicine 
+                    showModal={showModalEditMedicine} 
+                    hiddenModal={handleHiddenModalEdit} 
+                    medicine={medicineToEdit} 
+                    dispatch={dispatch}
+                    success={success}
+                    />}
+
+            {showModalDelete &&
+                <ModalConfirmDelete
+                    object={medicineToDelete}
+                    handleDelete={handleDeleteMedicine}
                     text={"Confima a exclusão do medicamento?"}
                     handleHiddenModalDelete={handleHiddenModalDelete}
-                    />}
+                />}
         </main>
     )
 }

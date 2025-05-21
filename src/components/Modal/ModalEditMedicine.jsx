@@ -7,12 +7,39 @@ import ArrowLeftButton from '../Button/ArrowLeftButton'
 import DeleteButton from '../Button/DeleteButton'
 import FormModal from './FormModal/FormModal'
 import FormModalRow from './FormModal/FormModalRow'
-
-import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
 
-const ModalEditMedicine = ({ showModal, hiddenModal ,medicine }) => {
+import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
+
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { resetSuccess, updateMedicine } from '../../slices/medicineSlice'
+
+
+const ModalEditMedicine = ({ showModal, hiddenModal ,medicine, dispatch, success }) => {
+
+    const [name, setName] = useState(medicine.name);
+    const [idPerson, setIdPerson] = useState(medicine.person?.id);
+
+    const {personList} = useSelector(state => state.person);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const updatedMedicine = {
+            id: medicine.id,
+            name,
+            idPerson
+        }
+        dispatch(updateMedicine(updatedMedicine));
+    }
+
+    if(success === true) {
+        hiddenModal();
+        setTimeout(() => {
+            dispatch(resetSuccess())
+        },1000)
+    }
 
     return (
         <>
@@ -26,11 +53,22 @@ const ModalEditMedicine = ({ showModal, hiddenModal ,medicine }) => {
                             </div>
                             <DeleteButton actionClick={() => null} />
                         </ModalHeader>
-                        <FormModal>
+                        <FormModal action={handleSubmit}>
                             <FormModalRow>
-                                <label htmlFor="personName">Pessoa:</label>
+                                <label htmlFor="name">Nome:</label>
                                 <div className={styles.input_group}>
-                                    <input type="text" id="personName" name="personName" value={medicine.personName} disabled />
+                                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)}/>
+                                </div>
+                            </FormModalRow>
+                            <FormModalRow>
+                                <label htmlFor="person">Pessoa vínculada:</label>
+                                <div className={styles.input_group}>
+                                    <select name="person" id="person" value={idPerson} onChange={(e) => setIdPerson(e.target.value)}>
+                                        {medicine.person === null &&  <option value="">-Selecione-</option> }
+                                        {personList.map(personState => (
+                                            <option key={personState.id} value={personState.id}>{personState.name}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </FormModalRow>
                             <FormModalRow>

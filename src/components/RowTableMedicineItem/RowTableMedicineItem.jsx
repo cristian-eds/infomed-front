@@ -18,8 +18,6 @@ const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
         dispatch(alterStatusMedicineItem(medicine.medicineItemId));
     }
 
-    console.log(medicine);
-
     return (<>
         <tr >
             <td>{medicine.name}</td>
