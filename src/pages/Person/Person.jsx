@@ -10,6 +10,7 @@ import styles from './Person.module.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPerson } from '../../slices/personSlice'
 import ModalAddPerson from '../../components/Modal/ModalAddPerson'
+import { formatDate } from '../../utils/formatterDates'
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -25,6 +26,8 @@ const Person = () => {
 
     const { personList, sort, loading} = useSelector(state => state.person); 
 
+    console.log(personList);
+
     const [showAddModal, setShowAddModal] = useState(false);
 
     useEffect(() => {
@@ -36,9 +39,9 @@ const Person = () => {
         return personList.map((person) => (
             <tr key={person.id}>
                 <td>{person.name}</td>
-                <td>4</td>
-                <td>2</td>
-                <td>13/05/2025</td>
+                <td>{person.totalMedicines}</td>
+                <td>{person.pendingMedicines}</td>
+                <td>{person.nextMedicine && formatDate(person.nextMedicine.dayHour)}</td>
                 <td>
                     <MdEdit size={20} />
                     <MdDelete size={20} />
