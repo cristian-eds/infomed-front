@@ -45,3 +45,7 @@ a {
   left: 0;
   border-radius: .5em;
 }
+
+.pointer {
+  cursor: pointer;
+}

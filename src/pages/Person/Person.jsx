@@ -41,7 +41,7 @@ const Person = () => {
                 <td>{person.name}</td>
                 <td>{person.totalMedicines}</td>
                 <td>{person.pendingMedicines}</td>
-                <td onClick={() => openModalNextMedicineItem(person)}>{person.nextMedicine && formatDate(person.nextMedicine.dayHour)}</td>
+                <td className='pointer' onClick={() => openModalNextMedicineItem(person)}>{person.nextMedicine && formatDate(person.nextMedicine.dayHour)}</td>
                 <td>
                     <MdEdit size={20} />
                     <MdDelete size={20} />
