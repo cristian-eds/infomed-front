@@ -42,8 +42,6 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
             idPerson
         }
 
-        console.log(newMedicine);
-
         dispatch(actionToDispatch(newMedicine));
         setShowModal(false);
     }

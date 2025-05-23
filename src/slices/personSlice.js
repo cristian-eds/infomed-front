@@ -18,6 +18,7 @@ export const fetchPerson = createAsyncThunk(
 
         const res = await fetch(`http://localhost:8080/person?actualPage=${0}&sizePage=${6}`, config)
             .then(res => res.json());
+            
         return res;
     }
 )
