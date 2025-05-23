@@ -10,17 +10,19 @@ import FormInputGroup from './FormModal/FormInputGroup'
 import ModalContent from './FormModal/ModalContent'
 import Modal from './Modal'
 import ModalHeader from './ModalHeader'
+import ModalConfirmDelete from './ModalConfirmDelete'
 
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { resetSuccess, updateMedicine } from '../../slices/medicineSlice'
+import { deleteMedicine, resetSuccess, updateMedicine } from '../../slices/medicineSlice'
 
 const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success }) => {
 
     const [name, setName] = useState(medicine.name);
     const [idPerson, setIdPerson] = useState(medicine.person?.id);
+    const [showModalDelete, setShowModalDelete] = useState(false);
 
     const { personList } = useSelector(state => state.person);
 
@@ -41,6 +43,11 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
         }, 1000)
     }
 
+    const handleDelete = () => {
+        dispatch(deleteMedicine(medicine.id));
+        setShowModalDelete(false);
+    }
+
     return (
         <>
             {showModal && <>
@@ -51,7 +58,7 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                             <div>
                                 <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                             </div>
-                            <DeleteButton actionClick={() => null} />
+                            <DeleteButton actionClick={() => setShowModalDelete(true)} />
                         </ModalHeader>
                         <FormModal action={handleSubmit}>
                             <FormModalRow>
@@ -99,6 +106,13 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                         </FormModal>
                     </ModalContent>
                 </Modal>
+                {showModalDelete &&
+                    <ModalConfirmDelete
+                        object={medicine}
+                        handleDelete={handleDelete}
+                        text={"Confima a exclusão do medicamento?"}
+                        handleHiddenModalDelete={() => setShowModalDelete(false)}
+                    />}
             </>}
         </>
     )

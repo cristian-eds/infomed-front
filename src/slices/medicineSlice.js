@@ -136,6 +136,7 @@ export const medicineSlice = createSlice({
                     medicine => medicine.id !== action.payload
                 )
                 state.loading = false;
+                state.success = true;
             })
             .addCase(createMedicine.pending, (state) => {
                 state.loading = true;
