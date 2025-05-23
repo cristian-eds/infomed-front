@@ -103,12 +103,19 @@ const Medicines = () => {
         return medicine && medicine.medicineItems.every(item => item.conclusion === true);
     }
 
+    console.log(medicines);
+
     const sortList = (medicinesState) => {
         let listOrdened = [...medicinesState];
         return listOrdened.sort(
             (a, b) => {
                 let valueA = a[sort.fieldSort];
                 let valueB = b[sort.fieldSort];
+
+                if (sort.fieldSort === "personName") {
+                    valueA = a.person.name;
+                    valueB = b.person.name;
+                }
 
                 if (sort.fieldSort === "registrationDate") {
                     valueA = new Date(a.registrationDate).getTime();
@@ -120,7 +127,7 @@ const Medicines = () => {
                     valueB = verifyConclusionMedicine(b);
                 }
 
-                if (sort.fieldSort === "name") {
+                if (sort.fieldSort === "name" || sort.fieldSort === "personName") {
                     if (sort.typeSort === "ASC") {
                         return valueA.localeCompare(valueB);
                     } else {
