@@ -8,10 +8,11 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 
 import styles from './Person.module.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPerson } from '../../slices/personSlice'
+import { fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
 import ModalAddPerson from '../../components/Modal/ModalAddPerson'
 import { formatDate } from '../../utils/formatterDates'
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
+import ArrowDownButton from '../../components/Button/ArrowDownButton'
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -25,15 +26,17 @@ const Person = () => {
 
     const dispatch = useDispatch();
 
-    const { personList, sort, loading } = useSelector(state => state.person);
+    const { personList, sort, loading, page } = useSelector(state => state.person);
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [medicine, setMedicine] = useState(null);
 
+    console.log(page);
+
     useEffect(() => {
         dispatch(fetchPerson());
-    }, [dispatch, sort, medicine])
+    }, [dispatch, sort, medicine ])
 
     const generateItems = () => {
         return personList.map((person) => (
@@ -64,6 +67,11 @@ const Person = () => {
         }, 1000)
     }
 
+    const handleFetchMoreMedicines = () => {
+        dispatch(incrementActualPage());
+        dispatch(fetchMorePerson());
+    }
+
     if (loading) return <p>Carregando...</p>
 
     return (
@@ -88,6 +96,17 @@ const Person = () => {
                 showModal={showModalMedicineItem}
                 setCloseModal={closeModalMedicine}
             />}
+
+            <footer className={styles.footer_person}>
+                {page.totalPages - 1 === page.number || page.totalElements === 0 ?
+                    <p>Todos elementos carregados...</p> :
+                    <>
+                        <p>Ver mais...</p>
+                        <ArrowDownButton actionClick={handleFetchMoreMedicines} />
+                    </>
+
+                }
+            </footer>
 
         </div>
     )

@@ -5,6 +5,12 @@ import { requestConfig } from "../utils/requests";
 const initialState = {
     personList: [],
     loading: false,
+    page: {
+        number: 0,
+        size: 6,
+        totalElements: null,
+        totalPages: null
+    },
     sort: {
         fieldSort: "name",
         typeSort: "DESC"
@@ -13,12 +19,25 @@ const initialState = {
 
 export const fetchPerson = createAsyncThunk(
     'person/fetch',
-    async () => {
+    async (_, { getState }) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person?actualPage=${0}&sizePage=${6}`, config)
+        const res = await fetch(`http://localhost:8080/person?actualPage=${getState().person.page.number}&sizePage=${getState().person.page.size}`, config)
             .then(res => res.json());
-            
+
+        return res;
+    }
+)
+
+
+export const fetchMorePerson = createAsyncThunk(
+    'person/fetchMore',
+    async (_, { getState }) => {
+        const config = requestConfig("GET");
+
+        const res = await fetch(`http://localhost:8080/person?actualPage=${getState().person.page.number}&sizePage=${getState().person.page.size}`, config)
+            .then(res => res.json());
+
         return res;
     }
 )
@@ -38,7 +57,11 @@ export const createPerson = createAsyncThunk(
 export const personSlice = createSlice({
     name: "person",
     initialState,
-    reducers: {},
+    reducers: {
+        incrementActualPage: (state) => {
+            state.page.number = state.page.number + 1;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchPerson.pending, (state) => {
@@ -47,6 +70,12 @@ export const personSlice = createSlice({
             .addCase(fetchPerson.fulfilled, (state, action) => {
                 state.loading = false;
                 state.personList = action.payload.content;
+                state.page = {
+                    number: action.payload.currentPage,
+                    size: action.payload.pageSize,
+                    totalElements: action.payload.totalElements,
+                    totalPages: action.payload.totalPages
+                }
             })
             .addCase(createPerson.pending, (state) => {
                 state.loading = true;
@@ -55,7 +84,20 @@ export const personSlice = createSlice({
                 state.loading = false;
                 state.personList.push(action.payload);
             })
+            .addCase(fetchMorePerson.fulfilled, (state, action) => {
+                state.personList.push(...action.payload.content);
+                  state.page = {
+                    number: action.payload.currentPage,
+                    size: action.payload.pageSize,
+                    totalElements: action.payload.totalElements,
+                    totalPages: action.payload.totalPages
+                }
+            })
     }
 })
+
+export const {
+    incrementActualPage
+} = personSlice.actions;
 
 export default personSlice.reducer;

@@ -8,3 +8,9 @@
 .header:last-child {
     justify-self: end;
 }
+
+.footer_person {
+    gap: 1em;
+    padding: .5em 0 3em 0;
+    text-align: center;
+}
