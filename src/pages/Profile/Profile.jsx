@@ -5,8 +5,9 @@ import { changeUserPassword, fetchUser, updateUser } from '../../slices/userSlic
 
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
-import { toast, ToastContainer } from 'react-toastify';
 import HistoricLog from '../../components/HistoricLog/HistoricLog';
+
+import { toast, ToastContainer } from 'react-toastify';
 
 import styles from './Profile.module.css';
 

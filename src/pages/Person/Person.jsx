@@ -13,6 +13,7 @@ import ModalAddPerson from '../../components/Modal/ModalAddPerson'
 import { formatDate } from '../../utils/formatterDates'
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
 import ArrowDownButton from '../../components/Button/ArrowDownButton'
+import { Link } from 'react-router'
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -32,11 +33,9 @@ const Person = () => {
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [medicine, setMedicine] = useState(null);
 
-    console.log(page);
-
     useEffect(() => {
         dispatch(fetchPerson());
-    }, [dispatch, sort, medicine ])
+    }, [dispatch, sort, medicine])
 
     const generateItems = () => {
         return personList.map((person) => (
@@ -46,7 +45,9 @@ const Person = () => {
                 <td>{person.pendingMedicines}</td>
                 <td className='pointer' onClick={() => openModalNextMedicineItem(person)}>{person.nextMedicine && formatDate(person.nextMedicine.dayHour)}</td>
                 <td>
-                    <MdEdit size={20} />
+                    <Link to={`/person/${person.id}`}>
+                        <MdEdit size={20}/>
+                    </Link>
                     <MdDelete size={20} />
                 </td>
             </tr>
@@ -90,13 +91,6 @@ const Person = () => {
                 </Table>
             </section>
 
-            {showModalMedicineItem && <ModalEditMedicineItem
-                dispatch={dispatch}
-                medicine={medicine}
-                showModal={showModalMedicineItem}
-                setCloseModal={closeModalMedicine}
-            />}
-
             <footer className={styles.footer_person}>
                 {page.totalPages - 1 === page.number || page.totalElements === 0 ?
                     <p>Todos elementos carregados...</p> :
@@ -108,7 +102,15 @@ const Person = () => {
                 }
             </footer>
 
+            {showModalMedicineItem && <ModalEditMedicineItem
+                dispatch={dispatch}
+                medicine={medicine}
+                showModal={showModalMedicineItem}
+                setCloseModal={closeModalMedicine}
+            />}
+
         </div>
+
     )
 }
 

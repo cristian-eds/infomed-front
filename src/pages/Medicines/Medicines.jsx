@@ -103,8 +103,6 @@ const Medicines = () => {
         return medicine && medicine.medicineItems.every(item => item.conclusion === true);
     }
 
-    console.log(medicines);
-
     const sortList = (medicinesState) => {
         let listOrdened = [...medicinesState];
         return listOrdened.sort(

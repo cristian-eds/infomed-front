@@ -11,6 +11,7 @@ import Medicines from './pages/Medicines/Medicines';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
 import Person from './pages/Person/Person';
+import PersonDetails from './pages/Person/PersonDetails';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
       <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
       <Route path='/profile' element={!user ? <Login login={login}/> : <Profile userContext={user}/> }/>
       <Route path='/person' element={!user ? <Login login={login} /> : role === "ADMIN" && <Person />} />
+      <Route path='/person/:id' element={!user ? <Login login={login} /> : role === "ADMIN" && <PersonDetails />} />
     </Routes>
   </BrowserRouter>
   )
