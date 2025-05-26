@@ -14,7 +14,8 @@ const initialState = {
     sort: {
         fieldSort: "name",
         typeSort: "DESC"
-    }
+    },
+    detailsPerson: {}
 }
 
 export const fetchPerson = createAsyncThunk(
@@ -22,7 +23,7 @@ export const fetchPerson = createAsyncThunk(
     async (_, { getState }) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person?actualPage=${getState().person.page.number}&sizePage=${getState().person.page.size}`, config)
+        const res = await fetch(`http://localhost:8080/person?actualPage=${0}&sizePage=${getState().person.page.size}`, config)
             .then(res => res.json());
 
         return res;
@@ -54,12 +55,27 @@ export const createPerson = createAsyncThunk(
     }
 )
 
+export const fetchDetailsPerson = createAsyncThunk(
+    'person/fetchPersonDetails',
+    async (id) => {
+        const config = requestConfig("GET");
+
+        const res = await fetch(`http://localhost:8080/person/`+id , config)
+            .then(res => res.json());
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
     reducers: {
         incrementActualPage: (state) => {
             state.page.number = state.page.number + 1;
+        },
+        resetDetailsPerson: (state) => {
+            state.detailsPerson = {}
         }
     },
     extraReducers: (builder) => {
@@ -93,11 +109,15 @@ export const personSlice = createSlice({
                     totalPages: action.payload.totalPages
                 }
             })
+            .addCase(fetchDetailsPerson.fulfilled, (state,action) => {
+                state.detailsPerson = action.payload;
+            })
     }
 })
 
 export const {
-    incrementActualPage
+    incrementActualPage,
+    resetDetailsPerson
 } = personSlice.actions;
 
 export default personSlice.reducer;
