@@ -15,7 +15,8 @@ const initialState = {
         fieldSort: "name",
         typeSort: "DESC"
     },
-    detailsPerson: {}
+    detailsPerson: {},
+    medicinesForPersonDetails: []
 }
 
 export const fetchPerson = createAsyncThunk(
@@ -67,6 +68,18 @@ export const fetchDetailsPerson = createAsyncThunk(
     }
 )
 
+export const fetchMedicinesForDetailsPerson = createAsyncThunk(
+    'person/fetchPersonDetailsMedicines',
+    async (id) => {
+        const config = requestConfig("GET");
+
+        const res = await fetch(`http://localhost:8080/person/`+id+"/medicines" , config)
+            .then(res => res.json());
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -76,6 +89,7 @@ export const personSlice = createSlice({
         },
         resetDetailsPerson: (state) => {
             state.detailsPerson = {}
+            state.medicinesForPersonDetails = []
         }
     },
     extraReducers: (builder) => {
@@ -111,6 +125,9 @@ export const personSlice = createSlice({
             })
             .addCase(fetchDetailsPerson.fulfilled, (state,action) => {
                 state.detailsPerson = action.payload;
+            })
+            .addCase(fetchMedicinesForDetailsPerson.fulfilled, (state, action) => {
+                state.medicinesForPersonDetails = action.payload;
             })
     }
 })
