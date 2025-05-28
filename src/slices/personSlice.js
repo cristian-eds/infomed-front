@@ -80,6 +80,18 @@ export const fetchMedicinesForDetailsPerson = createAsyncThunk(
     }
 )
 
+export const updatePerson = createAsyncThunk(
+    'perso/updatePerson',
+    async (data) => {
+        const config = requestConfig("PUT",data);
+
+        const res = await fetch(`http://localhost:8080/person/`+data.id, config)
+                            .then(res=> res.json());
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -128,6 +140,9 @@ export const personSlice = createSlice({
             })
             .addCase(fetchMedicinesForDetailsPerson.fulfilled, (state, action) => {
                 state.medicinesForPersonDetails = action.payload;
+            })
+            .addCase(updatePerson.fulfilled, (state, action) => {
+                state.detailsPerson = action.payload;
             })
     }
 })
