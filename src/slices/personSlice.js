@@ -61,7 +61,7 @@ export const fetchDetailsPerson = createAsyncThunk(
     async (id) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person/`+id , config)
+        const res = await fetch(`http://localhost:8080/person/` + id, config)
             .then(res => res.json());
 
         return res;
@@ -73,7 +73,7 @@ export const fetchMedicinesForDetailsPerson = createAsyncThunk(
     async (id) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person/`+id+"/medicines" , config)
+        const res = await fetch(`http://localhost:8080/person/` + id + "/medicines", config)
             .then(res => res.json());
 
         return res;
@@ -81,14 +81,30 @@ export const fetchMedicinesForDetailsPerson = createAsyncThunk(
 )
 
 export const updatePerson = createAsyncThunk(
-    'perso/updatePerson',
+    'person/updatePerson',
     async (data) => {
-        const config = requestConfig("PUT",data);
+        const config = requestConfig("PUT", data);
 
-        const res = await fetch(`http://localhost:8080/person/`+data.id, config)
-                            .then(res=> res.json());
+        const res = await fetch(`http://localhost:8080/person/` + data.id, config)
+            .then(res => res.json());
 
         return res;
+    }
+)
+
+export const deletePerson = createAsyncThunk(
+    'person/delete',
+    async (id) => {
+        const config = requestConfig("DELETE");
+
+        const res = await fetch(`http://localhost:8080/person/` + id, config)
+            .then(res => res);
+
+        if (res.status === 204) {
+            return id;
+        }
+
+        return null;
     }
 )
 
@@ -128,14 +144,14 @@ export const personSlice = createSlice({
             })
             .addCase(fetchMorePerson.fulfilled, (state, action) => {
                 state.personList.push(...action.payload.content);
-                  state.page = {
+                state.page = {
                     number: action.payload.currentPage,
                     size: action.payload.pageSize,
                     totalElements: action.payload.totalElements,
                     totalPages: action.payload.totalPages
                 }
             })
-            .addCase(fetchDetailsPerson.fulfilled, (state,action) => {
+            .addCase(fetchDetailsPerson.fulfilled, (state, action) => {
                 state.detailsPerson = action.payload;
             })
             .addCase(fetchMedicinesForDetailsPerson.fulfilled, (state, action) => {
@@ -143,6 +159,11 @@ export const personSlice = createSlice({
             })
             .addCase(updatePerson.fulfilled, (state, action) => {
                 state.detailsPerson = action.payload;
+            })
+            .addCase(deletePerson.fulfilled, (state, action) => {
+                if (action.payload) { 
+                    state.personList = state.personList.filter(person => person.id !== action.payload );
+                }
             })
     }
 })
