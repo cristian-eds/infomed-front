@@ -8,12 +8,13 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 
 import styles from './Person.module.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
+import { deletePerson, fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
 import ModalAddPerson from '../../components/Modal/ModalAddPerson'
 import { formatDate } from '../../utils/formatterDates'
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
 import ArrowDownButton from '../../components/Button/ArrowDownButton'
 import { Link } from 'react-router'
+import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete'
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -31,7 +32,9 @@ const Person = () => {
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
+    const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
     const [medicine, setMedicine] = useState(null);
+    const [personToDelete, setPersonToDelete] = useState(null);
 
     useEffect(() => {
         dispatch(fetchPerson());
@@ -48,7 +51,7 @@ const Person = () => {
                     <Link to={`/person/${person.id}`}>
                         <MdEdit size={20}/>
                     </Link>
-                    <MdDelete size={20} />
+                    <MdDelete size={20} onClick={() => handleOpenModalDelete(person)}/>
                 </td>
             </tr>
         ))
@@ -71,6 +74,21 @@ const Person = () => {
     const handleFetchMoreMedicines = () => {
         dispatch(incrementActualPage());
         dispatch(fetchMorePerson());
+    }
+
+    const handleDelete = () => {
+        dispatch(deletePerson(personToDelete.id));
+        setShowModalConfirmDelete(false);
+    }
+
+    const handleOpenModalDelete = (person) => {
+        setPersonToDelete(person);
+        setShowModalConfirmDelete(true);
+    }
+
+    const handleHiddenModalDelete = () => {
+        setShowModalConfirmDelete(false);
+        setPersonToDelete(null);
     }
 
     if (loading) return <p>Carregando...</p>
@@ -108,6 +126,8 @@ const Person = () => {
                 showModal={showModalMedicineItem}
                 setCloseModal={closeModalMedicine}
             />}
+
+            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: "+personToDelete.name+" ?"} object={personToDelete} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete}/> }
 
         </div>
 
