@@ -30,6 +30,7 @@ const Person = () => {
 
     const { personList, sort, loading, page } = useSelector(state => state.person);
 
+
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);

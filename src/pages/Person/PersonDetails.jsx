@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 
-import { fetchDetailsPerson, fetchMedicinesForDetailsPerson, resetDetailsPerson, updatePerson } from '../../slices/personSlice';
+import { deletePerson, fetchDetailsPerson, fetchMedicinesForDetailsPerson, resetDetailsPerson, updatePerson } from '../../slices/personSlice';
 
 import Table from '../../components/Table/Table';
 import ArrowLeftButton from '../../components/Button/ArrowLeftButton';
@@ -14,6 +14,7 @@ import { convertToPatternLocalDate, formatDate } from '../../utils/formatterDate
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
 import { format } from 'date-fns';
+import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -27,6 +28,7 @@ const titles = [
 const PersonDetails = () => {
 
     const { id } = useParams("id");
+    const navigate = useNavigate();
 
     const { detailsPerson, medicinesForPersonDetails } = useSelector(state => state.person);
 
@@ -35,6 +37,8 @@ const PersonDetails = () => {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [birthDate, setBirthDate] = useState("");
+
+    const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -88,6 +92,16 @@ const PersonDetails = () => {
         setEditing(false);
     }
 
+    const handleDelete = () => {
+        dispatch(deletePerson(detailsPerson.id));
+        setShowModalConfirmDelete(false);
+        navigate("/person");
+    }
+
+    const handleHiddenModalDelete = () => {
+        setShowModalConfirmDelete(false);
+    }
+
     return (
         <div className="container_main">
             <header className={styles.header_details}>
@@ -97,7 +111,7 @@ const PersonDetails = () => {
                 <h2>
                     {detailsPerson.name}
                 </h2>
-                <DeleteButton />
+                <DeleteButton actionClick={() => setShowModalConfirmDelete(true)}/>
             </header>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
@@ -143,7 +157,9 @@ const PersonDetails = () => {
                 <Table titles={titles} sort={sort} handleSort={handleSort} >
                     {generateItemsTable()}
                 </Table>
+                {medicinesForPersonDetails.length === 0 &&  <p style={{textAlign:'center'}}>Não há medicamentos...</p> }
             </section>
+            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: "+detailsPerson.name+" ?"} object={detailsPerson} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete}/> }
         </div>
     )
 }
