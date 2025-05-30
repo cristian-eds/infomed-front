@@ -1,8 +1,8 @@
 import styles from '../Modal.module.css'
 
-const FormInputGroup = ({children}) => {
+const FormInputGroup = ({disabled, children}) => {
   return (
-    <div className={styles.input_group}>
+    <div className={`${styles.input_group} ${disabled && styles.disabled}`}>
         <>
             {children}
         </>

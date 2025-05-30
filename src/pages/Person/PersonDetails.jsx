@@ -121,19 +121,19 @@ const PersonDetails = () => {
                 <div className={styles.form_row}>
                     <label htmlFor="name">Nome:</label>
                     <div className={styles.container_info_row}>
-                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={!editing}/>
+                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={!editing} disabled={!editing}/>
                     </div>
                 </div>
                 <div className={styles.form_row}>
                     <label htmlFor="phone">Telefone:</label>
                     <div className={styles.container_info_row}>
-                        <input type="text" id="phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} readOnly={!editing}/>
+                        <input type="text" id="phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} readOnly={!editing} disabled={!editing}/>
                     </div>
                 </div>
                 <div className={styles.form_row}>
                     <label htmlFor="birth_date">Data Nascimento:</label>
                     <div className={styles.container_info_row}>
-                        <input type="date" id="birth_date" name="birth_date" value={birthDate && format(birthDate,'yyyy-MM-dd')} onChange={handleBirthDate} readOnly={!editing}/>
+                        <input type="date" id="birth_date" name="birth_date" value={birthDate && format(birthDate,'yyyy-MM-dd')} onChange={handleBirthDate} readOnly={!editing} disabled={!editing}/>
                     </div>
                 </div>
 
@@ -141,7 +141,7 @@ const PersonDetails = () => {
                     <div className={styles.form_row}>
                         <label htmlFor="accessCode">Código acesso:</label>
                         <div className={styles.container_info_row}>
-                            <input type="text" id="namaccessCodee" name="accessCode" value={detailsPerson.accessCode} readOnly />
+                            <input type="text" id="namaccessCodee" name="accessCode" value={detailsPerson.accessCode} readOnly disabled={!editing}/>
                         </div>
                     </div>
                 }

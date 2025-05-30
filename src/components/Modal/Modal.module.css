@@ -74,6 +74,10 @@
     min-height: 40px;
 }
 
+.input_group.disabled {
+    background-color: #46704ac8;
+}
+
 .input_group input[type="checkbox"] {
     height: 1.25em;
     width: 1.25em;
@@ -110,9 +114,15 @@ input[type="datetime-local"]:focus {
     background-color: rgb(52, 83, 38);
 }
 
-
 .unit {
     margin-left: .3em;
     font-size: 1.2em;
 }
 
+.disabled {
+    font-style: italic;
+}
+
+input:not([disabled]) {
+    cursor: pointer;
+}

@@ -80,21 +80,21 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="creationDate">Data criação:</label>
-                                <FormInputGroup>
-                                    <input type="datetime-local" id="creationDate" name="creationDate" value={convertToPatternLocalDateTime(medicine.registrationDate)} disabled />
+                                <FormInputGroup disabled={true}>
+                                    <input type="datetime-local" id="creationDate" name="creationDate" value={convertToPatternLocalDateTime(medicine.registrationDate)} disabled className={styles.disabled}/>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="frequence">Frequência:</label>
-                                <FormInputGroup>
-                                    <input type="text" id="frequence" name="frequence" value={medicine.frequencyHours} disabled />
+                                <FormInputGroup disabled={true}>
+                                    <input type="text" id="frequence" name="frequence" value={medicine.frequencyHours} disabled className={styles.disabled}/>
                                     <span className="unit">hrs</span>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="totDays">Total dias:</label>
-                                <FormInputGroup>
-                                    <input type="text" id="totDays" name="totDays" value={medicine.totalDays} disabled />
+                                <FormInputGroup disabled={true}> 
+                                    <input type="text" id="totDays" name="totDays" value={medicine.totalDays} disabled className={styles.disabled}/>
                                     <span className="unit">dias</span>
                                 </FormInputGroup>
                             </FormModalRow>

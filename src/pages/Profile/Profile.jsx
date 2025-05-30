@@ -53,19 +53,19 @@ const Profile = ({ userContext }) => {
     const generateInputsChangingPassword = () => (
         <>
             <div className={styles.form_row}>
-                <label htmlFor="password">Current Password:</label>
+                <label htmlFor="password">Senha atual:</label>
                 <div className={styles.container_info_row}>
                     <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
             </div>
             <div className={styles.form_row}>
-                <label htmlFor="newPassword">New Password:</label>
+                <label htmlFor="newPassword">Nova senha:</label>
                 <div className={styles.container_info_row}>
                     <input type="password" id="newPassword" name="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                 </div>
             </div>
             <div className={styles.form_row}>
-                <label htmlFor="confirmNewPassword">Confirm New Password:</label>
+                <label htmlFor="confirmNewPassword">Confirmar nova senha:</label>
                 <div className={styles.container_info_row}>
                     <input type="password" id="confirmNewPassword" name="confirmNewPassword" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
                 </div>
@@ -161,13 +161,13 @@ const Profile = ({ userContext }) => {
                 <div className={styles.form_row}>
                     <label htmlFor="name">Nome:</label>
                     <div className={styles.container_info_row}>
-                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={changingPassword || !editing}  />
+                        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} readOnly={changingPassword || !editing} disabled={!editing} />
                     </div>
                 </div>
                 <div className={styles.form_row}>
                     <label htmlFor="email">Email:</label>
                     <div className={styles.container_info_row}>
-                        <input type="text" id="email" name="email" value={email} readOnly />
+                        <input type="text" id="email" name="email" value={email} readOnly disabled/>
                     </div>
                 </div>
                 {changingPassword && generateInputsChangingPassword()}

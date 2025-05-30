@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Modal from './Modal'
 
+import { deleteMedicineItem, updateMedicineItem } from '../../slices/medicineItemSlice'
+import { format } from 'date-fns'
+import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
+
 import styles from './Modal.module.css'
 
 import DeleteButton from '../Button/DeleteButton'
 import ArrowLeftButton from '../Button/ArrowLeftButton'
 import ButtonGroup from '../Button/ButtonGroup'
 import Button from '../Button/Button'
-
-import { deleteMedicineItem, updateMedicineItem } from '../../slices/medicineItemSlice'
-import { format } from 'date-fns'
-import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
-
 import ModalConfirmDelete from './ModalConfirmDelete'
 import ModalContent from './FormModal/ModalContent'
 import ModalHeader from './ModalHeader'
@@ -81,14 +80,14 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                         <FormModal action={handleEdit}>
                             <FormModalRow>
                                 <label htmlFor="personName">Pessoa:</label>
-                                <FormInputGroup>
-                                    <input type="text" id="personName" name="personName" value={medicine.personName} disabled />
+                                <FormInputGroup disabled={true}>
+                                    <input type="text" id="personName" name="personName" value={medicine.personName} disabled className={styles.disabled}/>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="dayHour">Data e hora:</label>
-                                <FormInputGroup>
-                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} onChange={(e) => setDayHour(e.target.value)} disabled />
+                                <FormInputGroup disabled={true}>
+                                    <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} className={styles.disabled} disabled />
                                 </FormInputGroup>
                             </FormModalRow>
 
