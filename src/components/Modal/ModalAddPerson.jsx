@@ -13,6 +13,7 @@ import ModalHeader from './ModalHeader';
 import FormModal from './FormModal/FormModal';
 import FormModalRow from './FormModal/FormModalRow';
 import FormInputGroup from './FormModal/FormInputGroup';
+import MessageError from '../MessageError/MessageError';
 
 const ModalAddPerson = ({ setShowModal, dispatch }) => {
 
@@ -20,8 +21,12 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
     const [phone, setPhone] = useState("");
     const [birthDate, setBirthDate] = useState("");
 
+    const [validationErros, setValidationErros] = useState(null);
+
     const handleConfirm = (e) => {
         e.preventDefault();
+        const erros = validateFields();
+        if(erros) return;
         const data = {
             name,
             phone,
@@ -29,6 +34,17 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
         }
         dispatch(createPerson(data));
         setShowModal(false);
+    }
+
+     const validateFields = () => {
+        let err = "";
+
+        if(name === null || name.length <= 1) {
+            err = "Insira um nome válido";
+        }
+
+        setValidationErros(err);
+        return err;
     }
 
     return (
@@ -60,6 +76,8 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                             <input type="date" id="birthDate" name="birthDate" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
                         </FormInputGroup>
                     </FormModalRow>
+
+                    <MessageError message={validationErros}/>
 
                     <ButtonGroup>
                         <Button value="Cadastrar" type="submit" variant="button_confirm" />
