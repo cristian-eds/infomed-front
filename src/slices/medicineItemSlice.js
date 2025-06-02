@@ -55,7 +55,7 @@ export const createMedicine = createAsyncThunk(
         const config = requestConfig("POST", data);
         const res = await fetch("http://localhost:8080/medicine/item", config)
             .then(res => res)
-            .catch(err => err)
+            .catch(err => err);
 
         if(res.status === 201) {
             dispatch(searchCustomMedicinesItemUser(getState().medicineItem.filters));

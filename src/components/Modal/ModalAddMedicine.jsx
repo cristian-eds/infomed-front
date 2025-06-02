@@ -17,6 +17,7 @@ import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchPerson } from '../../slices/personSlice'
+import MessageError from '../MessageError/MessageError'
 
 const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch }) => {
 
@@ -26,6 +27,8 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
     const [initialDate, setInitialDate] = useState(format(new Date(), 'yyyy-MM-dd hh:mm'));
     const [idPerson, setIdPerson] = useState("");
 
+    const [validationErros, setValidationErros] = useState(null);
+
     const { personList } = useSelector(state => state.person);
 
     useEffect(() => {
@@ -34,6 +37,8 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const erros = validateFields();
+        if(erros) return;
         const newMedicine = {
             name,
             totalDays,
@@ -46,6 +51,23 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
         setShowModal(false);
     }
 
+    const validateFields = () => {
+        let err = null;
+        if(name === null || name.length <= 1) {
+            err = "Insira um nome válido";
+        }
+        if(frequency === null || frequency.length == 0) {
+            err = "Insira uma frequência válida";
+        }
+        if(totalDays === null || totalDays < 0 || totalDays == 0) {
+            err = "Insira uma quantidade total de dias válida";
+        }
+        if(idPerson === null || idPerson.length == 0) {
+            err = "Selecione uma pessoa";
+        }
+        setValidationErros(err);
+        return err;
+    }
 
 
     return (
@@ -100,6 +122,8 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                                     </select>
                                 </FormInputGroup>
                             </FormModalRow>
+
+                            {validationErros && <MessageError message={validationErros}/> }
 
                             <ButtonGroup>
                                 <Button value="Cadastrar" type="submit" variant="button_confirm" />
