@@ -123,7 +123,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                                 </FormInputGroup>
                             </FormModalRow>
 
-                            {validationErros && <MessageError message={validationErros}/> }
+                            <MessageError message={validationErros}/>
 
                             <ButtonGroup>
                                 <Button value="Cadastrar" type="submit" variant="button_confirm" />

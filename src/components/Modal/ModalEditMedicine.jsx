@@ -17,6 +17,7 @@ import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { deleteMedicine, resetSuccess, updateMedicine } from '../../slices/medicineSlice'
+import MessageError from '../MessageError/MessageError'
 
 const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success }) => {
 
@@ -24,10 +25,14 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
     const [idPerson, setIdPerson] = useState(medicine.person?.id);
     const [showModalDelete, setShowModalDelete] = useState(false);
 
+    const [validationErros, setValidationErros] = useState(null);
+
     const { personList } = useSelector(state => state.person);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const erros = validateFields();
+        if(erros) return;
         const updatedMedicine = {
             id: medicine.id,
             name,
@@ -41,6 +46,20 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
         setTimeout(() => {
             dispatch(resetSuccess())
         }, 1000)
+    }
+
+    const validateFields = () => {
+
+        let err = "";
+        if(name === null || name.length <= 1) {
+            err = "Insira um nome válido";
+        }
+        if(idPerson === null || idPerson.length == 0) {
+            err = "Selecione uma pessoa";
+        }
+
+        setValidationErros(err);
+        return err;
     }
 
     const handleDelete = () => {
@@ -98,6 +117,8 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                                     <span className="unit">dias</span>
                                 </FormInputGroup>
                             </FormModalRow>
+
+                            <MessageError message={validationErros} />
 
                             <ButtonGroup>
                                 <Button value="Confirmar" type="submit" variant="button_confirm" />
