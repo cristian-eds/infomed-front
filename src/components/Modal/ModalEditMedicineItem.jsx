@@ -17,12 +17,14 @@ import ModalHeader from './ModalHeader'
 import FormModal from './FormModal/FormModal'
 import FormModalRow from './FormModal/FormModalRow'
 import FormInputGroup from './FormModal/FormInputGroup'
+import MessageError from '../MessageError/MessageError'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
 
     const [dayHour, setDayHour] = useState(medicine.dayHour);
     const [conclusion, setConclusion] = useState(medicine.conclusion);
     const [conclusionDayHour, setConclusionDayHour] = useState(medicine.conclusionDayHour ? format(medicine.conclusionDayHour, 'yyyy-MM-dd hh:mm') : "");
+    const [validationErros, setValidationErros] = useState(null);
 
     const [showModalDelete, setShowModalDelete] = useState(false);
 
@@ -34,6 +36,8 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
 
     const handleEdit = (e) => {
         e.preventDefault();
+        const erros = validateFields();
+        if(erros) return;
         const updatedData = {
             id: medicine.medicineItemId,
             conclusion,
@@ -43,6 +47,17 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
 
         dispatch(updateMedicineItem(updatedData));
         setCloseModal();
+    }
+
+    const validateFields = () => {
+
+        let err = "";
+        if(conclusion && (conclusionDayHour === null || conclusionDayHour.length <= 1) ) {
+            err = "Insira um data de conclusão";
+        }
+
+        setValidationErros(err);
+        return err;
     }
 
     const handleAlterConclusion = (isConclusion) => {
@@ -105,6 +120,8 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                                     <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
                                 </FormInputGroup>
                             </FormModalRow>
+
+                            <MessageError message={validationErros}/>
 
                             <ButtonGroup>
                                 <Button value="Confirmar" type="submit" variant="button_confirm" />
