@@ -8,7 +8,7 @@ const Table = ({ sort, titles, handleSort, children }) => {
 
     const verifyIconSortActive = (field) => {
         if (field === sort.fieldSort) {
-            if(sort.typeSort === "ASC") {
+            if (sort.typeSort === "ASC") {
                 return <IoIosArrowUp />
             } else {
                 return <IoIosArrowDown />
@@ -17,17 +17,19 @@ const Table = ({ sort, titles, handleSort, children }) => {
     }
 
     return (
-        <table className={styles.table}>
-            <thead>
-                <tr>
-                    {titles.map((title, index) =>
-                        (<th key={index} onClick={() => handleSort(title.field)}>{title.name}{verifyIconSortActive(title.field)}</th>))}
-                </tr>
-            </thead>
-            <tbody>
-                {children}
-            </tbody>
-        </table>
+        <div className={styles.container_table}>
+            <table className={styles.table}>
+                <thead>
+                    <tr>
+                        {titles.map((title, index) =>
+                            (<th key={index} onClick={() => handleSort(title.field)}>{title.name}{verifyIconSortActive(title.field)}</th>))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {children}
+                </tbody>
+            </table>
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const url = 'http://localhost:8080/';
+    const url = 'http://192.168.0.112:8080/';
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);

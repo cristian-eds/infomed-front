@@ -1,3 +1,7 @@
+.container_table {
+    overflow-x: auto;
+}
+
 .table {
     width: 100%;
     border-spacing: 0 .7em;
@@ -17,9 +21,11 @@
     border-top-right-radius: .5em;
 }
 
-.table th, td {
+.table th,
+td {
     padding: .5em .8em;
     text-align: left;
+    white-space: nowrap;
 }
 
 .table th:not(:first-child):not(:last-child),
@@ -43,9 +49,24 @@
 
 .table th svg {
     margin-left: .5em;
-    
+
 }
 
 .table td svg {
     cursor: pointer;
+}
+
+@media (max-width: 1200px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width : 768px) {
+    .table *{
+        font-size: .9rem;
+    }
+
+    .table th,
+    .table td {
+        text-align: left;
+    }
 }

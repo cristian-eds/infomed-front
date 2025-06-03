@@ -115,7 +115,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="conclusionDayHour">Data e hora que foi tomado:</label>
+                                <label htmlFor="conclusionDayHour">Quando foi tomado:</label>
                                 <FormInputGroup>
                                     <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
                                 </FormInputGroup>

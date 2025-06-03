@@ -21,7 +21,7 @@
     height: 50%;
     width: 55%;
     background-color: #252424f7;
-} 
+}
 
 .modal_content * {
     color: rgb(255, 255, 255);
@@ -127,3 +127,29 @@ input:not([disabled]) {
     cursor: pointer;
 }
 
+
+@media (max-width: 1200px) {}
+
+@media (max-width: 992px) {
+    
+}
+
+@media (max-width : 768px) {
+    .modal_content {
+        width: 90%;
+    }
+
+    .medication_form {
+        width: 100%;
+        margin: 0 auto;
+        padding: 1em .5em;
+    }
+
+    .form_row * {
+        font-size: .8rem;
+    }
+
+    .input_group {
+        width: 57%;
+    }
+}

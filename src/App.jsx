@@ -12,14 +12,20 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './pages/Profile/Profile';
 import Person from './pages/Person/Person';
 import PersonDetails from './pages/Person/PersonDetails';
+import NavbarPhone from './components/Navbar/NavbarPhone';
 
 function App() {
 
   const {user, loading , role, error, login, logout, register} = useContext(AuthContext);
+
+  const width = window.innerWidth;
+
+  console.log(width);
  
   return (
   <BrowserRouter>
-    {user &&  <Navbar logout={logout} role={role} />}
+    {user && width >= 768 && <Navbar logout={logout} role={role} />}
+    {user && width < 768 && <NavbarPhone /> }
     <Routes>
       <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>

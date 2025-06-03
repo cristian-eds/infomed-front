@@ -112,7 +112,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="person">Pessoa vínculada:</label>
+                                <label htmlFor="person">Pessoa vinculada:</label>
                                 <FormInputGroup>
                                     <select name="person" id="person" value={idPerson} onChange={(e) => setIdPerson(e.target.value)}>
                                         <option value="">Selecione</option>
