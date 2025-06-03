@@ -8,7 +8,7 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 
 import styles from './Person.module.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePerson, fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
+import { changeFieldSort, changeTypeSort, deletePerson, fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
 import ModalAddPerson from '../../components/Modal/ModalAddPerson'
 import { formatDate } from '../../utils/formatterDates'
 import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
@@ -30,7 +30,6 @@ const Person = () => {
 
     const { personList, sort, loading, page } = useSelector(state => state.person);
 
-
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
@@ -42,7 +41,8 @@ const Person = () => {
     }, [dispatch, sort, medicine])
 
     const generateItems = () => {
-        return personList.map((person) => (
+        const listSorted = sortList(personList);
+        return listSorted.map((person) => (
             <tr key={person.id}>
                 <td>{person.name}</td>
                 <td>{person.totalMedicines}</td>
@@ -50,12 +50,46 @@ const Person = () => {
                 <td className='pointer' onClick={() => openModalNextMedicineItem(person)}>{person.nextMedicine && formatDate(person.nextMedicine.dayHour)}</td>
                 <td>
                     <Link to={`/person/${person.id}`}>
-                        <MdEdit size={20}/>
+                        <MdEdit size={20} />
                     </Link>
-                    <MdDelete size={20} onClick={() => handleOpenModalDelete(person)}/>
+                    <MdDelete size={20} onClick={() => handleOpenModalDelete(person)} />
                 </td>
             </tr>
         ))
+    }
+
+    const sortList = (listToSort) => {
+        let copyList = [...listToSort];
+        return copyList.sort(
+            (a, b) => {
+                let valueA = a[sort.fieldSort];
+                let valueB = b[sort.fieldSort];
+
+                if (sort.fieldSort === "nextMedicine") {
+                    valueA = new Date(a.nextMedicine?.dayHour).getTime();
+                    valueB = new Date(b.nextMedicine?.dayHour).getTime();
+
+                    if (valueA === null || Number.isNaN(valueA)) {
+                        return 1;
+                    }
+                    if (valueB === null || Number.isNaN(valueB)) {
+                        return -1;
+                    }
+                }
+
+                if (sort.fieldSort === "name") {
+                    if (sort.typeSort === "ASC") {
+                        return valueA.localeCompare(valueB);
+                    } else {
+                        return valueB.localeCompare(valueA);
+                    }
+                }
+
+                if (sort.typeSort === "ASC") return valueA - valueB;
+
+                return valueB - valueA;
+            }
+        )
     }
 
     const openModalNextMedicineItem = (person) => {
@@ -92,6 +126,14 @@ const Person = () => {
         setPersonToDelete(null);
     }
 
+    const handleSort = (field) => {
+        if (field === sort.fieldSort) {
+            dispatch(changeTypeSort());
+        } else {
+            dispatch(changeFieldSort(field));
+        }
+    }
+
     if (loading) return <p>Carregando...</p>
 
     return (
@@ -105,7 +147,7 @@ const Person = () => {
                 </div>
             </header>
             <section>
-                <Table titles={titles} sort={sort} >
+                <Table titles={titles} sort={sort} handleSort={handleSort}>
                     {generateItems()}
                 </Table>
             </section>
@@ -128,7 +170,7 @@ const Person = () => {
                 setCloseModal={closeModalMedicine}
             />}
 
-            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: "+personToDelete.name+" ?"} object={personToDelete} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete}/> }
+            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: " + personToDelete.name + " ?"} object={personToDelete} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
 
         </div>
 

@@ -118,7 +118,14 @@ export const personSlice = createSlice({
         resetDetailsPerson: (state) => {
             state.detailsPerson = {}
             state.medicinesForPersonDetails = []
-        }
+        },
+        changeFieldSort: (state, action) => {
+            state.sort.fieldSort = action.payload;
+            state.sort.typeSort = "ASC";
+        },
+        changeTypeSort: (state) => {
+            state.sort.typeSort = state.sort.typeSort === "ASC" ? "DESC" : "ASC";
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -170,7 +177,9 @@ export const personSlice = createSlice({
 
 export const {
     incrementActualPage,
-    resetDetailsPerson
+    resetDetailsPerson,
+    changeFieldSort,
+    changeTypeSort
 } = personSlice.actions;
 
 export default personSlice.reducer;
