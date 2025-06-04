@@ -79,7 +79,19 @@
 
     .button_group {
         flex-direction: column;
-        gap: 2em;
+        gap: 1.5rem;
         align-items: center;
+        padding-top: .8rem;
     }
+
+    .button_input {
+        height: 2.25em;
+    }
+
+    .button_plus {
+        height: 1.8rem;
+        padding: .4rem .6rem;
+        width: 6rem;
+    }
+
 }

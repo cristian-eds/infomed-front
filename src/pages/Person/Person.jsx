@@ -141,7 +141,9 @@ const Person = () => {
             {showAddModal && <ModalAddPerson setShowModal={setShowAddModal} dispatch={dispatch} />}
             <header className={styles.header}>
                 <div></div>
-                <InputSearch />
+                <div className={styles.header_input}>
+                    <InputSearch />
+                </div>
                 <div style={{ justifySelf: 'end' }}>
                     <ButtonPlus action={() => setShowAddModal(true)} />
                 </div>

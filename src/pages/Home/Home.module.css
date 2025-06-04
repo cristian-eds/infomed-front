@@ -5,13 +5,17 @@
     align-items: center;
 }
 
+.header_input {
+    width: 40%;
+}
+
 .container_caption {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
 
-.container_table{
+.container_table {
     height: 90%;
 }
 
@@ -20,6 +24,10 @@
     .header {
         flex-direction: column;
         gap: 2em;
+    }
+
+    .header_input {
+        width: 90%;
     }
 
 }

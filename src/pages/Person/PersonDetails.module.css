@@ -46,3 +46,27 @@
     width: 100%;
     padding: .2em .7em;
 }
+
+@media (max-width : 768px) {
+    .container_info {
+        width: 95%;
+    }
+
+     .container_info h3 {
+        font-size: .9rem;
+        text-align: left;
+    }
+
+    .container_info p:last-of-type {
+        font-size: .9rem;
+    }
+
+    .form_row {
+        margin-bottom: .5rem;
+    }
+
+    .form_row label {
+        font-size: .8rem;
+        text-align: left;
+    }
+}

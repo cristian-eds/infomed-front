@@ -93,7 +93,9 @@ const Home = () => {
       <main className="container_main">
         <header className={styles.header}>
           <NextMedicine medicinesItems={medicinesItems} />
-          <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
+          <div className={styles.header_input}>
+            <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
+          </div>
         </header>
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>

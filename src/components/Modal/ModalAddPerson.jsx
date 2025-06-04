@@ -66,12 +66,12 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                     <FormModalRow>
                         <label htmlFor="phone">Telefone:</label>
                         <FormInputGroup>
-                            <input type="text" id="phone" placeholder="Insira o teledone da pessoa:" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                            <input type="text" id="phone" placeholder="Insira o telefone da pessoa:" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </FormInputGroup>
                     </FormModalRow>
 
                     <FormModalRow>
-                        <label htmlFor="birthDate">Data de Nascimento:</label>
+                        <label htmlFor="birthDate">Nascimento:</label>
                         <FormInputGroup>
                             <input type="date" id="birthDate" name="birthDate" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
                         </FormInputGroup>

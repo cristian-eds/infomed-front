@@ -15,3 +15,17 @@
     text-align: center;
 }
 
+@media (max-width : 768px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header div:first-of-type {
+        display: none;
+    }
+
+    .header_input {
+        width: 70%;
+    }
+}

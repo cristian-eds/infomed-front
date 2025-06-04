@@ -173,7 +173,7 @@ const Profile = ({ userContext }) => {
                 {changingPassword && generateInputsChangingPassword()}
                 {editing && generateButtons(handleUpdateUser, () => setEditing(false))}
                 {error && <p className={styles.container_profile_error}>{error}</p>}
-                {!editing && !changingPassword && <p onClick={() => setChangingPassword(true)}>Alterar senha</p>}
+                {!editing && !changingPassword && <p style={{textAlign: 'left'}} onClick={() => setChangingPassword(true)}>Alterar senha</p>}
 
             </form>
 

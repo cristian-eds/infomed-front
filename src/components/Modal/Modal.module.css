@@ -41,6 +41,10 @@
     grid-column: 2;
 }
 
+.modal_content_text {
+    padding-top: 1em;
+}
+
 .medication_form {
     width: 85%;
     margin: 0 auto;
@@ -135,7 +139,8 @@ input:not([disabled]) {
 }
 
 @media (max-width : 768px) {
-    .modal_content {
+    .modal_content,
+    .modal_content_minor {
         width: 90%;
     }
 
@@ -152,4 +157,9 @@ input:not([disabled]) {
     .input_group {
         width: 57%;
     }
+
+    .modal_content_header_text {
+        
+    }
+
 }

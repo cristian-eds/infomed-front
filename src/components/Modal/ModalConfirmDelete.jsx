@@ -15,7 +15,7 @@ const ModalConfirmDelete = ({ object, text, handleDelete, handleHiddenModalDelet
           <ArrowLeftButton actionClick={handleHiddenModalDelete} />
           <h1>{object.name}</h1>
         </header>
-        <div className={styles.modal_content_header_text} style={{padding: '2em'}}>
+        <div className={`${styles.modal_content_header_text} ${styles.modal_content_text}`}>
           <h2>{text}</h2>
           <ButtonGroup>
             <Button value="Confirmar" type="submit" variant="button_confirm" onClick={() => handleDelete()}/>

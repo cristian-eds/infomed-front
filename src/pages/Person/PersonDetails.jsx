@@ -115,7 +115,7 @@ const PersonDetails = () => {
             </header>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
-                    <h4>Informações da conta</h4>
+                    <h4>Informações</h4>
                     {<p onClick={() => setEditing(true)} className='pointer'>{editing ? "Editando informações" : "Editar informações"}</p>}
                 </div>
                 <div className={styles.form_row}>

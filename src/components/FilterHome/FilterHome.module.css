@@ -44,7 +44,8 @@
     padding-bottom: .4em;
 }
 
-.accordion_filters_itens {
+.accordion_filters_itens,
+.accordion_filters_itens_caption {
     display: flex;
     flex-direction: row;
     gap: .5em;
@@ -67,4 +68,44 @@
 
 .active {
     background-color: rgb(97, 182, 81);
+}
+
+.button_filter {
+    padding: .4rem .7rem;
+    border-radius: .2rem;
+    margin-top: .5rem;
+    width: 10rem;
+    align-self: center;
+    background-color: green;
+    border: none;
+}
+
+@media (max-width : 768px) {
+   
+    .container_accordion {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: .5rem;
+    }
+
+    .accordion_filters_itens {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .accordion_filters_itens div {
+        display: flex;
+        justify-content: space-between;
+        font-size: .8rem;
+    }
+   
+    .accordion_filters_itens_caption {
+        flex-direction: row;
+    }
+
+    .accordion_filters_itens div input {
+        width: 70%;
+    }
+
 }

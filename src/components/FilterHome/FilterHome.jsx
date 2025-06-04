@@ -5,6 +5,7 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { LuFilterX } from "react-icons/lu";
 import { useDispatch } from 'react-redux';
 import { resetFilters } from '../../slices/medicineItemSlice';
+import Button from '../Button/Button';
 
 const statusValues = {
     "TODOS": 'TODOS',
@@ -81,7 +82,7 @@ const FilterHome = ({ handleSearch, filters }) => {
                     </div>
                     <div className={styles.accordion_filters}>
                         <p>Status</p>
-                        <div className={styles.accordion_filters_itens}>
+                        <div className={styles.accordion_filters_itens_caption}>
                             <div className={`${styles.itens_caption} ${statusChecked === 'TODOS' && styles.active}`} onClick={() => setStatusChecked('TODOS')}>
                                 Todos
                             </div>
@@ -93,7 +94,8 @@ const FilterHome = ({ handleSearch, filters }) => {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleFilter}>Filtrar</button>
+
+                    <button onClick={handleFilter} className={styles.button_filter}>Filtrar</button>
                 </div>}
         </form>
     )
