@@ -7,11 +7,14 @@ import { RiMedicineBottleLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import ArrowLeftButton from '../Button/ArrowLeftButton';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const SideMenu = ({ closeMenu }) => {
 
     const navigate = useNavigate();
+
+    const {logout} = useContext(AuthContext);
 
     const navigateToLink = (link) => {
         navigate(link);
@@ -28,7 +31,7 @@ const SideMenu = ({ closeMenu }) => {
             </ul>
             <div>
                 <ul>
-                    <li><RiLogoutBoxLine /> Logout</li>
+                    <li onClick={logout}><RiLogoutBoxLine /> Logout</li>
                 </ul>
             </div>
         </div>

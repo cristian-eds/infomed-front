@@ -14,7 +14,7 @@ const NavbarPhone = () => {
     }
     return (
         <nav className={styles.navbar}>
-            <button onClick={handleShowMenu}><FiMenu /></button>
+            <button onClick={handleShowMenu}><FiMenu size={20}/></button>
             <span>InfoMed</span>
             {showMenu && <SideMenu closeMenu={() => setShowMenu(false)}/> }
         </nav>

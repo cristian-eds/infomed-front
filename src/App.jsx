@@ -19,8 +19,6 @@ function App() {
   const {user, loading , role, error, login, logout, register} = useContext(AuthContext);
 
   const width = window.innerWidth;
-
-  console.log(width);
  
   return (
   <BrowserRouter>
