@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { requestConfig } from "../utils/requests";
+import { API_URL, requestConfig } from "../utils/requests";
 
 const initialState = {
     medicines: [],
@@ -27,7 +27,7 @@ export const fetchMoreMedicinesUser = createAsyncThunk(
     'medicine/fetchMoreMedicines',
     async (pagination) => {
         const config = requestConfig("GET");
-        const res = await fetch(`http://localhost:8080/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+        const res = await fetch(`${API_URL}/medicine?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
 
         return res;
@@ -38,7 +38,7 @@ export const searchMedicinesUser = createAsyncThunk(
     'medicine/searchMedicines',
     async (filters) => {
         const config = requestConfig("GET");
-        const res = await fetch(`http://localhost:8080/medicine?name=${filters.name}&actualPage=${filters.actualPage}&sizePage=${filters.sizePage}`, config)
+        const res = await fetch(`${API_URL}/medicine?name=${filters.name}&actualPage=${filters.actualPage}&sizePage=${filters.sizePage}`, config)
             .then(res => res.json());
 
         return res;
@@ -49,7 +49,7 @@ export const deleteMedicine = createAsyncThunk(
     'medicine/deleteMedicine',
     async (id) => {
         const config = requestConfig("DELETE");
-        const res = await fetch("http://localhost:8080/medicine/" + id, config)
+        const res = await fetch(`${API_URL}/medicine/` + id, config)
             .then(res => res);
 
         if (res.status == 200) return id;
@@ -62,7 +62,7 @@ export const createMedicine = createAsyncThunk(
     'medicine/createMedicine',
     async (data, {getState, dispatch}) => {
         const config = requestConfig("POST", data);
-        const res = await fetch("http://localhost:8080/medicine", config)
+        const res = await fetch(`${API_URL}/medicine`, config)
             .then(res => res)
             .catch(err => err);
 
@@ -77,7 +77,7 @@ export const updateMedicine = createAsyncThunk(
     'medicine/updateMedicine',
     async (data) => {
         const config = requestConfig("PUT",data);
-        const res = await fetch("http://localhost:8080/medicine/" + data.id,config)
+        const res = await fetch(`${API_URL}/medicine/` + data.id,config)
             .then(res=>res)
 
         return res.json();

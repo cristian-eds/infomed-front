@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { requestConfig } from "../utils/requests";
+import { API_URL, requestConfig } from "../utils/requests";
 
 const initialState = {
     logs: [],
@@ -18,7 +18,7 @@ export const fetchLogs = createAsyncThunk(
     async (pagination) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/log?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+        const res = await fetch(`${API_URL}/log?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
         return res;
     }
@@ -29,7 +29,7 @@ export const fetchMoreLogs = createAsyncThunk(
     async (pagination) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/log?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
+        const res = await fetch(`${API_URL}/log?actualPage=${pagination.actualPage}&sizePage=${pagination.sizePage}`, config)
             .then(res => res.json());
         return res;
     }

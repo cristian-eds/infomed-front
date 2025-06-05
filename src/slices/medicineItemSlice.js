@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { requestConfig } from "../utils/requests";
-
-const url = 'http://192.168.0.112:8080';
+import { API_URL, requestConfig } from "../utils/requests";
 
 const initialState = {
     medicinesItems: [],
@@ -44,7 +42,7 @@ export const searchCustomMedicinesItemUser = createAsyncThunk(
             }
         }
 
-        const res = await fetch(`${url}/medicine/item?` + searchParam.toString() + "&" + textSort, config)
+        const res = await fetch(`${API_URL}/medicine/item?` + searchParam.toString() + "&" + textSort, config)
             .then(res => res.json());
 
         return res;
@@ -55,7 +53,7 @@ export const createMedicine = createAsyncThunk(
     'medicineItems/createMedicine',
     async (data, {getState, dispatch}) => {
         const config = requestConfig("POST", data);
-        const res = await fetch(url+"/medicine/item", config)
+        const res = await fetch(API_URL+"/medicine/item", config)
             .then(res => res)
             .catch(err => err);
 
@@ -71,7 +69,7 @@ export const alterStatusMedicineItem = createAsyncThunk(
     'medicineItems/alterStatus',
     async (id) => {
         const config = requestConfig("PUT");
-        const res = await fetch(url+"/medicine/item/" + id + "/status", config)
+        const res = await fetch(API_URL+"/medicine/item/" + id + "/status", config)
             .then(res => res)
             .catch(err => err);
 
@@ -83,7 +81,7 @@ export const updateMedicineItem = createAsyncThunk(
     'medicineItems/updateMedicineItem',
     async (data) => {
         const config = requestConfig("PUT", data);
-        const res = await fetch(url+"/medicine/item/" + data.id, config)
+        const res = await fetch(API_URL+"/medicine/item/" + data.id, config)
             .then(res => res.json())
             .catch(err => err);
 
@@ -95,7 +93,7 @@ export const deleteMedicineItem = createAsyncThunk(
     'medicineItems/deleteMedicineItem',
     async (id, {getState, dispatch}) => {
         const config = requestConfig("DELETE");
-        const res = await fetch(url+"/medicine/item/" + id, config)
+        const res = await fetch(API_URL+"/medicine/item/" + id, config)
             .then(res => res);
 
         if (res.status === 204) {
@@ -110,7 +108,7 @@ export const getNextMedicineItem = createAsyncThunk(
     'medicinesItems/nextMedicineItem',
     async () => {
         const config = requestConfig("GET");
-        const res = await fetch(url+"/medicine/item/next", config)
+        const res = await fetch(API_URL+"/medicine/item/next", config)
             .then(res => res);
 
         if (res.status === 204) return null;

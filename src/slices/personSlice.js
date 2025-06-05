@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { requestConfig } from "../utils/requests";
+import { API_URL, requestConfig } from "../utils/requests";
 
 
 const initialState = {
@@ -24,7 +24,7 @@ export const fetchPerson = createAsyncThunk(
     async (_, { getState }) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person?actualPage=${0}&sizePage=${getState().person.page.size}`, config)
+        const res = await fetch(`${API_URL}/person?actualPage=${0}&sizePage=${getState().person.page.size}`, config)
             .then(res => res.json());
 
         return res;
@@ -37,7 +37,7 @@ export const fetchMorePerson = createAsyncThunk(
     async (_, { getState }) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person?actualPage=${getState().person.page.number}&sizePage=${getState().person.page.size}`, config)
+        const res = await fetch(`${API_URL}/person?actualPage=${getState().person.page.number}&sizePage=${getState().person.page.size}`, config)
             .then(res => res.json());
 
         return res;
@@ -49,7 +49,7 @@ export const createPerson = createAsyncThunk(
     async (data) => {
         const config = requestConfig("POST", data);
 
-        const res = await fetch(`http://localhost:8080/person`, config)
+        const res = await fetch(`${API_URL}/person`, config)
             .then(res => res.json());
 
         return res;
@@ -61,7 +61,7 @@ export const fetchDetailsPerson = createAsyncThunk(
     async (id) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person/` + id, config)
+        const res = await fetch(`${API_URL}/person/` + id, config)
             .then(res => res.json());
 
         return res;
@@ -73,7 +73,7 @@ export const fetchMedicinesForDetailsPerson = createAsyncThunk(
     async (id) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/person/` + id + "/medicines", config)
+        const res = await fetch(`${API_URL}/person/` + id + "/medicines", config)
             .then(res => res.json());
 
         return res;
@@ -85,7 +85,7 @@ export const updatePerson = createAsyncThunk(
     async (data) => {
         const config = requestConfig("PUT", data);
 
-        const res = await fetch(`http://localhost:8080/person/` + data.id, config)
+        const res = await fetch(`${API_URL}/person/` + data.id, config)
             .then(res => res.json());
 
         return res;
@@ -97,7 +97,7 @@ export const deletePerson = createAsyncThunk(
     async (id) => {
         const config = requestConfig("DELETE");
 
-        const res = await fetch(`http://localhost:8080/person/` + id, config)
+        const res = await fetch(`${API_URL}/person/` + id, config)
             .then(res => res);
 
         if (res.status === 204) {

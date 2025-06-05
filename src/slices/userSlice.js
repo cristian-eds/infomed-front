@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { requestConfig } from "../utils/requests";
+import { API_URL, requestConfig } from "../utils/requests";
 
 const initialState = {
     user: {},
@@ -13,7 +13,7 @@ export const fetchUser = createAsyncThunk(
     async (email) => {
         const config = requestConfig("GET");
 
-        const res = await fetch(`http://localhost:8080/users?email=${email}`, config)
+        const res = await fetch(`${API_URL}/users?email=${email}`, config)
             .then(res => res.json());
 
         return res;
@@ -26,7 +26,7 @@ export const changeUserPassword = createAsyncThunk(
     
         const config = requestConfig("PATCH", data.atualization);
         
-        const res = await fetch(`http://localhost:8080/users/${data.id}`, config)
+        const res = await fetch(`${API_URL}/users/${data.id}`, config)
             .then(res => res);
 
         if (res.status == 400) {
@@ -45,7 +45,7 @@ export const updateUser = createAsyncThunk(
     async (data) => {
         const config = requestConfig("PUT",data.user);
 
-        const res = await fetch(`http://localhost:8080/users/${data.id}`, config)
+        const res = await fetch(`${API_URL}/users/${data.id}`, config)
             .then(res => res);
 
         if (res.status == 200) data.handleSuccesUpdate();
