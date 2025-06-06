@@ -5,6 +5,9 @@ import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
 import ArrowDownButton from '../../components/Button/ArrowDownButton';
 import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
+import ButtonPlus from '../../components/Button/ButtonPlus';
+import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
+import ModalEditMedicine from '../../components/Modal/ModalEditMedicine';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
@@ -13,9 +16,6 @@ import { changeFieldSort, changeTypeSort, changeValueFieldFilter, createMedicine
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
-import ButtonPlus from '../../components/Button/ButtonPlus';
-import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
-import ModalEditMedicine from '../../components/Modal/ModalEditMedicine';
 
 const titles = [
     { name: "Nome", field: "name" },

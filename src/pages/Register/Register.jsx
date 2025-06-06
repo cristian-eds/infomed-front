@@ -6,8 +6,8 @@ import logo from '../../assets/Infomed.png'
 import styles from '../Login/Login.module.css'
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
-import { toast, ToastContainer } from 'react-toastify';
 
+import { toast, ToastContainer } from 'react-toastify';
 
 const Register = ({ register, loading }) => {
 

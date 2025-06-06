@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import RowTableMedicineItem from '../../components/RowTableMedicineItem/RowTableMedicineItem';

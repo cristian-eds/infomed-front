@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router'
 
 import InputSearch from '../../components/InputSearch/InputSearch'
 import ButtonPlus from '../../components/Button/ButtonPlus'
 import Table from '../../components/Table/Table'
+import ModalAddPerson from '../../components/Modal/ModalAddPerson'
+import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
+import ArrowDownButton from '../../components/Button/ArrowDownButton'
+import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete'
 
 import { MdDelete, MdEdit } from 'react-icons/md'
 
-import styles from './Person.module.css';
-import { useDispatch, useSelector } from 'react-redux'
 import { changeFieldSort, changeTypeSort, deletePerson, fetchMorePerson, fetchPerson, incrementActualPage } from '../../slices/personSlice'
-import ModalAddPerson from '../../components/Modal/ModalAddPerson'
+
 import { formatDate } from '../../utils/formatterDates'
-import ModalEditMedicineItem from '../../components/Modal/ModalEditMedicineItem'
-import ArrowDownButton from '../../components/Button/ArrowDownButton'
-import { Link } from 'react-router'
-import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete'
+
+import styles from './Person.module.css';
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -134,8 +136,6 @@ const Person = () => {
         }
     }
 
-    if (loading) return <p>Carregando...</p>
-
     return (
         <div className="container_main">
             {showAddModal && <ModalAddPerson setShowModal={setShowAddModal} dispatch={dispatch} />}
@@ -149,9 +149,11 @@ const Person = () => {
                 </div>
             </header>
             <section>
-                <Table titles={titles} sort={sort} handleSort={handleSort}>
-                    {generateItems()}
-                </Table>
+                {loading ? <p>Carregando...</p> :
+                    <Table titles={titles} sort={sort} handleSort={handleSort}>
+                        {generateItems()}
+                    </Table>
+                }
             </section>
 
             <footer className={styles.footer_person}>
