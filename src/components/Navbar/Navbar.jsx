@@ -6,7 +6,7 @@ import { NavLink } from 'react-router'
 const Navbar = ({logout, role}) => {
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} id={styles.navbar}>
       <span>InfoMed</span>
       <div className={styles.navbar__itens}>
         <NavLink to="/" activeClassName="active">Home</NavLink>

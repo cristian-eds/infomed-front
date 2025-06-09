@@ -13,7 +13,7 @@ const NavbarPhone = () => {
         setShowMenu(!showMenu);
     }
     return (
-        <nav className={styles.navbar}>
+        <nav className={styles.navbar} id={styles.navbar_phone}>
             <button onClick={handleShowMenu}><FiMenu size={20}/></button>
             <span>InfoMed</span>
             {showMenu && <SideMenu closeMenu={() => setShowMenu(false)}/> }
