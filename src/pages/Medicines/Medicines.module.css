@@ -1,3 +1,8 @@
+.medicines h3,
+.medicines p {
+    color: var(--text-title-color);
+}
+
 .footer_medicines {
     padding-top: .8em;
     flex-direction: row;

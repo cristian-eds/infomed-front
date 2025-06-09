@@ -3,9 +3,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(17, 180, 101);
+    background-color: var(--primary-color);
     height: 3.5em;
     padding: .5em 5em;
+}
+
+.navbar * {
+    color: var(--text-title-color);
 }
 
 .navbar span {
@@ -19,7 +23,6 @@
 }
 
 .navbar__itens a {
-    color: rgb(231, 231, 231);
     font-size: 1em;
     font-weight: bold;
     cursor: pointer;
@@ -27,8 +30,9 @@
     position: relative;
 }
 
-.navbar__itens a:hover, .navbar button:hover {
-    color: rgb(251, 237, 237);
+.navbar__itens a:hover,
+.navbar button:hover {
+    color: var(--text-title-color);
     transform: scale(1.05);
 }
 
@@ -44,5 +48,3 @@
         display: none;
     }
 }
-
-

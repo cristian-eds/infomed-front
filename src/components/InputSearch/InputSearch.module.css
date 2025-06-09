@@ -1,5 +1,6 @@
 .search_input {
     position: relative;
+
 }
 
 .search_input input {
@@ -7,6 +8,7 @@
     width: 100%;
     border-radius: .7em;
     padding: .5em .7em;
+    background-color: var(--background-input-color);
 }
 
 .search_input__icon {
@@ -16,4 +18,5 @@
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
+    color: var(--text-title-color);
 }

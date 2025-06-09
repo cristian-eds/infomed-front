@@ -165,7 +165,7 @@ const Medicines = () => {
             <header className={styles.header_medicines}>
                 <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading} />
             </header>
-            <div>
+            <div className={styles.medicines}>
                 {loading ? <p>Loading...</p> : <>
                     <div className={styles.container_flex}>
                         <h3>Histórico medicamentos...</h3>

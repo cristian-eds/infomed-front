@@ -14,6 +14,10 @@
     cursor: pointer;
 }
 
+.text_title {
+    color: var(--text-title-color);
+}
+
 .control_accordion {
     display: flex;
     flex-direction: row;
@@ -33,7 +37,7 @@
     width: 90%;
     border: 1px solid green;
     border-radius: .3em;
-    background-color: rgba(68, 74, 67, 0.726);
+    background-color: var(--second-background-color);
     padding: .4em;
 }
 
@@ -44,6 +48,10 @@
     padding-bottom: .4em;
 }
 
+.accordion_filters * {
+    color: var(--text-title-color);
+}
+
 .accordion_filters_itens,
 .accordion_filters_itens_caption {
     display: flex;
@@ -52,7 +60,7 @@
 }
 
 .accordion_filters_itens input {
-    background-color: rgb(93, 93, 93);
+    background-color: var(--background-input-color);
     margin-left: .2em;
 }
 
@@ -78,6 +86,7 @@
     align-self: center;
     background-color: green;
     border: none;
+     color: var(--text-title-color);
 }
 
 @media (max-width : 768px) {

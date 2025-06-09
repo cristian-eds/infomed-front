@@ -2,11 +2,13 @@
     display: flex;
     justify-content: space-between;
     text-align: center;
+    color: var(--text-title-color);
 }
 
 .container_info {
     width: 60%;
     margin: 0 auto;
+    color: var(--text-color);
 }
 
 .container_info_title {
@@ -43,6 +45,7 @@
 }
 
 .container_info_row input {
+    
     width: 100%;
     padding: .2em .7em;
 }

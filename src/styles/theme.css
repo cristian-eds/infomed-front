@@ -1,0 +1,42 @@
+:root {
+    /* Theme Dark (padrão) */
+    --primary-color: rgba(27, 197, 58, 0.859);
+    --secondary-color: #016909;
+    --background-color: #161616eb;
+    --second-background-color: rgb(52, 54, 51);
+
+    --placeholder-color: #cac9c9;
+    --background-input-color: #4c4c4cb3;
+
+    --text-color: rgb(219, 219, 219);
+    --text-title-color: rgb(232, 231, 231);
+
+    --text-disabled: rgb(94, 94, 94);
+    --background-disabled: rgb(30, 30, 30);
+
+}
+
+/* Theme light */
+body.light-theme {
+    --primary-color: rgb(47, 190, 37);
+    --secondary-color: #189322;
+    --background-color: #dce3db;
+    --second-background-color: #bdcbba;
+
+    --placeholder-color: #eae4e4;
+    --background-input-color: #609d5a;
+
+    --text-color: rgb(16, 92, 1);
+    --text-title-color: rgb(11, 59, 1);
+    --text-disabled: rgb(140, 140, 140);
+
+    --background-disabled: rgb(192, 188, 188);
+
+}
+
+body.halloween-theme {
+    --primary-color: #ff4500;
+    --secondary-color: #5d2b00;
+    --background-color: #1a0a00;
+    --text-color: #ffa500;
+}

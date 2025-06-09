@@ -6,6 +6,8 @@ import { differenceInMinutes } from 'date-fns';
 
 import ModalEditMedicineItem from '../Modal/ModalEditMedicineItem';
 
+import styles from './NextMedicine.module.css'
+
 const NextMedicine = ({ medicinesItems }) => {
 
     const dispatch = useDispatch();
@@ -43,14 +45,14 @@ const NextMedicine = ({ medicinesItems }) => {
     return (
         <div>
             {nextMedicineItem && <ModalEditMedicineItem dispatch={dispatch} medicine={nextMedicineItem} showModal={showModalEditItem} setCloseModal={()=> setShowModalEditItem(false)}/>}
-            <h2>Hoje: {date && date.toLocaleDateString()}</h2>
+            <h2 className={styles.title_text}>Hoje: {date && date.toLocaleDateString()}</h2>
             {Object.keys(nextMedicineItem).length > 0 ?
                 <div onClick={() => setShowModalEditItem(true)} style={{cursor: 'pointer'}}>
-                    <p>{verifyTimeToNextMedicine(nextMedicineItem)}</p>
+                    <p className={styles.title_text}>{verifyTimeToNextMedicine(nextMedicineItem)}</p>
 
                 </div>
                 :
-                <p>Não há nenhum próximo medicamento...</p>}
+                <p className={styles.title_text}>Não há nenhum próximo medicamento...</p>}
         </div>
     )
 }

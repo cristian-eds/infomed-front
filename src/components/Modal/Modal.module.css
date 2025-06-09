@@ -13,18 +13,14 @@
     margin: 5% auto;
     height: 80%;
     width: 65%;
-    background-color: #252424f7;
+    background-color: var(--second-background-color);
 }
 
 .modal_content_minor {
     margin: 5% auto;
     height: 50%;
     width: 55%;
-    background-color: #252424f7;
-}
-
-.modal_content * {
-    color: rgb(255, 255, 255);
+    background-color: var(--second-background-color);
 }
 
 .modal_content_header {
@@ -32,8 +28,12 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
     padding: 1em;
-    background-color: #016704d8;
+    background-color: var(--secondary-color);
     text-align: center;
+}
+
+.modal_content_header * {
+    color: var(--text-title-color);
 }
 
 .modal_content_header_text {
@@ -61,6 +61,7 @@
     border-radius: .4em;
     padding-left: .4em;
     min-height: 2.45em;
+    color: var(--text-color);
 }
 
 .form_row label {
@@ -72,10 +73,15 @@
     display: flex;
     width: 50%;
     align-items: center;
-    background-color: #1c8a25;
+    background-color: var(--secondary-color);
     border-radius: .4em;
     padding: .3em;
     min-height: 40px;
+}
+
+.input_group input,
+.input_group select {
+    color: var(--placeholder-color);
 }
 
 .input_group.disabled {
@@ -94,9 +100,10 @@
 .input_group select {
     border: none;
     background-color: transparent;
+    font-style: italic;
     width: 100%;
     padding: .3em;
-    font-size: 1.2em;
+    font-size: 1.1rem;
 }
 
 input[type="text"]:focus,

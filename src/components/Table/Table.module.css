@@ -2,6 +2,10 @@
     overflow-x: auto;
 }
 
+.container_table * {
+    color: var(--text-title-color);
+}
+
 .table {
     width: 100%;
     border-spacing: 0 .7em;
@@ -39,11 +43,11 @@ td {
 }
 
 .table td {
-    background-color: #1c8a25;
+    background-color: var(--primary-color);
 }
 
 .table th {
-    background-color: #0a5810;
+    background-color: var(--secondary-color);
     cursor: pointer;
 }
 

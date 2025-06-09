@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
 import styles from './FilterHome.module.css';
+
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { LuFilterX } from "react-icons/lu";
+
 import { useDispatch } from 'react-redux';
 import { resetFilters } from '../../slices/medicineItemSlice';
-import Button from '../Button/Button';
+
 
 const statusValues = {
     "TODOS": 'TODOS',
@@ -48,11 +51,11 @@ const FilterHome = ({ handleSearch, filters }) => {
         <form className={styles.caption_filter}>
             <div className={styles.caption_filter_header} >
                 <div onClick={() => setShowAccordionFilters(!showAccordionFilters)} className={styles.control_accordion}>
-                    <p>Filtros</p>
+                    <p className={styles.text_title}>Filtros</p>
                     {showAccordionFilters ?
-                        <IoIosArrowUp />
+                        <IoIosArrowUp className={styles.text_title} />
                         :
-                        <IoIosArrowDown />
+                        <MdOutlineKeyboardArrowDown className={styles.text_title}/>
                     }
 
                 </div>

@@ -1,7 +1,9 @@
 .pagination {
     margin: 0 auto;
+    padding-bottom: 2em;
     width: 100%;
     text-align: center;
+
 }
 
 .pagination ul {
@@ -12,24 +14,27 @@
     display: inline;
     border: 1px solid green;
     padding: .4em;
-    color: white;
-    background-color: rgb(36, 34, 34);
+    background-color: var(--second-background-color);
+}
+
+.pagination ul li * {
+    color: var(--text-title-color);
 }
 
 .pagination ul li:not(.disabled):not(.active):hover {
-    background-color: rgb(8, 8, 8);
+    background-color: var(--secondary-color);
 }
 
 .pagination ul li.disabled {
-    background-color: rgb(58, 58, 58);
+    background-color: var(--background-disabled);
     pointer-events: none;
     cursor: default;
 }
 
-.pagination ul li.active {
-    background-color: rgb(15, 14, 14);
+.pagination ul li.disabled * {
+    color: var(--text-disabled);
 }
 
-.pagination ul li a{
-    color: white;
+.pagination ul li.active {
+    background-color: var(--secondary-color);
 }

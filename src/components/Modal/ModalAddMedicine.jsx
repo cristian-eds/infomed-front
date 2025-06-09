@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import styles from './Modal.module.css'
 
@@ -11,13 +13,12 @@ import FormModal from './FormModal/FormModal'
 import FormModalRow from './FormModal/FormModalRow'
 import FormInputGroup from './FormModal/FormInputGroup'
 import ModalContent from './FormModal/ModalContent'
+import MessageError from '../MessageError/MessageError'
 
 import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+
 import { fetchPerson } from '../../slices/personSlice'
-import MessageError from '../MessageError/MessageError'
 
 const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch }) => {
 
@@ -84,14 +85,14 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                             <FormModalRow>
                                 <label htmlFor="name">Nome:</label>
                                 <FormInputGroup>
-                                    <input type="text" id="name" name="name" placeholder="Nome medicamento" value={name} onChange={(e) => setName(e.target.value)} />
+                                    <input type="text" id="name" name="name" placeholder="Nome medicamento..." value={name} onChange={(e) => setName(e.target.value)} />
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
                                 <label htmlFor="frequence">Frequência:</label>
                                 <FormInputGroup>
-                                    <input type="number" id="frequence" name="frequence" placeholder="Frequência" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
+                                    <input type="number" id="frequence" name="frequence" placeholder="Frequência..." value={frequency} onChange={(e) => setFrequency(e.target.value)} />
                                     <span className="unit">hrs</span>
                                 </FormInputGroup>
                             </FormModalRow>
@@ -99,7 +100,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                             <FormModalRow>
                                 <label htmlFor="qtdDias">Qtd Dias:</label>
                                 <FormInputGroup>
-                                    <input type="number" id="qtdDias" name="qtdDias" placeholder="Quantidade dias" value={totalDays} onChange={(e) => setTotalDays(e.target.value)} />
+                                    <input type="number" id="qtdDias" name="qtdDias" placeholder="Quantidade dias..." value={totalDays} onChange={(e) => setTotalDays(e.target.value)} />
                                     <span className="unit">dias</span>
                                 </FormInputGroup>
                             </FormModalRow>

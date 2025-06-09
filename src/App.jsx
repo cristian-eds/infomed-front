@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { AuthContext } from './context/AuthContext';
 
 import './App.css'
+import './styles/theme.css'
 
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register';
