@@ -7,8 +7,11 @@ import { RiMedicineBottleLine } from "react-icons/ri";
 import { IoMdPeople } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { RiLogoutBoxLine } from "react-icons/ri";
+
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+
+import ControlTheme from '../ControlTheme/ControlTheme';
 
 const SideMenu = ({ closeMenu }) => {
 
@@ -31,6 +34,7 @@ const SideMenu = ({ closeMenu }) => {
             </ul>
             <div>
                 <ul>
+                    <li> <ControlTheme /> <p>Theme</p> </li>
                     <li onClick={logout}><RiLogoutBoxLine /> Logout</li>
                 </ul>
             </div>

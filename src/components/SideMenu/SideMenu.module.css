@@ -2,7 +2,7 @@
     position: absolute;
     width: 80%;
     height: 80%;
-    background-color: rgb(33, 108, 33);
+    background-color: var(--secondary-color);
     left: 0;
     top: 3.2em;
     z-index: 2;
@@ -13,6 +13,10 @@
     border-radius: 0 .5em .5em 0;
 }
 
+.container_menu * {
+    color: var(--text-title-color);
+}
+
 .container_menu ul li {
     display: flex;
     flex-direction: row;
@@ -21,7 +25,10 @@
     padding: .5em .2em;
     border-bottom: 1px solid rgb(220, 220, 220);
     font-size: 1.1em;
-    color: rgba(255, 255, 255, 0.892);
+}
+
+.container_menu ul li * {
+    color: var(--text-title-color);
 }
 
 .container_menu ul li:hover {

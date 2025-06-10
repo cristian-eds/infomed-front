@@ -4,9 +4,13 @@
     justify-content: space-between;
     align-content: center;
     align-items: center;
-    background-color: rgb(17, 180, 101);
+    background-color: var(--primary-color);
     height: 3.2em;
     padding: 1em;
+}
+
+.navbar * {
+    color: var(--text-title-color)
 }
 
 .navbar span {
@@ -25,5 +29,3 @@
         display: flex;
     }
 }
-
-
