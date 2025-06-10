@@ -1,0 +1,36 @@
+.container_theme {
+    display: flex;
+    justify-content: center;
+}
+
+.container_theme_item {
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    width: 1.7rem;
+    padding: .15em .1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-theme-inactive);
+}
+
+.container_theme_item.active {
+    background-color: var(--background-theme-active);
+}
+
+.container_theme_item.active svg {
+    transform: scale(1.15);
+}
+
+.container_theme_item:hover svg {
+    transform: scale(1.1);
+}
+
+.container_theme .container_theme_item:first-child {
+    border-radius: 50% 0 0 50%;
+    border-right: 1px solid white;
+}
+
+.container_theme .container_theme_item:last-child {
+    border-radius: 0 50% 50% 0;
+}
