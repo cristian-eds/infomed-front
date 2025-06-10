@@ -1,10 +1,12 @@
 .header {
     text-align: center;
+    color: var(--text-title-color);
 }
 
 .container_profile {
     width: 60%;
     margin: 0 auto;
+    color: var(--text-color);
 }
 
 .container_profile_title {
@@ -66,6 +68,13 @@
 .container_info_row input {
     width: 100%;
     padding: .2em .7em;
+    background-color: var(--background-input-color);
+    color: var(--placeholder-color);
+}
+
+.container_info_row input:disabled {
+    color: var(--text-disabled);
+    background-color: var(--background-disabled);
 }
 
 @media (max-width : 768px) {

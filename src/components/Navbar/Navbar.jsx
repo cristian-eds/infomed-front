@@ -1,24 +1,8 @@
-import React, { useEffect, useState } from 'react'
-
 import styles from './Navbar.module.css'
 import { NavLink } from 'react-router'
+import ControlTheme from '../ControlTheme/ControlTheme';
 
 const Navbar = ({logout, role}) => {
-
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    document.body.className = `${theme}-theme`
-  },[theme])
-
-  const handleTheme = () => {
-    if(theme === "dark") {
-      setTheme("light");
-    } else{
-      setTheme("dark");
-    }
-
-  }
 
   return (
     <nav className={styles.navbar} id={styles.navbar}>
@@ -29,9 +13,9 @@ const Navbar = ({logout, role}) => {
          {role === "ADMIN" && <NavLink to="/person" activeClassName="active">Pessoas</NavLink> }
         <NavLink to="/profile" activeClassName="active">Perfil</NavLink>
       </div>
-      <div >
+      <div className={styles.navbar__itens}>
         <button onClick={logout}>Logout</button>
-        <button onClick={handleTheme}>Tema</button>
+        <ControlTheme />
       </div>
     </nav>
   )

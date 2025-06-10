@@ -29,10 +29,6 @@
     padding-left: .6em;
 }   
 
-.form_row input {
-    border-radius: .3em;
-    border: none;
-}
 
 .form_row input:focus {
     outline: none;
@@ -45,9 +41,17 @@
 }
 
 .container_info_row input {
-    
     width: 100%;
     padding: .2em .7em;
+    border-radius: .3em;
+    border: none;
+    background-color: var(--background-input-color);
+    color: var(--placeholder-color);
+}
+
+.container_info_row input:disabled {
+    color: var(--text-disabled);
+    background-color: var(--background-disabled);
 }
 
 @media (max-width : 768px) {

@@ -37,7 +37,7 @@ const Login = ({ login }) => {
       <div className={styles.img}>
         <img src={logo} alt="Image Logo" />
       </div>
-      <h2>Login</h2>
+      <h2 className='title_text_color'>Login</h2>
       <form className={styles.login} onSubmit={handleLogin}>
         <input type="text" name="email" id="email" placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="password" name="password" id="" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />

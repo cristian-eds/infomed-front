@@ -67,6 +67,10 @@ a {
     gap: 1.1em;
 }
 
+.title_text_color {
+    color: var(--text-title-color);
+}
+
 @media (max-width: 1200px) {
     .container_main {
         padding: 1em 3em;

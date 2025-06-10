@@ -63,7 +63,7 @@ const Register = ({ register, loading }) => {
             <div className={styles.img}>
                 <img src={logo} alt="Image Logo" />
             </div>
-            <h2>Register</h2>
+            <h2 className='title_text_color'>Register</h2>
             <form className={styles.login} onSubmit={handleRegister}>
                 <div className={styles.roles}>
                     <div className={`${role === "USER" && styles.roles_itens__active} ${styles.roles_itens}`} onClick={() => setRole("USER")}>Usuário normal</div>

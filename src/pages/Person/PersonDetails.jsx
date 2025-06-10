@@ -194,7 +194,7 @@ const PersonDetails = () => {
                     <div className={styles.form_row}>
                         <label htmlFor="accessCode">Código acesso:</label>
                         <div className={styles.container_info_row}>
-                            <input type="text" id="namaccessCodee" name="accessCode" value={detailsPerson.accessCode || " "} readOnly disabled={!editing} />
+                            <input type="text" id="accessCodee" name="accessCode" value={detailsPerson.accessCode || " "} readOnly disabled={!editing} />
                         </div>
                     </div>
                 }
@@ -206,11 +206,11 @@ const PersonDetails = () => {
                 }
             </section>
             <section>
-                <h4>Lista de medicamentos...</h4>
+                <h4 className='title_text_color'>Lista de medicamentos...</h4>
                 <Table titles={titles} sort={{fieldSort,typeSort}} handleSort={handleSort} >
                     {generateItemsTable()}
                 </Table>
-                {medicinesForPersonDetails.length === 0 && <p style={{ textAlign: 'center' }}>Não há medicamentos...</p>}
+                {medicinesForPersonDetails.length === 0 && <p style={{ textAlign: 'center' }} className='title_text_color' >Não há medicamentos...</p>}
             </section>
             {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: " + detailsPerson.name + " ?"} object={detailsPerson} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
         </div>

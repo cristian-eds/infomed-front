@@ -5,14 +5,17 @@
     --background-color: #161616eb;
     --second-background-color: rgb(52, 54, 51);
 
-    --placeholder-color: #cac9c9;
-    --background-input-color: #4c4c4cb3;
+    --placeholder-color: #1f1f1f;
+    --background-input-color: rgb(197, 197, 197);
 
-    --text-color: rgb(219, 219, 219);
+    --text-color: rgb(204, 204, 204);
     --text-title-color: rgb(232, 231, 231);
 
-    --text-disabled: rgb(94, 94, 94);
+    --text-disabled: rgb(125, 125, 125);
     --background-disabled: rgb(30, 30, 30);
+
+    --background-theme-active: #033908;
+    --background-theme-inactive: rgba(181, 181, 181, 0.637);
 
 }
 
@@ -23,14 +26,16 @@ body.light-theme {
     --background-color: #dce3db;
     --second-background-color: #bdcbba;
 
-    --placeholder-color: #eae4e4;
-    --background-input-color: #609d5a;
+    --placeholder-color: #0c4406;
+    --background-input-color: #ededed;
 
     --text-color: rgb(16, 92, 1);
     --text-title-color: rgb(11, 59, 1);
-    --text-disabled: rgb(140, 140, 140);
 
+    --text-disabled: rgb(75, 75, 75);
     --background-disabled: rgb(192, 188, 188);
+
+    --background-theme-active: #f8f8f8;
 
 }
 
