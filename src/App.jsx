@@ -14,6 +14,7 @@ import Profile from './pages/Profile/Profile';
 import Person from './pages/Person/Person';
 import PersonDetails from './pages/Person/PersonDetails';
 import NavbarPhone from './components/Navbar/NavbarPhone';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       <Route path='/profile' element={!user ? <Login login={login}/> : <Profile userContext={user}/> }/>
       <Route path='/person' element={!user ? <Login login={login} /> : role === "ADMIN" && <Person />} />
       <Route path='/person/:id' element={!user ? <Login login={login} /> : role === "ADMIN" && <PersonDetails />} />
+      <Route path='*' element={!user ?  <Login login={login}/> : <NotFound />}/>
     </Routes>
   </BrowserRouter>
   )

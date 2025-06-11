@@ -1,0 +1,13 @@
+.content_not_found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    padding: 1em 0;
+}
+
+
+.content_not_found footer {
+    margin-top: 2.5rem;
+}
