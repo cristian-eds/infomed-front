@@ -77,6 +77,16 @@ const Medicines = () => {
         setShowModalEditMedicine(false);
     }
 
+    const handleDuplicateMedicine = (medicine) => {
+        setShowModalNewMedicine(true);
+        setMedicineToEdit(medicine);
+    }
+
+    const handleCloseModalNewMedicine = () => {
+        setShowModalNewMedicine(false);
+        setMedicineToEdit(null);
+    }
+
     const handleFetchMoreMedicines = () => {
         setActualPage(actualPage + 1);
         const pagination = {
@@ -160,8 +170,6 @@ const Medicines = () => {
 
     return (
         <main className="container_main">
-            <ModalAddMedicine showModal={showModalNewMedicine} setShowModal={setShowModalNewMedicine} actionToDispatch={createMedicine} dispatch={dispatch} />
-
             <header className={styles.header_medicines}>
                 <InputSearch handleSearch={handleSearchMedicines} searchText={searchText} setSearchText={setSearchText} loading={loading} />
             </header>
@@ -190,14 +198,25 @@ const Medicines = () => {
                 </>}
             </div>
 
-            {showModalEditMedicine && 
-                <ModalEditMedicine 
-                    showModal={showModalEditMedicine} 
-                    hiddenModal={handleHiddenModalEdit} 
-                    medicine={medicineToEdit} 
+            {showModalNewMedicine &&  <ModalAddMedicine 
+                showModal={showModalNewMedicine} 
+                setShowModal={setShowModalNewMedicine} 
+                actionToDispatch={createMedicine} 
+                dispatch={dispatch} 
+                handleCloseModal={handleCloseModalNewMedicine}
+                medicineDuplicate={medicineToEdit}
+            />}
+
+            {showModalEditMedicine &&
+                <ModalEditMedicine
+                    showModal={showModalEditMedicine}
+                    hiddenModal={handleHiddenModalEdit}
+                    medicine={medicineToEdit}
                     dispatch={dispatch}
                     success={success}
-                    />}
+                    handleDuplicateMedicine={handleDuplicateMedicine}
+
+                />}
 
             {showModalDelete &&
                 <ModalConfirmDelete

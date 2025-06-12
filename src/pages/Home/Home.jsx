@@ -86,7 +86,7 @@ const Home = () => {
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} setShowModal={setShowModal} actionToDispatch={createMedicine} dispatch={dispatch} />
+      <ModalAddMedicine showModal={showModal} handleCloseModal={() => setShowModal(false)} actionToDispatch={createMedicine} dispatch={dispatch} />
       {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
 
       <main className="container_main">

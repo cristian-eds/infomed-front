@@ -20,13 +20,13 @@ import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 import { fetchPerson } from '../../slices/personSlice'
 
-const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch }) => {
+const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispatch, medicineDuplicate }) => {
 
-    const [name, setName] = useState("");
-    const [frequency, setFrequency] = useState("");
-    const [totalDays, setTotalDays] = useState("");
+    const [name, setName] = useState(medicineDuplicate?.name ?? "");
+    const [frequency, setFrequency] = useState(medicineDuplicate?.frequencyHours || "");
+    const [totalDays, setTotalDays] = useState(medicineDuplicate?.totalDays || "");
     const [initialDate, setInitialDate] = useState(format(new Date(), 'yyyy-MM-dd hh:mm'));
-    const [idPerson, setIdPerson] = useState("");
+    const [idPerson, setIdPerson] = useState(medicineDuplicate?.person.id ?? "");
 
     const [validationErros, setValidationErros] = useState(null);
 
@@ -49,7 +49,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
         }
 
         dispatch(actionToDispatch(newMedicine));
-        setShowModal(false);
+        handleCloseModal();
     }
 
     const validateFields = () => {
@@ -77,7 +77,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
                 <Modal >
                     <ModalContent>
                         <ModalHeader>
-                            <ArrowLeftButton actionClick={() => setShowModal(false)} />
+                            <ArrowLeftButton actionClick={handleCloseModal} />
                             <h2 className={styles.modal_content_header_text}>Nova Medicação</h2>
                         </ModalHeader>
 
@@ -128,7 +128,7 @@ const ModalAddMedicine = ({ showModal, setShowModal, actionToDispatch, dispatch 
 
                             <ButtonGroup>
                                 <Button value="Cadastrar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={() => setShowModal(false)} variant="button_cancel" />
+                                <Button value="Cancelar" type="button" onClick={handleCloseModal} variant="button_cancel" />
                             </ButtonGroup>
                         </FormModal>
                     </ModalContent>

@@ -1,4 +1,12 @@
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { deleteMedicine, resetSuccess, updateMedicine } from '../../slices/medicineSlice'
+
 import styles from './Modal.module.css'
+
+import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
+
+import useToggle from '../../hooks/useToggle'
 
 import ArrowLeftButton from '../Button/ArrowLeftButton'
 import DeleteButton from '../Button/DeleteButton'
@@ -11,19 +19,17 @@ import ModalContent from './FormModal/ModalContent'
 import Modal from './Modal'
 import ModalHeader from './ModalHeader'
 import ModalConfirmDelete from './ModalConfirmDelete'
-
-import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
-
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { deleteMedicine, resetSuccess, updateMedicine } from '../../slices/medicineSlice'
 import MessageError from '../MessageError/MessageError'
+import DuplicateButton from '../Button/DuplicateButton'
+import ModalConfirm from './ModalConfirm'
 
-const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success }) => {
+const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success, handleDuplicateMedicine }) => {
 
     const [name, setName] = useState(medicine.name);
     const [idPerson, setIdPerson] = useState(medicine.person?.id);
     const [showModalDelete, setShowModalDelete] = useState(false);
+
+    const {state: showModalConfirmDuplicate, toggle} = useToggle();
 
     const [validationErros, setValidationErros] = useState(null);
 
@@ -32,7 +38,7 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
     const handleSubmit = (e) => {
         e.preventDefault();
         const erros = validateFields();
-        if(erros) return;
+        if (erros) return;
         const updatedMedicine = {
             id: medicine.id,
             name,
@@ -51,10 +57,10 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
     const validateFields = () => {
 
         let err = "";
-        if(name === null || name.length <= 1) {
+        if (name === null || name.length <= 1) {
             err = "Insira um nome válido";
         }
-        if(idPerson === null || idPerson.length == 0) {
+        if (idPerson === null || idPerson.length == 0) {
             err = "Selecione uma pessoa";
         }
 
@@ -67,6 +73,12 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
         setShowModalDelete(false);
     }
 
+    const handleDuplicate = () => {
+        toggle();
+        hiddenModal();
+        handleDuplicateMedicine(medicine);
+    }
+
     return (
         <>
             {showModal && <>
@@ -77,7 +89,10 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                             <div>
                                 <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                             </div>
-                            <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                            <div className={styles.actions_buttons}>
+                                <DuplicateButton actionClick={toggle}/>
+                                <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                            </div>
                         </ModalHeader>
                         <FormModal action={handleSubmit}>
                             <FormModalRow>
@@ -100,20 +115,20 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                             <FormModalRow>
                                 <label htmlFor="creationDate">Data criação:</label>
                                 <FormInputGroup disabled={true}>
-                                    <input type="datetime-local" id="creationDate" name="creationDate" value={convertToPatternLocalDateTime(medicine.registrationDate)} disabled className={styles.disabled}/>
+                                    <input type="datetime-local" id="creationDate" name="creationDate" value={convertToPatternLocalDateTime(medicine.registrationDate)} disabled className={styles.disabled} />
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="frequence">Frequência:</label>
                                 <FormInputGroup disabled={true}>
-                                    <input type="text" id="frequence" name="frequence" value={medicine.frequencyHours} disabled className={styles.disabled}/>
+                                    <input type="text" id="frequence" name="frequence" value={medicine.frequencyHours} disabled className={styles.disabled} />
                                     <span className="unit">hrs</span>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
                                 <label htmlFor="totDays">Total dias:</label>
-                                <FormInputGroup disabled={true}> 
-                                    <input type="text" id="totDays" name="totDays" value={medicine.totalDays} disabled className={styles.disabled}/>
+                                <FormInputGroup disabled={true}>
+                                    <input type="text" id="totDays" name="totDays" value={medicine.totalDays} disabled className={styles.disabled} />
                                     <span className="unit">dias</span>
                                 </FormInputGroup>
                             </FormModalRow>
@@ -127,6 +142,7 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                         </FormModal>
                     </ModalContent>
                 </Modal>
+
                 {showModalDelete &&
                     <ModalConfirmDelete
                         object={medicine}
@@ -134,6 +150,15 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                         text={"Confima a exclusão do medicamento?"}
                         handleHiddenModalDelete={() => setShowModalDelete(false)}
                     />}
+                {showModalConfirmDuplicate && 
+                    <ModalConfirm  
+                        object={medicine}
+                        handleConfirm={handleDuplicate}
+                        text={"Confirma duplicação de medicamento?"}
+                        handleHiddenModal={toggle}
+                    />
+                    
+                }
             </>}
         </>
     )

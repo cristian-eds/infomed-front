@@ -42,7 +42,7 @@
 }
 
 .button_cancel {
-    background-color: rgb(114, 132, 114);
+    background-color: rgb(147, 161, 147);
 }
 
 .button_back {
@@ -55,6 +55,10 @@
 
 .button:hover {
     background-color: rgb(208, 208, 208);
+}
+
+.button_duplicate {
+    background-color: rgb(130, 185, 120);
 }
 
 .button_plus {
