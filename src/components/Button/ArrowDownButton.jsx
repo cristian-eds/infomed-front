@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { IoIosArrowDown } from 'react-icons/io';
 
 import styles from './Button.module.css';

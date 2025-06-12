@@ -86,8 +86,9 @@
 }
 
 .input_group input,
-.input_group select {
-    color: var(--placeholder-color);
+.input_group select,
+.input_group input::placeholder {
+    color: var(--text-color);
 }
 
 .input_group.disabled {
@@ -148,7 +149,9 @@ input:not([disabled]) {
 @media (max-width: 1200px) {}
 
 @media (max-width: 992px) {
-    
+    .modal_content_minor {
+        width: 75%;
+    }
 }
 
 @media (max-width : 768px) {
@@ -169,10 +172,6 @@ input:not([disabled]) {
 
     .input_group {
         width: 57%;
-    }
-
-    .modal_content_header_text {
-        
     }
 
 }

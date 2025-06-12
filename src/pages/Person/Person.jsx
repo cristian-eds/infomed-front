@@ -35,6 +35,7 @@ const Person = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
+    
     const [medicine, setMedicine] = useState(null);
     const [personToDelete, setPersonToDelete] = useState(null);
 

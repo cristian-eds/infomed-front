@@ -90,7 +90,9 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                                 <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                                 <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
                             </div>
-                            <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                            <div className={styles.actions_buttons}>
+                                <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                            </div>
                         </ModalHeader>
                         <FormModal action={handleEdit}>
                             <FormModalRow>
