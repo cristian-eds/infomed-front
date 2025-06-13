@@ -27,13 +27,15 @@ const FilterHome = ({ handleSearch, filters }) => {
 
     const handleFilter = (e) => {
         const filters = {
-            conclusion: statusValues[statusChecked],
+            conclusion: statusChecked,
             initialDate,
             finalDate,
             actualPage: 0
         };
         handleSearch(e, filters)
     }
+
+    console.log(filters.conclusion)
 
     const verifyFiltersOn = () => {
         return statusChecked !== "TODOS" || initialDate || finalDate;
@@ -89,10 +91,10 @@ const FilterHome = ({ handleSearch, filters }) => {
                             <div className={`${styles.itens_caption} ${statusChecked === 'TODOS' && styles.active}`} onClick={() => setStatusChecked('TODOS')}>
                                 Todos
                             </div>
-                            <div className={`${styles.itens_caption} ${statusChecked === 'PENDING' && styles.active}`} onClick={() => setStatusChecked('PENDING')}>
+                            <div className={`${styles.itens_caption} ${statusChecked === 'false' && styles.active}`} onClick={() => setStatusChecked('false')}>
                                 Pendentes
                             </div>
-                            <div className={`${styles.itens_caption} ${statusChecked === 'CONCLUDED' && styles.active}`} onClick={() => setStatusChecked('CONCLUDED')}>
+                            <div className={`${styles.itens_caption} ${statusChecked === 'true' && styles.active}`} onClick={() => setStatusChecked('true')}>
                                 Tomados
                             </div>
                         </div>

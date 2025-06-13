@@ -64,6 +64,11 @@
     margin-left: .2em;
 }
 
+.accordion_filters_itens input[type="datetime-local"] {
+    padding: .15rem;
+    border-radius: .2rem;
+}
+
 .itens_caption {
     cursor: pointer;
     min-width: 5em;
