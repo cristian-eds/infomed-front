@@ -13,7 +13,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 import ControlTheme from '../ControlTheme/ControlTheme';
 
-const SideMenu = ({ closeMenu }) => {
+const SideMenu = ({ closeMenu, role }) => {
 
     const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const SideMenu = ({ closeMenu }) => {
             <ul>
                 <li onClick={() => navigateToLink("/")}><FaHome /> Home</li>
                 <li onClick={() => navigateToLink("/medicines")}><RiMedicineBottleLine /> Medicine</li>
-                <li onClick={() => navigateToLink("/person")}><IoMdPeople /> Person</li>
+                {role === "ADMIN" && <li onClick={() => navigateToLink("/person")}><IoMdPeople /> Person</li>}
                 <li onClick={() => navigateToLink("/profile")}><ImProfile /> Profile</li>
             </ul>
             <div>
