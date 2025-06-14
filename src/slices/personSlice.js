@@ -108,6 +108,23 @@ export const deletePerson = createAsyncThunk(
     }
 )
 
+export const generateCode = createAsyncThunk(
+    'person/generateCode',
+    async (id) => {
+        const config = requestConfig("POST");
+
+        const res = await fetch(`${API_URL}/person/${id}/accessCode`, config)
+            .then(res => res);
+
+        console.log(res.status)
+        if(res.status == 200) {
+            return res.json();
+        }
+
+        return null;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -168,8 +185,14 @@ export const personSlice = createSlice({
                 state.detailsPerson = action.payload;
             })
             .addCase(deletePerson.fulfilled, (state, action) => {
-                if (action.payload) { 
-                    state.personList = state.personList.filter(person => person.id !== action.payload );
+                if (action.payload) {
+                    state.personList = state.personList.filter(person => person.id !== action.payload);
+                }
+            })
+            .addCase(generateCode.fulfilled, (state, action) => {
+                if(action.payload) {
+                    console.log("Entrou aqui")
+                    state.detailsPerson.accessCode = action.payload.accessCode;
                 }
             })
     }
