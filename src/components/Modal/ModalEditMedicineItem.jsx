@@ -18,6 +18,7 @@ import FormModal from './FormModal/FormModal'
 import FormModalRow from './FormModal/FormModalRow'
 import FormInputGroup from './FormModal/FormInputGroup'
 import MessageError from '../MessageError/MessageError'
+import CustomCheckBox from '../CustomCheckBox/CustomCheckBox'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
 
@@ -111,7 +112,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             <FormModalRow>
                                 <label htmlFor="frequencia">Concluído:</label>
                                 <FormInputGroup>
-                                    <input type="checkbox" name="conclusion" id="conclusion" checked={conclusion} onChange={(e) => handleAlterConclusion(e.target.checked)} />
+                                    <CustomCheckBox checked={conclusion} handleCheck={(e) => handleAlterConclusion(e.target.checked)} centralized={false}/>
                                     <span className="unit"></span>
                                 </FormInputGroup>
                             </FormModalRow>

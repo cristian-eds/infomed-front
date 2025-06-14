@@ -16,6 +16,7 @@ import { changeFieldSort, changeTypeSort, changeValueFieldFilter, createMedicine
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
+import CustomCheckBox from '../../components/CustomCheckBox/CustomCheckBox';
 
 const titles = [
     { name: "Nome", field: "name" },
@@ -159,7 +160,7 @@ const Medicines = () => {
                 <td>{formatDate(medicine.registrationDate)}</td>
                 <td>{medicine.frequencyHours}/{medicine.frequencyHours} horas</td>
                 <td>{medicine.totalDays} dias</td>
-                <td><input type="checkbox" name="conclusion" id="conclusion" checked={verifyConclusionMedicine(medicine)} readOnly /></td>
+                <td><CustomCheckBox checked={verifyConclusionMedicine(medicine)}/></td>
                 <td>
                     <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)} />
                     <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)} />

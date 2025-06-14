@@ -1,15 +1,18 @@
 .container_checkbox {
-    width: .95rem;
-    height: .95rem;
+    width: .9rem;
+    height: .9rem;
     padding: .1rem;
     background-color: whitesmoke;
     border-radius: .2rem;
     display: flex;
-    margin: 0 auto;
     justify-content: center;
     align-items: center;
 }
 
 .container_checkbox * {
     color: rgb(10, 47, 1);
+}
+
+.centralized {
+    margin: 0 auto;
 }

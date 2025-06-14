@@ -6,6 +6,7 @@ import { alterStatusMedicineItem } from '../../slices/medicineItemSlice';
 
 import styles from './RowTableMedicineItem.module.css';
 import { formatDate } from '../../utils/formatterDates';
+import CustomCheckBox from '../CustomCheckBox/CustomCheckBox';
 
 const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
 
@@ -25,7 +26,7 @@ const RowTableMedicineItem = ({ medicine, setShowMedicineEditing }) => {
             <td>{medicine.sequency}/{medicine.total}</td>
             <td>{medicine.frequency}/{medicine.frequency} horas</td>
             <td>{formatDate(medicine.dayHour)}</td>
-            <td><input type="checkbox" name="conclusion" id="conclusion" checked={checked} onChange={handleAlterConclusionItem}/></td>
+            <td><CustomCheckBox checked={checked} handleCheck={handleAlterConclusionItem}/></td>
             <td onClick={() => setShowMedicineEditing(medicine)} className={styles.row_edit}>Editar</td>
         </tr>
 
