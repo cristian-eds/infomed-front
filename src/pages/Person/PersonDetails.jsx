@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 
 import { format } from 'date-fns';
 
-import { deletePerson, fetchDetailsPerson, fetchMedicinesForDetailsPerson, resetDetailsPerson, updatePerson } from '../../slices/personSlice';
+import { deletePerson, fetchDetailsPerson, fetchMedicinesForDetailsPerson, generateCode, resetDetailsPerson, updatePerson } from '../../slices/personSlice';
 
 import Table from '../../components/Table/Table';
 import ArrowLeftButton from '../../components/Button/ArrowLeftButton';
@@ -45,6 +45,8 @@ const PersonDetails = () => {
 
     const dispatch = useDispatch();
 
+    console.log(detailsPerson);
+
     useEffect(() => {
         dispatch(fetchDetailsPerson(id));
         dispatch(fetchMedicinesForDetailsPerson(id));
@@ -65,13 +67,13 @@ const PersonDetails = () => {
 
 
     const handleSort = (field) => {
-        if(field === fieldSort) {
-            typeSort === "ASC"? setTypeSort("DESC") : setTypeSort("ASC");
+        if (field === fieldSort) {
+            typeSort === "ASC" ? setTypeSort("DESC") : setTypeSort("ASC");
         } else {
             setFieldSort(field);
             setTypeSort("ASC");
         }
-     }
+    }
 
     const sortList = (medicinesState) => {
         let listOrdened = [...medicinesState];
@@ -93,7 +95,7 @@ const PersonDetails = () => {
                 }
 
                 if (fieldSort === "name") {
-                     if (typeSort === "ASC") {
+                    if (typeSort === "ASC") {
                         return valueA.localeCompare(valueB);
                     } else {
                         return valueB.localeCompare(valueA);
@@ -151,6 +153,10 @@ const PersonDetails = () => {
         navigate("/person");
     }
 
+    const handleGenerateCode = () => {
+        dispatch(generateCode(detailsPerson.id));
+    }
+
     const handleHiddenModalDelete = () => {
         setShowModalConfirmDelete(false);
     }
@@ -191,13 +197,19 @@ const PersonDetails = () => {
                 </div>
 
                 {!editing &&
-                    <div className={styles.form_row}>
-                        <label htmlFor="accessCode">Código acesso:</label>
-                        <div className={styles.container_info_row}>
-                            <input type="text" id="accessCodee" name="accessCode" value={detailsPerson.accessCode || " "} readOnly disabled={!editing} />
+                    <>
+                        <div className={styles.form_row}>
+                            <label htmlFor="accessCode">Código acesso:</label>
+                            <div className={styles.container_info_row}>
+                                <input type="text" id="accessCodee" name="accessCode" value={detailsPerson.accessCode || " "} readOnly disabled={!editing} />
+                            </div>
+                             {!detailsPerson.accessCode && <p className={styles.generate_code} onClick={handleGenerateCode}>Gerar código de acesso</p>}
                         </div>
-                    </div>
+                       
+                    </>
+
                 }
+
                 {editing &&
                     <ButtonGroup>
                         <Button type="submit" value="Confirmar" variant="button_confirm" onClick={handleConfirmEditing} />
@@ -207,7 +219,7 @@ const PersonDetails = () => {
             </section>
             <section>
                 <h4 className='title_text_color'>Lista de medicamentos...</h4>
-                <Table titles={titles} sort={{fieldSort,typeSort}} handleSort={handleSort} >
+                <Table titles={titles} sort={{ fieldSort, typeSort }} handleSort={handleSort} >
                     {generateItemsTable()}
                 </Table>
                 {medicinesForPersonDetails.length === 0 && <p style={{ textAlign: 'center' }} className='title_text_color' >Não há medicamentos...</p>}
