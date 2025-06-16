@@ -39,6 +39,7 @@
 .modal_content_header_text {
     text-align: center;
     grid-column: 2;
+    color: var(--text-title-color);
 }
 
 .modal_content_text {
@@ -88,7 +89,7 @@
 .input_group input,
 .input_group select,
 .input_group input::placeholder {
-    color: var(--text-color);
+    color: var(--second-text-color);
 }
 
 .input_group.disabled {

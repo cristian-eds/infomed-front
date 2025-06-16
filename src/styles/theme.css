@@ -1,5 +1,5 @@
 :root {
-    /* Theme Dark (padrão) */
+    /* Theme Dark (default) */
     --primary-color: rgba(27, 197, 58, 0.859);
     --secondary-color: #016909;
     --background-color: #161616eb;
@@ -30,6 +30,7 @@ body.light-theme {
     --background-input-color: #ededed;
 
     --text-color: rgb(16, 92, 1);
+    --second-text-color: rgb(236, 236, 236);
     --text-title-color: rgb(11, 59, 1);
 
     --text-disabled: rgb(75, 75, 75);
