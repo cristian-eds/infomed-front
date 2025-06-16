@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { CiLight, CiDark } from "react-icons/ci";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 import styles from './ControlTheme.module.css'
 
+import { CiLight, CiDark } from "react-icons/ci";
+
 const ControlTheme = () => {
 
-    const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-
-    useEffect(() => {
-        document.body.className = `${theme}-theme`
-    }, [theme])
-
-    const handleTheme = () => {
-        if (theme === "dark") {
-            localStorage.setItem("theme", "light")
-            setTheme("light");
-        } else {
-            setTheme("dark");
-            localStorage.setItem("theme", "dark")
-        }
-
-    }
+    const {theme, handleTheme} = useContext(ThemeContext);
 
     return (
         <div className={styles.container_theme}>
