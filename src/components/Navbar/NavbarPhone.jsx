@@ -5,7 +5,7 @@ import { FiMenu } from "react-icons/fi";
 import styles from './NavbarPhone.module.css'
 import SideMenu from '../SideMenu/SideMenu';
 
-const NavbarPhone = ({role}) => {
+const NavbarPhone = ({ role }) => {
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -14,9 +14,9 @@ const NavbarPhone = ({role}) => {
     }
     return (
         <nav className={styles.navbar} id={styles.navbar_phone}>
-            <button onClick={handleShowMenu}><FiMenu size={20}/></button>
+            <button onClick={handleShowMenu}><FiMenu size={20} /></button>
             <span>InfoMed</span>
-            {showMenu && <SideMenu closeMenu={() => setShowMenu(false)} role={role}/> }
+            {showMenu && <SideMenu closeMenu={() => setShowMenu(false)} role={role} />}
         </nav>
     )
 }

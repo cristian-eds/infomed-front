@@ -19,8 +19,11 @@ import { format } from 'date-fns'
 import { convertToPatternLocalDateTime } from '../../utils/formatterDates'
 
 import { fetchPerson } from '../../slices/personSlice'
+import { useTranslation } from 'react-i18next'
 
 const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispatch, medicineDuplicate }) => {
+
+    const {t} = useTranslation();
 
     const [name, setName] = useState(medicineDuplicate?.name ?? "");
     const [frequency, setFrequency] = useState(medicineDuplicate?.frequencyHours || "");
@@ -55,16 +58,16 @@ const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispa
     const validateFields = () => {
         let err = null;
         if(name === null || name.length <= 1) {
-            err = "Insira um nome válido";
+            err = t('validation-messages.valid-name');
         }
         if(frequency === null || frequency.length == 0) {
-            err = "Insira uma frequência válida";
+            err = t('validation-messages.valid-frequence');
         }
         if(totalDays === null || totalDays < 0 || totalDays == 0) {
-            err = "Insira uma quantidade total de dias válida";
+            err = t('validation-messages.valid-qty-days');
         }
         if(idPerson === null || idPerson.length == 0) {
-            err = "Selecione uma pessoa";
+            err = t('validation-messages.valid-person');
         }
         setValidationErros(err);
         return err;
@@ -78,45 +81,45 @@ const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispa
                     <ModalContent>
                         <ModalHeader>
                             <ArrowLeftButton actionClick={handleCloseModal} />
-                            <h2 className={styles.modal_content_header_text}>Nova Medicação</h2>
+                            <h2 className={styles.modal_content_header_text}>{t('modals.title-add-medicine')}</h2>
                         </ModalHeader>
 
                         <FormModal action={handleSubmit}>
                             <FormModalRow>
-                                <label htmlFor="name">Nome:</label>
+                                <label htmlFor="name">{t('modals.label-name')}</label>
                                 <FormInputGroup>
-                                    <input type="text" id="name" name="name" placeholder="Nome medicamento..." value={name} onChange={(e) => setName(e.target.value)} />
+                                    <input type="text" id="name" name="name" placeholder={t('modals.placeholder-name')} value={name} onChange={(e) => setName(e.target.value)} />
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="frequence">Frequência:</label>
+                                <label htmlFor="frequence">{t('modals.label-frequence')}</label>
                                 <FormInputGroup>
-                                    <input type="number" id="frequence" name="frequence" placeholder="Frequência..." value={frequency} onChange={(e) => setFrequency(e.target.value)} />
+                                    <input type="number" id="frequence" name="frequence" placeholder={t('modals.placeholder-frequence')} value={frequency} onChange={(e) => setFrequency(e.target.value)} />
                                     <span className="unit">hrs</span>
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="qtdDias">Qtd Dias:</label>
+                                <label htmlFor="qtdDias">{t('modals.label-qty-days')}</label>
                                 <FormInputGroup>
-                                    <input type="number" id="qtdDias" name="qtdDias" placeholder="Quantidade dias..." value={totalDays} onChange={(e) => setTotalDays(e.target.value)} />
+                                    <input type="number" id="qtdDias" name="qtdDias" placeholder={t('modals.placeholder-qty-days')} value={totalDays} onChange={(e) => setTotalDays(e.target.value)} />
                                     <span className="unit">dias</span>
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="dataHoraInicial">Dia e hora inicial:</label>
+                                <label htmlFor="dataHoraInicial">{t('modals.label-initial-schedule')}</label>
                                 <FormInputGroup>
                                     <input type="datetime-local" id="dataHoraInicial" name="dataHoraInicial" value={initialDate} onChange={(e) => setInitialDate(e.target.value)} />
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="person">Pessoa vinculada:</label>
+                                <label htmlFor="person">{t('modals.label-related-person')}</label>
                                 <FormInputGroup>
                                     <select name="person" id="person" value={idPerson} onChange={(e) => setIdPerson(e.target.value)}>
-                                        <option value="">Selecione</option>
+                                        <option value="">{t('modals.placeholder-default-select')}</option>
                                         {personList.map(person => (
                                             <option key={person.id} value={person.id}>{person.name}</option>
                                         ))}
@@ -127,8 +130,8 @@ const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispa
                             <MessageError message={validationErros}/>
 
                             <ButtonGroup>
-                                <Button value="Cadastrar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={handleCloseModal} variant="button_cancel" />
+                                <Button value={t("buttons.text-save")} type="submit" variant="button_confirm" />
+                                <Button value={t("buttons.text-cancel")} type="button" onClick={handleCloseModal} variant="button_cancel" />
                             </ButtonGroup>
                         </FormModal>
                     </ModalContent>

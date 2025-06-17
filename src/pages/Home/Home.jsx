@@ -15,19 +15,21 @@ import NextMedicine from '../../components/NextMedicine/NextMedicine';
 import ButtonPlus from '../../components/Button/ButtonPlus';
 
 import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, createMedicine, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
-
-const titles = [
-  { name: "Nome", field: "NAME" },
-  { name: "Pessoa", field: "PERSON" },
-  { name: "N°", field: "NUMBER" },
-  { name: "Frequência", field: "FREQUENCE" },
-  { name: "Horário", field: "DAY_HOUR" },
-  { name: "Concluído", field: "CONCLUSION" },
-  { name: "Ações", }];
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
 
   const dispatch = useDispatch();
+  const {t} = useTranslation();
+
+  const titles = [
+    { name: t('table-home.text-name'), field: "NAME" },
+    { name: t('table-home.text-person'), field: "PERSON" },
+    { name: t('table-home.text-number'), field: "NUMBER" },
+    { name: t('table-home.text-frequence'), field: "FREQUENCE" },
+    { name: t('table-home.text-schedule'), field: "DAY_HOUR" },
+    { name: t('table-home.text-completed'), field: "CONCLUSION" },
+    { name: t('table-home.text-actions'), }];
 
   const { loading, medicinesItems, page, sort, filters } = useSelector(state => state.medicineItem);
 
@@ -86,9 +88,6 @@ const Home = () => {
 
   return (
     <>
-      <ModalAddMedicine showModal={showModal} handleCloseModal={() => setShowModal(false)} actionToDispatch={createMedicine} dispatch={dispatch} />
-      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
-
       <main className="container_main">
         <header className={styles.header}>
           <NextMedicine medicinesItems={medicinesItems} />
@@ -108,6 +107,9 @@ const Home = () => {
           </div>
           <Pagination page={page} />
         </>}
+        <ModalAddMedicine showModal={showModal} handleCloseModal={() => setShowModal(false)} actionToDispatch={createMedicine} dispatch={dispatch} />
+        {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
+
       </main>
     </>
   )

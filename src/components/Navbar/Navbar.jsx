@@ -1,20 +1,26 @@
 import styles from './Navbar.module.css'
+
 import { NavLink } from 'react-router'
+
+import { useTranslation } from 'react-i18next';
+
 import ControlTheme from '../ControlTheme/ControlTheme';
 
 const Navbar = ({logout, role}) => {
+
+  const { t } = useTranslation();
 
   return (
     <nav className={styles.navbar} id={styles.navbar}>
       <span>InfoMed</span>
       <div className={styles.navbar__itens}>
-        <NavLink to="/" activeClassName="active">Home</NavLink>
-        <NavLink to="/medicines" activeClassName="active">Medicamentos</NavLink>
-         {role === "ADMIN" && <NavLink to="/person" activeClassName="active">Pessoas</NavLink> }
-        <NavLink to="/profile" activeClassName="active">Perfil</NavLink>
+        <NavLink to="/" activeClassName="active">{t('navbar.text-home')}</NavLink>
+        <NavLink to="/medicines" activeClassName="active">{t('navbar.text-medicine')}</NavLink>
+         {role === "ADMIN" && <NavLink to="/person" activeClassName="active">{t('navbar.text-person')}</NavLink> }
+        <NavLink to="/profile" activeClassName="active">{t('navbar.text-profile')}</NavLink>
       </div>
       <div className={styles.navbar__itens}>
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout}>{t('navbar.text-logout')}</button>
         <ControlTheme />
       </div>
     </nav>

@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { useContext } from 'react';
 
 import styles from './SideMenu.module.css'
 
@@ -8,12 +10,14 @@ import { IoMdPeople } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { RiLogoutBoxLine } from "react-icons/ri";
 
-import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 import ControlTheme from '../ControlTheme/ControlTheme';
 
+
 const SideMenu = ({ closeMenu, role }) => {
+
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -27,15 +31,15 @@ const SideMenu = ({ closeMenu, role }) => {
     return (
         <div className={styles.container_menu}>
             <ul>
-                <li onClick={() => navigateToLink("/")}><FaHome /> Home</li>
-                <li onClick={() => navigateToLink("/medicines")}><RiMedicineBottleLine /> Medicine</li>
-                {role === "ADMIN" && <li onClick={() => navigateToLink("/person")}><IoMdPeople /> Person</li>}
-                <li onClick={() => navigateToLink("/profile")}><ImProfile /> Profile</li>
+                <li onClick={() => navigateToLink("/")}><FaHome /> {t('navbar.text-home')}</li>
+                <li onClick={() => navigateToLink("/medicines")}><RiMedicineBottleLine />{t('navbar.text-medicine')}</li>
+                {role === "ADMIN" && <li onClick={() => navigateToLink("/person")}><IoMdPeople />{t('navbar.text-person')}</li>}
+                <li onClick={() => navigateToLink("/profile")}><ImProfile />{t('navbar.text-profile')}</li>
             </ul>
             <div>
                 <ul>
-                    <li> <ControlTheme /> <p>Theme</p> </li>
-                    <li onClick={logout}><RiLogoutBoxLine /> Logout</li>
+                    <li> <ControlTheme /> <p>{t('navbar.text-themes')}</p> </li>
+                    <li onClick={logout}><RiLogoutBoxLine /> {t('navbar.text-logout')}</li>
                 </ul>
             </div>
         </div>

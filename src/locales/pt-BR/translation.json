@@ -1,0 +1,102 @@
+{
+    "greeting": "Olá Mundo",
+
+    "page-login": {
+        "text-login": "Conectando",
+
+        "placeholder-email": "E-mail...",
+        "placeholder-password": "Senha...",
+
+        "value-button-confirm-login": "Entrar",
+        "value-button-register": "Registrar-se"
+    },
+
+    "page-register": {
+        "text-register": "Registrando",
+        "text-type-normal-user": "Usuário normal",
+        "text-type-adm-user": "Usuário administrador",
+
+        "placeholder-name": "Seu nome...",
+        "placeholder-email": "Seu email...",
+        "placeholder-password": "Digite sua senha...",
+        "placeholder-confirm-password": "Repita sua senha...",
+
+        "value-button-confirm-register": "Registrar",
+        "value-button-login": "Conectar-se"
+    },
+
+    "navbar": {
+        "text-home": "Início",
+        "text-medicine": "Medicamentos",
+        "text-person": "Pessoas",
+        "text-profile": "Perfil",
+        "text-logout": "Sair",
+        "text-themes": "Temas"
+    },
+
+    "next-medicine": {
+        "text-today": "Hoje:",
+        "text-next-in-minutes": "Próximo medicamento: {{name}} em {{minutesDiff}} minutos.",
+        "text-next-in-hours-minutes": "Próximo medicamento: {{name}} em {{timeToNext}}",
+        "text-hours-minutes": "{{hours}} horas e {{minutes}} minutos",
+        "text-no-next": "Não há próximo medicamento..."
+    },
+
+    "input-search": {
+        "text-input": "Pesquisar..."
+    },
+
+    "filter-home": {
+        "text-filters": "Filtros",
+        "text-clean-filters": "Limpar filtros",
+        "text-period": "Período",
+        "text-start-date": "Data inicial:",
+        "text-final-date": "Data final:",
+        "text-status-all": "Todos",
+        "text-status-pending": "Pendentes",
+        "text-status-completed": "Tomados",
+        "value-button-filter": "Filtrar"
+    },
+
+    "table-home": {
+        "text-name": "Nome",
+        "text-person": "Pessoa",
+        "text-number": "N°",
+        "text-frequence": "Frequência",
+        "text-schedule": "Horário",
+        "text-completed": "Concluído",
+        "text-actions": "Ações"
+    },
+
+    "row-table-medicine-item": {
+        "text-hours": "horas"
+    },
+
+    "modals": {
+        "title-add-medicine": "Nova Medicação",
+        "label-name": "Nome:",
+        "placeholder-name": "Nome medicamento...",
+        "label-frequence": "Frequência:",
+        "placeholder-frequence": "Frequência...",
+        "label-qty-days": "Qtd dias:",
+        "placeholder-qty-days": "Quantidade de dias...",
+        "label-initial-schedule": "Data inicial:",
+        "label-related-person": "Pessoa vínculada:",
+        "placeholder-default-select": "Selecione",
+        "label-schedule": "Data e hora:",
+        "label-completed": "Concluído?",
+        "label-when-was-completed": "Quando foi tomado?"
+    },
+
+    "buttons": {
+        "text-save": "Gravar",
+        "text-cancel": "Cancelar"
+    },
+
+    "validation-messages": {
+        "valid-name": "Insira um nome válido",
+        "valid-frequence":"Insira uma frequência válida",
+        "valid-qty-days": "Insira uma quantidade total de dias válida",
+        "valid-person":"Selecione uma pessoa"
+    }
+}

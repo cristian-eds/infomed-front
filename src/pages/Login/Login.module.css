@@ -8,12 +8,12 @@
 
 .container_login h2 {
     text-align: left;
-    padding: 1em .5em 0;
+    padding: .8em .5em 0;
     font-size: 1.7em;
 }
 
 .login {
-    padding-top: 1.5em;
+    padding-top: 1.2em;
     display: flex;
     flex-direction: column;
     gap: 1em;

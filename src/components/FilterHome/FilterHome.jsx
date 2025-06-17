@@ -2,23 +2,18 @@ import React, { useState } from 'react';
 
 import styles from './FilterHome.module.css';
 
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowUp } from 'react-icons/io';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { LuFilterX } from "react-icons/lu";
 
 import { useDispatch } from 'react-redux';
 import { resetFilters } from '../../slices/medicineItemSlice';
-
-
-const statusValues = {
-    "TODOS": 'TODOS',
-    "PENDING": 'false',
-    "CONCLUDED": 'true'
-}
+import { useTranslation } from 'react-i18next';
 
 const FilterHome = ({ handleSearch, filters }) => {
 
     const dispatch = useDispatch();
+    const {t} = useTranslation();
 
     const [showAccordionFilters, setShowAccordionFilters] = useState(false);
     const [statusChecked, setStatusChecked] = useState(filters.conclusion);
@@ -34,8 +29,6 @@ const FilterHome = ({ handleSearch, filters }) => {
         };
         handleSearch(e, filters)
     }
-
-    console.log(filters.conclusion)
 
     const verifyFiltersOn = () => {
         return statusChecked !== "TODOS" || initialDate || finalDate;
@@ -53,7 +46,7 @@ const FilterHome = ({ handleSearch, filters }) => {
         <form className={styles.caption_filter}>
             <div className={styles.caption_filter_header} >
                 <div onClick={() => setShowAccordionFilters(!showAccordionFilters)} className={styles.control_accordion}>
-                    <p className={styles.text_title}>Filtros</p>
+                    <p className={styles.text_title}>{t('filter-home.text-filters')}</p>
                     {showAccordionFilters ?
                         <IoIosArrowUp className={styles.text_title} />
                         :
@@ -64,7 +57,7 @@ const FilterHome = ({ handleSearch, filters }) => {
                 {
                     verifyFiltersOn() &&
                     <div className={styles.clean_filters} onClick={handleCleanFilters}>
-                        <p>Limpar filtros</p>
+                        <p>{t('filter-home.text-clean-filters')}</p>
                         <LuFilterX />
                     </div>
                 }
@@ -73,14 +66,14 @@ const FilterHome = ({ handleSearch, filters }) => {
             {showAccordionFilters &&
                 <div className={styles.container_accordion}>
                     <div className={styles.accordion_filters}>
-                        <p>Período</p>
+                        <p>{t('filter-home.text-period')}</p>
                         <div className={styles.accordion_filters_itens}>
                             <div>
-                                Data inicial:
+                                {t('filter-home.text-start-date')}
                                 <input type="datetime-local" id="initialDate" name="initialDate" value={initialDate} onChange={(e) => setInitialDate(e.target.value)} />
                             </div>
                             <div>
-                                Data final:
+                                {t('filter-home.text-final-date')}
                                 <input type="datetime-local" id="finalDate" name="finalDate" value={finalDate} onChange={(e) => setFinalDate(e.target.value)} />
                             </div>
                         </div>
@@ -89,18 +82,18 @@ const FilterHome = ({ handleSearch, filters }) => {
                         <p>Status</p>
                         <div className={styles.accordion_filters_itens_caption}>
                             <div className={`${styles.itens_caption} ${statusChecked === 'TODOS' && styles.active}`} onClick={() => setStatusChecked('TODOS')}>
-                                Todos
+                                {t('filter-home.text-status-all')}
                             </div>
                             <div className={`${styles.itens_caption} ${statusChecked === 'false' && styles.active}`} onClick={() => setStatusChecked('false')}>
-                                Pendentes
+                               {t('filter-home.text-status-pending')}
                             </div>
                             <div className={`${styles.itens_caption} ${statusChecked === 'true' && styles.active}`} onClick={() => setStatusChecked('true')}>
-                                Tomados
+                                {t('filter-home.text-status-completed')}
                             </div>
                         </div>
                     </div>
 
-                    <button onClick={handleFilter} className={styles.button_filter}>Filtrar</button>
+                    <button onClick={handleFilter} className={styles.button_filter}>{t('filter-home.value-button-filter')}</button>
                 </div>}
         </form>
     )

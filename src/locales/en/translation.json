@@ -1,0 +1,92 @@
+{
+    "greeting": "Hello World",
+
+    "page-login": {
+        "text-login": "Connecting",
+
+        "placeholder-email": "E-mail...",
+        "placeholder-password": "Password...",
+
+        "value-button-confirm-login": "Login",
+        "value-button-register": "Registrer"
+    },
+
+    "page-register": {
+        "text-register": "Registering",
+        "text-type-normal-user": "Normal User",
+        "text-type-adm-user": "ADM User",
+
+        "placeholder-name": "Your name...",
+        "placeholder-email": "Your e-mail...",
+        "placeholder-password": "Enter a password...",
+        "placeholder-confirm-password": "Repeat password...",
+
+        "value-button-confirm-register": "Register",
+        "value-button-login": "Login"
+    },
+
+    "navbar": {
+        "text-home": "Home",
+        "text-medicine": "Medicines",
+        "text-person": "Person",
+        "text-profile": "Profile",
+        "text-logout": "Logout",
+        "text-themes": "Themes"
+    },
+
+    "next-medicine": {
+        "text-today": "Today:",
+        "text-next-in-minutes": "Next Medicine: {{name}} in {{minutesDiff}} minutes.",
+        "text-next-in-hours-minutes": "Next Medicine: {{name}} in {{timeToNext}}",
+        "text-hours-minutes": "{{hours}} hours and {{minutes}} minutes.",
+        "text-no-next": "There is no next medicine..."
+    },
+
+    "input-search": {
+        "text-input": "Research..."
+    },
+
+    "filter-home": {
+        "text-filters": "Filters",
+        "text-clean-filters": "Clean filters",
+        "text-period": "Period",
+        "text-start-date": "Start Date:",
+        "text-final-date": "Final Date:",
+        "text-status-all": "All",
+        "text-status-pending": "Pending",
+        "text-status-completed": "Completed",
+        "value-button-filter": "Filter"
+    },
+
+    "table-home": {
+        "text-name": "Name",
+        "text-person": "Person",
+        "text-number": "N°",
+        "text-frequence": "Frequence",
+        "text-schedule": "Schedule",
+        "text-completed": "Completed",
+        "text-actions": "Actions"
+    },
+
+    "row-table-medicine-item": {
+        "text-hours": "hours"
+    },
+
+    "modals": {
+        "title-add-medicine": "New Medicine",
+        "label-name": "Name:",
+        "placeholder-name": "Name of the medicine...",
+        "label-frequence": "Frequence:",
+        "placeholder-frequence": "Frequence...",
+        "label-qty-days": "Qty days:",
+        "placeholder-qty-days": "Number of days...",
+        "label-initial-schedule": "Start Datetime:",
+        "label-related-person": "Related person:",
+        "placeholder-default-select": "Select"
+    },
+
+    "buttons": {
+        "text-save": "Save",
+        "text-cancel": "Cancel"
+    }
+}

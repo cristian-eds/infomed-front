@@ -19,8 +19,11 @@ import FormModalRow from './FormModal/FormModalRow'
 import FormInputGroup from './FormModal/FormInputGroup'
 import MessageError from '../MessageError/MessageError'
 import CustomCheckBox from '../CustomCheckBox/CustomCheckBox'
+import { useTranslation } from 'react-i18next'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
+
+    const {t} = useTranslation();
 
     const [dayHour, setDayHour] = useState(medicine.dayHour);
     const [conclusion, setConclusion] = useState(medicine.conclusion);
@@ -97,20 +100,20 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                         </ModalHeader>
                         <FormModal action={handleEdit}>
                             <FormModalRow>
-                                <label htmlFor="personName">Pessoa:</label>
+                                <label htmlFor="personName">{t('modals.label-name')}</label>
                                 <FormInputGroup disabled={true}>
                                     <input type="text" id="personName" name="personName" value={medicine.personName} disabled className={styles.disabled}/>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
-                                <label htmlFor="dayHour">Data e hora:</label>
+                                <label htmlFor="dayHour">{t('modals.label-schedule')}</label>
                                 <FormInputGroup disabled={true}>
                                     <input type="datetime-local" id="dayHour" name="dayHour" value={dayHour} className={styles.disabled} disabled />
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="frequencia">Concluído:</label>
+                                <label htmlFor="frequencia">{t('modals.label-completed')}</label>
                                 <FormInputGroup>
                                     <CustomCheckBox checked={conclusion} handleCheck={(e) => handleAlterConclusion(e.target.checked)} centralized={false}/>
                                     <span className="unit"></span>
@@ -118,7 +121,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             </FormModalRow>
 
                             <FormModalRow>
-                                <label htmlFor="conclusionDayHour">Quando foi tomado:</label>
+                                <label htmlFor="conclusionDayHour">{t('modals.label-when-was-completed')}</label>
                                 <FormInputGroup>
                                     <input type="datetime-local" id="conclusionDayHour" name="conclusionDayHour" value={conclusionDayHour} onChange={(e) => setConclusionDayHour(e.target.value)} />
                                 </FormInputGroup>
@@ -127,8 +130,8 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                             <MessageError message={validationErros}/>
 
                             <ButtonGroup>
-                                <Button value="Confirmar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={() => setCloseModal()} variant="button_cancel" />
+                                <Button value={t("buttons.text-save")} type="submit" variant="button_confirm" />
+                                <Button value={t("buttons.text-cancel")} type="button" onClick={() => setCloseModal()} variant="button_cancel" />
                             </ButtonGroup>
                         </FormModal>
                     </ModalContent>

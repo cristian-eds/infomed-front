@@ -7,6 +7,8 @@ import { Provider } from 'react-redux'
 
 import store from './store.js'
 
+import './i18n';
+
 import App from './App.jsx'
 
 
