@@ -25,6 +25,26 @@
         "value-button-login": "Conectar-se"
     },
 
+    "page-medicines": {
+        "text-history-medicines": "Histórico de medicamentos..."
+    },
+
+    "page-person-details": {
+        "text-informations": "Informações",
+        "text-editing-informations": "Editando informações",
+        "text-edit-informations": "Editar informações",
+        "text-generate-access-code": "Gerar código de acesso",
+        "text-list-medicines": "Lista de medicamentos...",
+        "text-no-medicines": "Não há medicamentos..."
+    },
+
+    "page-profile": {
+        "text-information" : "Informações da conta",
+        "text-editing-information": "Editando informações",
+        "text-edit-information": "Editar informações",
+        "text-change-password": "Alterar senha"
+    },  
+
     "navbar": {
         "text-home": "Início",
         "text-medicine": "Medicamentos",
@@ -58,14 +78,22 @@
         "value-button-filter": "Filtrar"
     },
 
-    "table-home": {
+    "title-tables": {
         "text-name": "Nome",
         "text-person": "Pessoa",
         "text-number": "N°",
         "text-frequence": "Frequência",
         "text-schedule": "Horário",
         "text-completed": "Concluído",
-        "text-actions": "Ações"
+        "text-duration": "Duração",
+        "text-registration-date": "Data criação",
+        "text-actions": "Ações",
+        "text-next-medicine": "Próximo medicamento",
+        "text-total-medicines": "Total medicamentos",
+        "text-pending-medicines": "Medicamentos abertos",
+        "text-action": "Ação",
+        "text-description": "Descrição",
+        "text-date": "Data"
     },
 
     "row-table-medicine-item": {
@@ -74,6 +102,8 @@
 
     "modals": {
         "title-add-medicine": "Nova Medicação",
+        "title-add-person": "Nova Pessoa",
+
         "label-name": "Nome:",
         "placeholder-name": "Nome medicamento...",
         "label-frequence": "Frequência:",
@@ -85,18 +115,56 @@
         "placeholder-default-select": "Selecione",
         "label-schedule": "Data e hora:",
         "label-completed": "Concluído?",
-        "label-when-was-completed": "Quando foi tomado?"
+        "label-when-was-completed": "Quando foi tomado?",
+        "label-registration-date": "Data criação",
+        "label-phone": "Telefone:",
+        "placeholder-phone": "Insira o telefone...",
+        "label-birthdate": "Nascimento:",
+        "label-access-code": "Código de acesso:",
+        "label-current-password": "Senha atual:",
+        "label-new-password": "Nova senha:",
+        "label-confirm-new-password": "Repita nova senha:",
+        "label-email": "E-mail:",
+
+        "question-confirm-delete-medicine-item": "Confirma a exclusão desse item do medicamento?",
+        "question-confirm-delete-medicine": "Confirma a exclusão do medicamento?",
+        "question-confirm-duplicate-medicine": "Confirma a duplicação do medicamento?",
+        "question-confirm-delete-person": "Confirma a exclusão da pessoa: {{name}} ?",
+        
+        "unit-hours": "horas",
+        "unit-days": "dias"
     },
 
     "buttons": {
         "text-save": "Gravar",
-        "text-cancel": "Cancelar"
+        "text-cancel": "Cancelar",
+        "text-confirm": "Confirmar"
     },
 
     "validation-messages": {
         "valid-name": "Insira um nome válido",
         "valid-frequence":"Insira uma frequência válida",
         "valid-qty-days": "Insira uma quantidade total de dias válida",
-        "valid-person":"Selecione uma pessoa"
+        "valid-person":"Selecione uma pessoa",
+        "valid-conclusion-date": "Insira uma data de conclusão válida",
+        "valid-fields-requireds": "Todos os campos são obrigatórios.",
+        "valid-confirm-new-password": "As senhas não conferem.",
+        "valid-password-lenght": "A senha deve ter ao menos 4 caracteres.",
+        "valid-name-lenght": "O nome deve ter ao menos 3 caracteres"
+    },
+
+    "toast-messages": {
+        "text-successfully-change-password": "A senha foi alterada com sucesso",
+        "text-successfully-update-user": "Usuário atualizado com sucesso"
+    },
+
+    "footer-see-more": {
+        "text-see-more": "Ver mais...",
+        "text-all-loaded": "Todos os elementos foram carregados..."
+    },
+
+    "historic": {
+        "text-historic": "Histórico"
     }
+
 }

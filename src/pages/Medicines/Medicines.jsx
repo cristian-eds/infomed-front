@@ -17,20 +17,24 @@ import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
 import CustomCheckBox from '../../components/CustomCheckBox/CustomCheckBox';
+import { useTranslation } from 'react-i18next';
 
-const titles = [
-    { name: "Nome", field: "name" },
-    { name: "Pessoa", field: "personName" },
-    { name: "Data criação", field: "registrationDate" },
-    { name: "Frequência", field: "frequencyHours" },
-    { name: "Duração", field: "totalDays" },
-    { name: "Concluído", field: "conclusion" },
-    { name: "Ações", }
-]
+
 
 const Medicines = () => {
 
     const dispatch = useDispatch();
+    const {t} = useTranslation();
+
+    const titles = [
+        { name: t("title-tables.text-name"), field: "name" },
+        { name: t("title-tables.text-person"), field: "personName" },
+        { name: t("title-tables.text-registration-date"), field: "registrationDate" },
+        { name: t("title-tables.text-frequence"), field: "frequencyHours" },
+        { name: t("title-tables.text-duration"), field: "totalDays" },
+        { name: t("title-tables.text-completed"), field: "conclusion" },
+        { name: t("title-tables.text-actions"), }
+    ]
 
     const { loading, sort, medicines, filters, medicinePage, success } = useSelector(state => state.medicine);
 
@@ -160,7 +164,7 @@ const Medicines = () => {
                 <td>{formatDate(medicine.registrationDate)}</td>
                 <td>{medicine.frequencyHours}/{medicine.frequencyHours} horas</td>
                 <td>{medicine.totalDays} dias</td>
-                <td><CustomCheckBox checked={verifyConclusionMedicine(medicine)}/></td>
+                <td><CustomCheckBox checked={verifyConclusionMedicine(medicine)} /></td>
                 <td>
                     <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)} />
                     <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)} />
@@ -177,7 +181,7 @@ const Medicines = () => {
             <div className={styles.medicines}>
                 {loading ? <p>Loading...</p> : <>
                     <div className={styles.container_flex}>
-                        <h3>Histórico medicamentos...</h3>
+                        <h3>{t('page-medicines.text-history-medicines')}</h3>
                         <ButtonPlus action={() => setShowModalNewMedicine(true)} />
                     </div>
                     <div className={styles.container_table} ref={containerTableRef}>
@@ -188,9 +192,9 @@ const Medicines = () => {
                     </div>
                     <footer className={styles.footer_medicines}>
                         {medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0 ?
-                            <p>Todos elementos carregados...</p> :
+                            <p>{t('footer-see-more.text-all-loaded')}</p> :
                             <>
-                                <p>Ver mais...</p>
+                                <p>{t('footer-see-more.text-see-more')}</p>
                                 <ArrowDownButton actionClick={handleFetchMoreMedicines} />
                             </>
 
@@ -199,11 +203,11 @@ const Medicines = () => {
                 </>}
             </div>
 
-            {showModalNewMedicine &&  <ModalAddMedicine 
-                showModal={showModalNewMedicine} 
-                setShowModal={setShowModalNewMedicine} 
-                actionToDispatch={createMedicine} 
-                dispatch={dispatch} 
+            {showModalNewMedicine && <ModalAddMedicine
+                showModal={showModalNewMedicine}
+                setShowModal={setShowModalNewMedicine}
+                actionToDispatch={createMedicine}
+                dispatch={dispatch}
                 handleCloseModal={handleCloseModalNewMedicine}
                 medicineDuplicate={medicineToEdit}
             />}
@@ -223,7 +227,7 @@ const Medicines = () => {
                 <ModalConfirmDelete
                     object={medicineToDelete}
                     handleDelete={handleDeleteMedicine}
-                    text={"Confima a exclusão do medicamento?"}
+                    text={t('modals.question-confirm-delete-medicine')}
                     handleHiddenModalDelete={handleHiddenModalDelete}
                 />}
         </main>

@@ -16,20 +16,23 @@ import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 import { convertToPatternLocalDate, formatDate } from '../../utils/formatterDates';
 
 import styles from './PersonDetails.module.css'
-
-const titles = [
-    { name: "Nome", field: "name" },
-    { name: "Data criação", field: "registrationDate" },
-    { name: "Frequência", field: "frequencyHours" },
-    { name: "Duração", field: "totalDays" },
-    { name: "Concluído", field: "conclusion" },
-    { name: "Próximo Medicamento", field: "nextMedicine" }
-]
+import { useTranslation } from 'react-i18next';
 
 const PersonDetails = () => {
 
     const { id } = useParams("id");
     const navigate = useNavigate();
+
+    const {t} = useTranslation();
+
+    const titles = [
+    { name: t('title-tables.text-name'), field: "name" },
+    { name: t('title-tables.text-registration-date'), field: "registrationDate" },
+    { name: t('title-tables.text-frequence'), field: "frequencyHours" },
+    { name: t('title-tables.text-duration'), field: "totalDays" },
+    { name: t('title-tables.text-completed'), field: "conclusion" },
+    { name: t('title-tables.text-next-medicine'), field: "nextMedicine" }
+]
 
     const { detailsPerson, medicinesForPersonDetails } = useSelector(state => state.person);
 
@@ -44,8 +47,6 @@ const PersonDetails = () => {
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
 
     const dispatch = useDispatch();
-
-    console.log(detailsPerson);
 
     useEffect(() => {
         dispatch(fetchDetailsPerson(id));
@@ -121,8 +122,8 @@ const PersonDetails = () => {
                 <tr key={index}>
                     <td>{medicine.name}</td>
                     <td>{formatDate(medicine.registrationDate)}</td>
-                    <td>{medicine.frequence}/{medicine.frequence} horas</td>
-                    <td>{medicine.totalDays} dias</td>
+                    <td>{medicine.frequence}/{medicine.frequence} {t('modals.unit-hours')}</td>
+                    <td>{medicine.totalDays} {t('modals.unit-days')}</td>
                     <td><input type="checkbox" name="conclusion" id="conclusion" checked={medicine.concluded} readOnly /></td>
                     <td>{medicine.nextItem && formatDate(medicine.nextItem.dayHour)}</td>
                 </tr>
@@ -174,23 +175,23 @@ const PersonDetails = () => {
             </header>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
-                    <h4>Informações</h4>
-                    {<p onClick={() => setEditing(true)} className='pointer'>{editing ? "Editando informações" : "Editar informações"}</p>}
+                    <h4>{t('page-person-details.text-informations')}</h4>
+                    {<p onClick={() => setEditing(true)} className='pointer'>{editing ? t('page-person-details.text-editing-informations') : t('page-person-details.text-edit-informations')}</p>}
                 </div>
                 <div className={styles.form_row}>
-                    <label htmlFor="name">Nome:</label>
+                    <label htmlFor="name">{t('modals.label-name')}</label>
                     <div className={styles.container_info_row}>
                         <input type="text" id="name" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} readOnly={!editing} disabled={!editing} />
                     </div>
                 </div>
                 <div className={styles.form_row}>
-                    <label htmlFor="phone">Telefone:</label>
+                    <label htmlFor="phone">{t('modals.label-phone')}</label>
                     <div className={styles.container_info_row}>
                         <input type="text" id="phone" name="phone" value={phone || ""} onChange={(e) => setPhone(e.target.value)} readOnly={!editing} disabled={!editing} />
                     </div>
                 </div>
                 <div className={styles.form_row}>
-                    <label htmlFor="birth_date">Data Nascimento:</label>
+                    <label htmlFor="birth_date">{t('modals.label-birthdate')}</label>
                     <div className={styles.container_info_row}>
                         <input type="date" id="birth_date" name="birth_date" value={birthDate && format(birthDate, 'yyyy-MM-dd') || ""} onChange={handleBirthDate} readOnly={!editing} disabled={!editing} />
                     </div>
@@ -199,11 +200,11 @@ const PersonDetails = () => {
                 {!editing &&
                     <>
                         <div className={styles.form_row}>
-                            <label htmlFor="accessCode">Código acesso:</label>
+                            <label htmlFor="accessCode">{t('modals.label-access-code')}</label>
                             <div className={styles.container_info_row}>
                                 <input type="text" id="accessCodee" name="accessCode" value={detailsPerson.accessCode || " "} readOnly disabled={!editing} />
                             </div>
-                             {!detailsPerson.accessCode && <p className={styles.generate_code} onClick={handleGenerateCode}>Gerar código de acesso</p>}
+                             {!detailsPerson.accessCode && <p className={styles.generate_code} onClick={handleGenerateCode}>{t('page-person-details.text-generate-access-code')}</p>}
                         </div>
                        
                     </>
@@ -212,19 +213,19 @@ const PersonDetails = () => {
 
                 {editing &&
                     <ButtonGroup>
-                        <Button type="submit" value="Confirmar" variant="button_confirm" onClick={handleConfirmEditing} />
-                        <Button type="button" value="Cancelar" variant="button_cancel" onClick={() => setEditing(false)} />
+                        <Button type="submit" value={t('buttons.text-confirm')} variant="button_confirm" onClick={handleConfirmEditing} />
+                        <Button type="button" value={t('buttons.text-cancel')} variant="button_cancel" onClick={() => setEditing(false)} />
                     </ButtonGroup>
                 }
             </section>
             <section>
-                <h4 className='title_text_color'>Lista de medicamentos...</h4>
+                <h4 className='title_text_color'>{t('page-person-details.text-list-medicines')}</h4>
                 <Table titles={titles} sort={{ fieldSort, typeSort }} handleSort={handleSort} >
                     {generateItemsTable()}
                 </Table>
-                {medicinesForPersonDetails.length === 0 && <p style={{ textAlign: 'center' }} className='title_text_color' >Não há medicamentos...</p>}
+                {medicinesForPersonDetails.length === 0 && <p style={{ textAlign: 'center' }} className='title_text_color' >{t('page-person-details.text-no-medicines')}</p>}
             </section>
-            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: " + detailsPerson.name + " ?"} object={detailsPerson} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
+            {showModalConfirmDelete && <ModalConfirmDelete text={t('modals.question-confirm-delete-person',{name: detailsPerson.name})} object={detailsPerson} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
         </div>
     )
 }

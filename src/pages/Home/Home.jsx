@@ -23,13 +23,13 @@ const Home = () => {
   const {t} = useTranslation();
 
   const titles = [
-    { name: t('table-home.text-name'), field: "NAME" },
-    { name: t('table-home.text-person'), field: "PERSON" },
-    { name: t('table-home.text-number'), field: "NUMBER" },
-    { name: t('table-home.text-frequence'), field: "FREQUENCE" },
-    { name: t('table-home.text-schedule'), field: "DAY_HOUR" },
-    { name: t('table-home.text-completed'), field: "CONCLUSION" },
-    { name: t('table-home.text-actions'), }];
+    { name: t('title-tables.text-name'), field: "NAME" },
+    { name: t('title-tables.text-person'), field: "PERSON" },
+    { name: t('title-tables.text-number'), field: "NUMBER" },
+    { name: t('title-tables.text-frequence'), field: "FREQUENCE" },
+    { name: t('title-tables.text-schedule'), field: "DAY_HOUR" },
+    { name: t('title-tables.text-completed'), field: "CONCLUSION" },
+    { name: t('title-tables.text-actions'), }];
 
   const { loading, medicinesItems, page, sort, filters } = useSelector(state => state.medicineItem);
 

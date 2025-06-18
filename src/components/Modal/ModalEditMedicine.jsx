@@ -22,8 +22,11 @@ import ModalConfirmDelete from './ModalConfirmDelete'
 import MessageError from '../MessageError/MessageError'
 import DuplicateButton from '../Button/DuplicateButton'
 import ModalConfirm from './ModalConfirm'
+import { useTranslation } from 'react-i18next'
 
 const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success, handleDuplicateMedicine }) => {
+
+    const {t} = useTranslation();
 
     const [name, setName] = useState(medicine.name);
     const [idPerson, setIdPerson] = useState(medicine.person?.id);
@@ -58,10 +61,10 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
 
         let err = "";
         if (name === null || name.length <= 1) {
-            err = "Insira um nome válido";
+            err = t('validation-messages.valid-name');
         }
         if (idPerson === null || idPerson.length == 0) {
-            err = "Selecione uma pessoa";
+            err = t('validation-messages.valid-person');
         }
 
         setValidationErros(err);
@@ -96,13 +99,13 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                         </ModalHeader>
                         <FormModal action={handleSubmit}>
                             <FormModalRow>
-                                <label htmlFor="name">Nome:</label>
+                                <label htmlFor="name">{t('modals.label-name')}</label>
                                 <FormInputGroup>
                                     <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} />
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
-                                <label htmlFor="person">Pessoa vínculada:</label>
+                                <label htmlFor="person">{t('modals.label-related-person')}</label>
                                 <FormInputGroup>
                                     <select name="person" id="person" value={idPerson} onChange={(e) => setIdPerson(e.target.value)}>
                                         {medicine.person === null && <option value="">-Selecione-</option>}
@@ -113,31 +116,31 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
-                                <label htmlFor="creationDate">Data criação:</label>
+                                <label htmlFor="creationDate">{t('modals.label-registration-date')}</label>
                                 <FormInputGroup disabled={true}>
                                     <input type="datetime-local" id="creationDate" name="creationDate" value={convertToPatternLocalDateTime(medicine.registrationDate)} disabled className={styles.disabled} />
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
-                                <label htmlFor="frequence">Frequência:</label>
+                                <label htmlFor="frequence">{t('modals.label-frequence')}</label>
                                 <FormInputGroup disabled={true}>
                                     <input type="text" id="frequence" name="frequence" value={medicine.frequencyHours} disabled className={styles.disabled} />
-                                    <span className="unit">hrs</span>
+                                    <span className="unit">{t('modals.unit-hours')}</span>
                                 </FormInputGroup>
                             </FormModalRow>
                             <FormModalRow>
-                                <label htmlFor="totDays">Total dias:</label>
+                                <label htmlFor="totDays">{t('modals.label-qty-days')}</label>
                                 <FormInputGroup disabled={true}>
                                     <input type="text" id="totDays" name="totDays" value={medicine.totalDays} disabled className={styles.disabled} />
-                                    <span className="unit">dias</span>
+                                    <span className="unit">{t('modals.unit-days')}</span>
                                 </FormInputGroup>
                             </FormModalRow>
 
                             <MessageError message={validationErros} />
 
                             <ButtonGroup>
-                                <Button value="Confirmar" type="submit" variant="button_confirm" />
-                                <Button value="Cancelar" type="button" onClick={hiddenModal} variant="button_cancel" />
+                                <Button value={t('buttons.text-confirm')} type="submit" variant="button_confirm" />
+                                <Button value={t('buttons.text-cancel')} type="button" onClick={hiddenModal} variant="button_cancel" />
                             </ButtonGroup>
                         </FormModal>
                     </ModalContent>
@@ -147,7 +150,7 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                     <ModalConfirmDelete
                         object={medicine}
                         handleDelete={handleDelete}
-                        text={"Confima a exclusão do medicamento?"}
+                        text={t('modals.question-confirm-delete-medicine')}
                         handleHiddenModalDelete={() => setShowModalDelete(false)}
                     />}
                 {showModalConfirmDuplicate && 

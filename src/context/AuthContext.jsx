@@ -11,15 +11,17 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [role, setRole] = useState("");
-    
+
 
     useEffect(() => {
         try {
-            var token = localStorage.getItem("token");
-            var payload = jwtDecode(token);
-            if (token && payload.exp > Date.now() / 1000) {
-                setUser(payload.sub);
-                setRole(payload.role);
+            const token = localStorage.getItem("token");
+            if (token) {
+                const payload = jwtDecode(token);
+                if (payload.exp > Date.now() / 1000) {
+                    setUser(payload.sub);
+                    setRole(payload.role);
+                }
             } else {
                 localStorage.removeItem("token");
             }

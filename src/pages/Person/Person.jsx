@@ -17,25 +17,27 @@ import { changeFieldSort, changeTypeSort, deletePerson, fetchMorePerson, fetchPe
 import { formatDate } from '../../utils/formatterDates'
 
 import styles from './Person.module.css';
-
-const titles = [
-    { name: "Nome", field: "name" },
-    { name: "Total medicamentos", field: "totalMedicines" },
-    { name: "Medicamentos abertos", field: "pendingMedicines" },
-    { name: "Próximo medicamento", field: "nextMedicine" },
-    { name: "Ações" }
-]
+import { useTranslation } from 'react-i18next'
 
 const Person = () => {
 
     const dispatch = useDispatch();
+    const {t} = useTranslation();
+
+    const titles = [
+        { name: t('title-tables.text-name'), field: "name" },
+        { name: t('title-tables.text-total-medicines'), field: "totalMedicines" },
+        { name: t('title-tables.text-pending-medicines'), field: "pendingMedicines" },
+        { name: t('title-tables.text-next-medicine'), field: "nextMedicine" },
+        { name: t('title-tables.text-actions') }
+    ]
 
     const { personList, sort, loading, page } = useSelector(state => state.person);
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [showModalMedicineItem, setShowModalMedicineItem] = useState(false);
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
-    
+
     const [medicine, setMedicine] = useState(null);
     const [personToDelete, setPersonToDelete] = useState(null);
 
@@ -159,9 +161,9 @@ const Person = () => {
 
             <footer className={styles.footer_person}>
                 {page.totalPages - 1 === page.number || page.totalElements === 0 ?
-                    <p>Todos elementos carregados...</p> :
+                    <p>{t('footer-see-more.text-all-loaded')}</p> :
                     <>
-                        <p>Ver mais...</p>
+                        <p>{t('footer-see-more.text-see-more')}</p>
                         <ArrowDownButton actionClick={handleFetchMoreMedicines} />
                     </>
 
@@ -175,7 +177,7 @@ const Person = () => {
                 setCloseModal={closeModalMedicine}
             />}
 
-            {showModalConfirmDelete && <ModalConfirmDelete text={"Confirmar exclusão da pessoa: " + personToDelete.name + " ?"} object={personToDelete} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
+            {showModalConfirmDelete && <ModalConfirmDelete text={t('modals.question-confirm-delete-person',{name:personToDelete.name})} object={personToDelete} handleDelete={handleDelete} handleHiddenModalDelete={handleHiddenModalDelete} />}
 
         </div>
 

@@ -9,16 +9,18 @@ import Table from '../Table/Table'
 import ArrowDownButton from '../Button/ArrowDownButton';
 
 import styles from './HistoricLog.module.css';
-
-const titles = [
-    { name: "Ação", field: "action" },
-    { name: "Descrição", field: "description" },
-    { name: "Data", field: "dateHour" }
-]
+import { useTranslation } from 'react-i18next';
 
 const HistoricLog = () => {
 
     const dispatch = useDispatch();
+    const { t } = useTranslation();
+
+    const titles = [
+        { name: t('title-tables.text-action'), field: "action" },
+        { name: t('title-tables.text-description'), field: "description" },
+        { name: t('title-tables.text-date'), field: "dateHour" }
+    ]
 
     const { logs, page, sort } = useSelector(state => state.log);
 
@@ -32,9 +34,9 @@ const HistoricLog = () => {
         dispatch(fetchLogs(pagination))
     }, [dispatch])
 
-    const sortList = () => { 
+    const sortList = () => {
         return [...logs].sort(
-            (a,b) => {
+            (a, b) => {
                 let valueA = a[sort.fieldSort];
                 let valueB = b[sort.fieldSort];
 
@@ -42,7 +44,7 @@ const HistoricLog = () => {
                     valueA = new Date(a.dateHour).getTime();
                     valueB = new Date(b.dateHour).getTime();
 
-                    if(sort.typeSort === "ASC") {
+                    if (sort.typeSort === "ASC") {
                         return valueA - valueB;
                     }
                     return valueB - valueA;
@@ -87,19 +89,19 @@ const HistoricLog = () => {
         }
     }
 
-  
+
 
     return (
         <>
-            <h3>Histórico</h3>
+            <h3>{t('historic.text-historic')}</h3>
             <Table titles={titles} sort={sort} handleSort={handleSort}>
                 {logs && generateRowsTableLogs()}
             </Table>
             <div className={styles.historic_footer}>
-                {page.totalPages - 1 == actualPage || logs.length === 0?
-                    <p>Todos elementos carregados...</p> :
+                {page.totalPages - 1 == actualPage || logs.length === 0 ?
+                    <p>{t('footer-see-more.text-all-loaded')}</p> :
                     <>
-                        <p>Ver mais...</p>
+                        <p>{t('footer-see-more.text-see-more')}</p>
                         <ArrowDownButton actionClick={handleFetchMoreLogs} />
                     </>
                 }

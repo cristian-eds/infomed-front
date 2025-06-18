@@ -57,7 +57,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
 
         let err = "";
         if(conclusion && (conclusionDayHour === null || conclusionDayHour.length <= 1) ) {
-            err = "Insira um data de conclusão";
+            err = t('validation-messages.valid-conclusion-date');
         }
 
         setValidationErros(err);
@@ -140,7 +140,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                         <ModalConfirmDelete
                             object={medicine}
                             handleDelete={handleDelete}
-                            text={"Confima a exclusão do medicamento?"}
+                            text={t('modals.question-confirm-delete-medicine-item')}
                             handleHiddenModalDelete={handleHiddenModalDelete}
                         />}
                 </ Modal >

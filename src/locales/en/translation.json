@@ -3,10 +3,8 @@
 
     "page-login": {
         "text-login": "Connecting",
-
         "placeholder-email": "E-mail...",
         "placeholder-password": "Password...",
-
         "value-button-confirm-login": "Login",
         "value-button-register": "Registrer"
     },
@@ -15,15 +13,33 @@
         "text-register": "Registering",
         "text-type-normal-user": "Normal User",
         "text-type-adm-user": "ADM User",
-
         "placeholder-name": "Your name...",
         "placeholder-email": "Your e-mail...",
         "placeholder-password": "Enter a password...",
         "placeholder-confirm-password": "Repeat password...",
-
         "value-button-confirm-register": "Register",
         "value-button-login": "Login"
     },
+
+    "page-medicines": {
+        "text-history-medicines": "Medicines history..."
+    },
+
+    "page-person-details": {
+        "text-informations": "Information",
+        "text-editing-informations": "Editing information",
+        "text-edit-informations": "Edit information",
+        "text-generate-access-code": "Generate access code",
+        "text-list-medicines": "List of medicines...",
+        "text-no-medicines": "There aren't medicines..."
+    },
+
+    "page-profile": {
+        "text-information" : "Information of account",
+        "text-editing-information": "Editing information",
+        "text-edit-information": "Edit information",
+        "text-change-password": "Change password"
+    }, 
 
     "navbar": {
         "text-home": "Home",
@@ -58,14 +74,19 @@
         "value-button-filter": "Filter"
     },
 
-    "table-home": {
+    "title-tables": {
         "text-name": "Name",
         "text-person": "Person",
         "text-number": "N°",
         "text-frequence": "Frequence",
         "text-schedule": "Schedule",
         "text-completed": "Completed",
-        "text-actions": "Actions"
+        "text-duration": "Duration",
+        "text-registration-date": "Registration Date",
+        "text-actions": "Actions",
+        "text-action": "Action",
+        "text-description": "Description",
+        "text-date": "Date"
     },
 
     "row-table-medicine-item": {
@@ -82,11 +103,53 @@
         "placeholder-qty-days": "Number of days...",
         "label-initial-schedule": "Start Datetime:",
         "label-related-person": "Related person:",
-        "placeholder-default-select": "Select"
+        "placeholder-default-select": "Select",
+        "label-schedule": "Schedule:",
+        "label-completed": "Completed?",
+        "label-when-was-completed": "When was it completed?",
+        "label-registration-date": "Registration Date:",
+        "label-phone": "Phone:",
+        "placeholder-phone": "Enter a phone...",
+        "label-birthdate": "Date of birth:",
+        "label-access-code": "Access code:",
+        "label-current-password": "Current password:",
+        "label-new-password": "New password:",
+        "label-confirm-new-password": "Repeat new password:",
+        "label-email": "E-mail:",
+
+        "question-confirm-delete-medicine-item": "Do you confirm the exclusion of this item from the medicine?",
+        "question-confirm-delete-medicine": "Do you confirm the exclusion of the medicine?",
+        "question-confirm-duplicate-medicine": "Do you confirm the duplication of the medicine?",
+        "question-confirm-delete-person": "Do you confirm the exclusion of the person: {{name}} ?",
+
+        "unit-hours": "hours",
+        "unit-days": "days"
     },
 
     "buttons": {
         "text-save": "Save",
         "text-cancel": "Cancel"
+    },
+
+    "validation-messages": {
+        "valid-name": "Enter a valid name",
+        "valid-frequence": "Enter a valid frequence",
+        "valid-qty-days": "Enter a valid total number of days",
+        "valid-person": "Selecet a person",
+        "valid-conclusion-date": "Enter a valid conclusion date",
+        "valid-fields-requireds": "All fields are mandatory.",
+        "valid-confirm-new-password": "The new passwords don't match.",
+        "valid-password-lenght": "Password must be at least four characters long.",
+        "valid-name-lenght": "Name must be at least three characters long."
+    },
+
+    "toast-messages": {
+        "text-successfully-change-password": "Password updated successfully",
+        "text-successfully-update-user": "User updated successfully"
+    },
+
+    "footer-see-more": {
+        "text-see-more": "See more...",
+        "text-all-loaded": "All elements have been loaded..."
     }
 }
