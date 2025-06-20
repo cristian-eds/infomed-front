@@ -13,6 +13,7 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import { AuthContext } from '../../context/AuthContext';
 
 import ControlTheme from '../ControlTheme/ControlTheme';
+import ControlLanguage from '../ControlLanguage/ControlLanguage';
 
 
 const SideMenu = ({ closeMenu, role }) => {
@@ -38,6 +39,7 @@ const SideMenu = ({ closeMenu, role }) => {
             </ul>
             <div>
                 <ul>
+                    <li> <ControlLanguage /> <p>{t('navbar.text-languages')}</p> </li>
                     <li> <ControlTheme /> <p>{t('navbar.text-themes')}</p> </li>
                     <li onClick={logout}><RiLogoutBoxLine /> {t('navbar.text-logout')}</li>
                 </ul>

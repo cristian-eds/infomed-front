@@ -1,0 +1,52 @@
+.pophover {
+    display: flex;
+    position: relative;
+}
+
+.pophover_content {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 120%;
+    width: 10rem;
+    height: 9.5rem;
+    background-color: var(--secondary-color);
+    border-radius: .3rem;
+    padding: .7rem .7rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.pophover_content * {
+    font-size: .8rem;
+}
+
+.pophover_content_itens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+}
+
+.pophover_content_itens p {
+    align-self: flex-start;
+}
+
+.pophover::after {
+    position: absolute;
+    z-index: 3;
+    content: "";
+    border-bottom: 5px solid var(--secondary-color);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    right: 22%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.pophover_active::after {
+    opacity: 1;
+}
