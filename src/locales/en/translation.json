@@ -47,7 +47,8 @@
         "text-person": "Person",
         "text-profile": "Profile",
         "text-logout": "Logout",
-        "text-themes": "Themes"
+        "text-themes": "Themes",
+        "text-languages": "Language"
     },
 
     "next-medicine": {
@@ -84,6 +85,9 @@
         "text-duration": "Duration",
         "text-registration-date": "Registration Date",
         "text-actions": "Actions",
+        "text-next-medicine": "Next medicine",
+        "text-total-medicines": "Total medicines",
+        "text-pending-medicines": "Pending medicines",
         "text-action": "Action",
         "text-description": "Description",
         "text-date": "Date"
@@ -151,5 +155,14 @@
     "footer-see-more": {
         "text-see-more": "See more...",
         "text-all-loaded": "All elements have been loaded..."
+    },
+
+    "historic": {
+        "text-historic": "Historic"
+    },
+
+    "config-pop-hover": {
+        "text-themes": "Themes",
+        "text-languages": "Languages"
     }
 }

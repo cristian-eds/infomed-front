@@ -51,7 +51,8 @@
         "text-person": "Pessoas",
         "text-profile": "Perfil",
         "text-logout": "Sair",
-        "text-themes": "Temas"
+        "text-themes": "Temas",
+        "text-languages": "Linguagem"
     },
 
     "next-medicine": {
@@ -165,6 +166,11 @@
 
     "historic": {
         "text-historic": "Histórico"
+    },
+
+    "config-pop-hover": {
+        "text-themes": "Temas",
+        "text-languages": "Linguagens"
     }
 
 }
