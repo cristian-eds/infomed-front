@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import InputSearch from '../../components/InputSearch/InputSearch';
 import Table from '../../components/Table/Table';
-import ArrowDownButton from '../../components/Button/ArrowDownButton';
 import ModalConfirmDelete from '../../components/Modal/ModalConfirmDelete';
 import ButtonPlus from '../../components/Button/ButtonPlus';
 import ModalAddMedicine from '../../components/Modal/ModalAddMedicine';
 import ModalEditMedicine from '../../components/Modal/ModalEditMedicine';
+import SeeMoreFooter from '../../components/SeeMoreFooter/SeeMoreFooter';
+import CustomCheckBox from '../../components/CustomCheckBox/CustomCheckBox';
 
 import { MdDelete, MdEdit } from "react-icons/md";
 
@@ -16,10 +18,6 @@ import { changeFieldSort, changeTypeSort, changeValueFieldFilter, createMedicine
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
-import CustomCheckBox from '../../components/CustomCheckBox/CustomCheckBox';
-import { useTranslation } from 'react-i18next';
-
-
 
 const Medicines = () => {
 
@@ -190,16 +188,7 @@ const Medicines = () => {
                         </Table>
 
                     </div>
-                    <footer className={styles.footer_medicines}>
-                        {medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0 ?
-                            <p>{t('footer-see-more.text-all-loaded')}</p> :
-                            <>
-                                <p>{t('footer-see-more.text-see-more')}</p>
-                                <ArrowDownButton actionClick={handleFetchMoreMedicines} />
-                            </>
-
-                        }
-                    </footer>
+                    <SeeMoreFooter condition={medicinePage.totalPages - 1 === actualPage || medicinePage.totalElements === 0} handleFetchMore={handleFetchMoreMedicines} />
                 </>}
             </div>
 

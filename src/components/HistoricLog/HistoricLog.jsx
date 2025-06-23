@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { formatDate } from '../../utils/formatterDates';
@@ -6,10 +7,7 @@ import { formatDate } from '../../utils/formatterDates';
 import { changeFieldSort, changeTypeSort, fetchLogs, fetchMoreLogs } from '../../slices/logSlice';
 
 import Table from '../Table/Table'
-import ArrowDownButton from '../Button/ArrowDownButton';
-
-import styles from './HistoricLog.module.css';
-import { useTranslation } from 'react-i18next';
+import SeeMoreFooter from '../SeeMoreFooter/SeeMoreFooter';
 
 const HistoricLog = () => {
 
@@ -97,15 +95,7 @@ const HistoricLog = () => {
             <Table titles={titles} sort={sort} handleSort={handleSort}>
                 {logs && generateRowsTableLogs()}
             </Table>
-            <div className={styles.historic_footer}>
-                {page.totalPages - 1 == actualPage || logs.length === 0 ?
-                    <p>{t('footer-see-more.text-all-loaded')}</p> :
-                    <>
-                        <p>{t('footer-see-more.text-see-more')}</p>
-                        <ArrowDownButton actionClick={handleFetchMoreLogs} />
-                    </>
-                }
-            </div>
+            <SeeMoreFooter condition={page.totalPages - 1 == actualPage || logs.length === 0} handleFetchMore={handleFetchMoreLogs}/>
         </>
     )
 }

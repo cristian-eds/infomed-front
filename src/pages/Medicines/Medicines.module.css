@@ -3,14 +3,6 @@
     color: var(--text-title-color);
 }
 
-.footer_medicines {
-    padding-top: .8em;
-    flex-direction: row;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .container_flex {
     display: flex;
     justify-content: space-between;
