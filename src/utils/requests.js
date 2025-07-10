@@ -18,4 +18,30 @@ export const requestConfig = (method,data) => {
     return config;
 }
 
+export const requestConfigFormData = (method,formData) => {
+
+    const token = localStorage.getItem("token");
+
+    const config = {
+        method,
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: createFormData(formData)
+    }
+
+    return config;
+}
+
+export const createFormData = (data) => {
+
+    const formData = new FormData();
+    
+    Object.keys(data).forEach(key => {
+        formData.append(key,data[key])
+    });
+
+    return formData;
+}
+
 export const API_URL = import.meta.env.VITE_API_BASE_URL;
