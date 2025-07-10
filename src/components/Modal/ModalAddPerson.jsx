@@ -65,7 +65,7 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                     <FormModalRow>
                         <label htmlFor="name">{t('modals.label-name')}</label>
                         <FormInputGroup>
-                            <input type="text" id="name" placeholder={t('modals.placeholder-name')} name="name" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input type="text" id="name" placeholder={t('modals.placeholder-name-person')} name="name" value={name} onChange={(e) => setName(e.target.value)} />
                         </FormInputGroup>
                     </FormModalRow>
                     <FormModalRow>

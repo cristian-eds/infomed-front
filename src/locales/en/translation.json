@@ -31,7 +31,8 @@
         "text-edit-informations": "Edit information",
         "text-generate-access-code": "Generate access code",
         "text-list-medicines": "List of medicines...",
-        "text-no-medicines": "There aren't medicines..."
+        "text-no-medicines": "There aren't medicines...",
+        "text-alt-image-person": "Person image"
     },
 
     "page-profile": {
@@ -99,6 +100,8 @@
 
     "modals": {
         "title-add-medicine": "New Medicine",
+        "title-add-person": "New Person",
+
         "label-name": "Name:",
         "placeholder-name": "Name of the medicine...",
         "label-frequence": "Frequence:",
@@ -120,6 +123,8 @@
         "label-new-password": "New password:",
         "label-confirm-new-password": "Repeat new password:",
         "label-email": "E-mail:",
+        "label-image": "Image:",
+        "placeholder-name-person": "Name of the person...",
 
         "question-confirm-delete-medicine-item": "Do you confirm the exclusion of this item from the medicine?",
         "question-confirm-delete-medicine": "Do you confirm the exclusion of the medicine?",

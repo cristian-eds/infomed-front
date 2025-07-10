@@ -35,7 +35,8 @@
         "text-edit-informations": "Editar informações",
         "text-generate-access-code": "Gerar código de acesso",
         "text-list-medicines": "Lista de medicamentos...",
-        "text-no-medicines": "Não há medicamentos..."
+        "text-no-medicines": "Não há medicamentos...",
+        "text-alt-image-person": "Imagem da pessoa"
     },
 
     "page-profile": {
@@ -126,6 +127,8 @@
         "label-new-password": "Nova senha:",
         "label-confirm-new-password": "Repita nova senha:",
         "label-email": "E-mail:",
+        "label-image": "Imagem:",
+        "placeholder-name-person": "Nome da pessoa...",
 
         "question-confirm-delete-medicine-item": "Confirma a exclusão desse item do medicamento?",
         "question-confirm-delete-medicine": "Confirma a exclusão do medicamento?",
