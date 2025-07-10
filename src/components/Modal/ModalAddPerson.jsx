@@ -23,6 +23,7 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [birthDate, setBirthDate] = useState("");
+    const [image, setImage] = useState("");
 
     const [validationErros, setValidationErros] = useState(null);
 
@@ -33,7 +34,8 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
         const data = {
             name,
             phone,
-            birthDate
+            birthDate,
+            file: image
         }
         dispatch(createPerson(data));
         setShowModal(false);
@@ -77,6 +79,13 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                         <label htmlFor="birthDate">{t('modals.label-birthdate')}</label>
                         <FormInputGroup>
                             <input type="date" id="birthDate" name="birthDate" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+                        </FormInputGroup>
+                    </FormModalRow>
+
+                    <FormModalRow>
+                        <label htmlFor="image">{t('modals.label-image')}</label>
+                        <FormInputGroup>
+                            <input type="file" id="image" accept="image/png, image/jpeg" capture="user" name="image" onChange={(e) => setImage(e.target.files[0])}/>
                         </FormInputGroup>
                     </FormModalRow>
 
