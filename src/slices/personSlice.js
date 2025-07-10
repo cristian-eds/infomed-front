@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { API_URL, requestConfig } from "../utils/requests";
+import { API_URL, requestConfig, requestConfigFormData } from "../utils/requests";
 
 
 const initialState = {
@@ -47,7 +47,7 @@ export const fetchMorePerson = createAsyncThunk(
 export const createPerson = createAsyncThunk(
     'person/create',
     async (data) => {
-        const config = requestConfig("POST", data);
+        const config = requestConfigFormData("POST", data);
 
         const res = await fetch(`${API_URL}/person`, config)
             .then(res => res.json());
@@ -191,7 +191,6 @@ export const personSlice = createSlice({
             })
             .addCase(generateCode.fulfilled, (state, action) => {
                 if(action.payload) {
-                    console.log("Entrou aqui")
                     state.detailsPerson.accessCode = action.payload.accessCode;
                 }
             })

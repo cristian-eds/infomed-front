@@ -18,7 +18,7 @@ export const requestConfig = (method,data) => {
     return config;
 }
 
-export const requestConfigFormData = (method,formData) => {
+export const requestConfigFormData = (method,dataToformData) => {
 
     const token = localStorage.getItem("token");
 
@@ -27,7 +27,7 @@ export const requestConfigFormData = (method,formData) => {
         headers: {
             "Authorization": `Bearer ${token}`
         },
-        body: createFormData(formData)
+        body: createFormData(dataToformData)
     }
 
     return config;
