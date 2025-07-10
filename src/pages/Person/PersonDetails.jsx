@@ -17,6 +17,7 @@ import { convertToPatternLocalDate, formatDate } from '../../utils/formatterDate
 
 import styles from './PersonDetails.module.css'
 import { useTranslation } from 'react-i18next';
+import { API_URL } from '../../utils/requests';
 
 const PersonDetails = () => {
 
@@ -46,6 +47,8 @@ const PersonDetails = () => {
 
     const [showModalConfirmDelete, setShowModalConfirmDelete] = useState(false);
 
+    const [imgSrc, setImageSrc] = useState("/src/assets/perfil.png");
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -61,6 +64,7 @@ const PersonDetails = () => {
             setName(detailsPerson.name);
             setPhone(detailsPerson.phone);
             setBirthDate(detailsPerson.birthDate);
+            detailsPerson.imageUrl && setImageSrc(`${API_URL}${detailsPerson.imageUrl}`);
         }
         return () => { }
     }, [detailsPerson])
@@ -173,6 +177,9 @@ const PersonDetails = () => {
                 </h2>
                 <DeleteButton actionClick={() => setShowModalConfirmDelete(true)} />
             </header>
+            <section className={styles.header_img}>
+                <img src={imgSrc} alt={t('page-person-details.text-alt-image-person')} />
+            </section>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
                     <h4>{t('page-person-details.text-informations')}</h4>

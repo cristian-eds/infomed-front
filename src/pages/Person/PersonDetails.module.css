@@ -5,6 +5,15 @@
     color: var(--text-title-color);
 }
 
+.header_img {
+    text-align: center;
+    min-height: 120px;
+}
+
+.header_img img{
+    height: 120px;
+}
+
 .container_info {
     width: 60%;
     margin: 0 auto;
