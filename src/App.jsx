@@ -23,7 +23,7 @@ function App() {
   return (
   <BrowserRouter>
     {user && <Navbar logout={logout} role={role} />}
-    {user && <NavbarPhone /> }
+    {user && <NavbarPhone role={role}/> }
     <Routes>
       <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
       <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>

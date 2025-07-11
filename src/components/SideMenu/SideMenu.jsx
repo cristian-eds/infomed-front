@@ -29,6 +29,7 @@ const SideMenu = ({ closeMenu, role }) => {
         closeMenu();
     }
 
+
     return (
         <div className={styles.container_menu}>
             <ul>
