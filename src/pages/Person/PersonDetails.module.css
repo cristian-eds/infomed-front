@@ -8,10 +8,16 @@
 .header_img {
     text-align: center;
     min-height: 120px;
+
+    border-radius: 50%;
 }
 
 .header_img img{
     height: 120px;
+    min-width: 120px;
+    border: 1px solid green;
+    border-radius: 50%;
+    object-fit: contain;
 }
 
 .container_info {

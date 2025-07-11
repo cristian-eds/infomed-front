@@ -85,7 +85,7 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                     <FormModalRow>
                         <label htmlFor="image">{t('modals.label-image')}</label>
                         <FormInputGroup>
-                            <input type="file" id="image" accept="image/png, image/jpeg" capture="user" name="image" onChange={(e) => setImage(e.target.files[0])}/>
+                            <input type="file" id="image" accept="image/png, image/jpeg" capture="user|environment" name="image" onChange={(e) => setImage(e.target.files[0])}/>
                         </FormInputGroup>
                     </FormModalRow>
 
