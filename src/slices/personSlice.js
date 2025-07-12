@@ -125,6 +125,18 @@ export const generateCode = createAsyncThunk(
     }
 )
 
+export const updateImagePerson = createAsyncThunk(
+    'person/uploadImage',
+    async (data) => {
+        const config = requestConfigFormData("PUT", data);
+
+        const res = await fetch(`${API_URL}/person/${data.personId}/image`, config)
+            .then(res => res.json());
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -192,6 +204,11 @@ export const personSlice = createSlice({
             .addCase(generateCode.fulfilled, (state, action) => {
                 if(action.payload) {
                     state.detailsPerson.accessCode = action.payload.accessCode;
+                }
+            })
+            .addCase(updateImagePerson.fulfilled, (state, action) => {
+                if(action.payload) {
+                    state.detailsPerson.imageUrl = action.payload.imageUrl;
                 }
             })
     }

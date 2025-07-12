@@ -13,7 +13,7 @@ import Button from '../Button/Button';
 import ButtonGroup from '../Button/ButtonGroup';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadImagePerson } from '../../slices/personSlice';
+import { updateImagePerson } from '../../slices/personSlice';
 import { API_URL } from '../../utils/requests';
 
 const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
@@ -40,7 +40,7 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
     const handleSaveImage = (e) => {
         e.preventDefault();
         if(newImage) {
-            dispatch(uploadImagePerson({
+            dispatch(updateImagePerson({
                 file: newImage,
                 personId: detailsPerson.id
             }))
