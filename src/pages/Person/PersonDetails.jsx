@@ -18,6 +18,7 @@ import { convertToPatternLocalDate, formatDate } from '../../utils/formatterDate
 import styles from './PersonDetails.module.css'
 import { useTranslation } from 'react-i18next';
 import { API_URL } from '../../utils/requests';
+import ImageView from '../../components/ImageView/ImageView';
 
 const PersonDetails = () => {
 
@@ -177,9 +178,7 @@ const PersonDetails = () => {
                 </h2>
                 <DeleteButton actionClick={() => setShowModalConfirmDelete(true)} />
             </header>
-            <section className={styles.header_img}>
-                <img src={imgSrc} alt={t('page-person-details.text-alt-image-person')} />
-            </section>
+            <ImageView imgSrc={imgSrc}/>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
                     <h4>{t('page-person-details.text-informations')}</h4>

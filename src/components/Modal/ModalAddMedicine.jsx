@@ -77,7 +77,7 @@ const ModalAddMedicine = ({ showModal, handleCloseModal, actionToDispatch, dispa
     return (
         <>
             {showModal && (
-                <Modal >
+                <Modal>
                     <ModalContent>
                         <ModalHeader>
                             <ArrowLeftButton actionClick={handleCloseModal} />
