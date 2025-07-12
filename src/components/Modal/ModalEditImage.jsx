@@ -1,4 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateImagePerson } from '../../slices/personSlice';
+
 import ArrowLeftButton from '../Button/ArrowLeftButton';
 import DeleteButton from '../Button/DeleteButton';
 import FormInputGroup from './FormModal/FormInputGroup';
@@ -11,10 +17,7 @@ import ModalHeader from './ModalHeader';
 import FormModal from './FormModal/FormModal';
 import Button from '../Button/Button';
 import ButtonGroup from '../Button/ButtonGroup';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateImagePerson } from '../../slices/personSlice';
-import { API_URL } from '../../utils/requests';
+
 
 const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
 
@@ -26,11 +29,6 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
 
     const [newImage, setNewImage] = useState("");
     const [inputKey, setInputKey] = useState(Date.now());
-    const [urlImage, setUrlImage] = useState("");
-
-    useEffect(()=> {
-        setUrlImage(`${imgSrc}?cache=${inputKey}`)
-    },[imgSrc,inputKey])
 
     const handleCancel = () => {
         setNewImage("");
@@ -45,10 +43,11 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
                 personId: detailsPerson.id
             }))
         }
-        handleCancel();
+        setTimeout(
+            () => handleCancel(),
+            100
+        )
     }
-
-    console.log(urlImage);
 
     return (
         <>
@@ -65,7 +64,7 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
                             </div>
                         </ModalHeader>
 
-                        <img key={inputKey} src={urlImage} alt={t('page-person-details.text-alt-image-person')} style={{ height: '50%' }} />
+                        <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} style={{ height: '50%' }} />
 
                         <FormModal>
                             <p>Alterar imagem:</p>

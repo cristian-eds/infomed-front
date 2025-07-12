@@ -9,6 +9,7 @@ const ImageView = ({ imgSrc }) => {
 
     const { t } = useTranslation();
 
+    const inputKey = Date.now();
     const [showModalEditImage, setShowModalEditImage] = useState(false);
 
     const handleImage = () => {
@@ -17,7 +18,7 @@ const ImageView = ({ imgSrc }) => {
 
     return (
         <section className={styles.header_img} >
-            <img src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.header_img__img} onClick={handleImage} />
+            <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.header_img__img} onClick={handleImage} />
             {imgSrc &&
                 <ModalEditImage
                     showModal={showModalEditImage}
