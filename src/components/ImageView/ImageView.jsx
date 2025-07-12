@@ -1,0 +1,30 @@
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import styles from './ImageView.module.css';
+import ModalEditImage from '../Modal/ModalEditImage';
+
+
+const ImageView = ({ imgSrc }) => {
+
+    const { t } = useTranslation();
+
+    const [showModalEditImage, setShowModalEditImage] = useState(false);
+
+    const handleImage = () => {
+        setShowModalEditImage(true);
+    }
+
+    return (
+        <section className={styles.header_img} >
+            <img src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.header_img__img} onClick={handleImage} />
+            {imgSrc &&
+                <ModalEditImage
+                    showModal={showModalEditImage}
+                    imgSrc={imgSrc}
+                    closeModal={() => setShowModalEditImage(false)} />}
+        </section>
+    )
+}
+
+export default ImageView
