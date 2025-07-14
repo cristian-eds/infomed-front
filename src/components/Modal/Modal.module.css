@@ -146,6 +146,9 @@ input:not([disabled]) {
     cursor: pointer;
 }
 
+.image {
+    height: 50%;
+}
 
 @media (max-width: 1200px) {}
 
@@ -156,6 +159,7 @@ input:not([disabled]) {
 }
 
 @media (max-width : 768px) {
+
     .modal_content,
     .modal_content_minor {
         width: 90%;
@@ -173,6 +177,10 @@ input:not([disabled]) {
 
     .input_group {
         width: 57%;
+    }
+
+    .image {
+        height: 40%;
     }
 
 }

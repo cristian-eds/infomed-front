@@ -42,6 +42,11 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
         dispatch(deleteImagePerson(detailsPerson.id))
     }
 
+    const handleFileChange = (e) => {
+        e.preventDefault();
+        setNewImage(e.target.files[0]);
+    }
+
     const handleSaveImage = (e) => {
         e.preventDefault();
         if (newImage) {
@@ -77,14 +82,14 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
 
                         </ModalHeader>
 
-                        <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} style={{ height: '50%' }} />
+                        <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.image}/>
 
                         <FormModal>
                             <p>{t('modals.label-change-image')}</p>
                             <FormModalRow>
                                 <label htmlFor="image">{t('modals.label-image')}</label>
                                 <FormInputGroup>
-                                    <input key={inputKey} type="file" id="image" accept="image/png, image/jpeg" capture="user|environment" name="image" onChange={(e) => setNewImage(e.target.files[0])} />
+                                    <input key={inputKey} type="file" id="image" accept="image/png, image/jpeg" capture="user|environment" name="image" onChange={handleFileChange} />
                                 </FormInputGroup>
                             </FormModalRow>
 
