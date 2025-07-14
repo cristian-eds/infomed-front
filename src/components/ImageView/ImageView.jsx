@@ -5,7 +5,7 @@ import styles from './ImageView.module.css';
 import ModalEditImage from '../Modal/ModalEditImage';
 
 
-const ImageView = ({ imgSrc }) => {
+const ImageView = ({ imgSrc, handleError }) => {
 
     const { t } = useTranslation();
 
@@ -18,7 +18,7 @@ const ImageView = ({ imgSrc }) => {
 
     return (
         <section className={styles.header_img} >
-            <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.header_img__img} onClick={handleImage} />
+            <img key={inputKey} src={imgSrc} alt={t('page-person-details.text-alt-image-person')} className={styles.header_img__img} onClick={handleImage} onError={handleError}/>
             {imgSrc &&
                 <ModalEditImage
                     showModal={showModalEditImage}

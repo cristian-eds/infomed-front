@@ -167,6 +167,10 @@ const PersonDetails = () => {
         setShowModalConfirmDelete(false);
     }
 
+    const handleErrorImage = () => {
+        setImageSrc('/src/assets/perfil.png');
+    }
+
     return (
         <div className="container_main">
             <header className={styles.header_details}>
@@ -178,7 +182,7 @@ const PersonDetails = () => {
                 </h2>
                 <DeleteButton actionClick={() => setShowModalConfirmDelete(true)} />
             </header>
-            <ImageView imgSrc={imgSrc}/>
+            <ImageView imgSrc={imgSrc} handleError={handleErrorImage}/>
             <section className={styles.container_info}>
                 <div className={styles.container_info_title}>
                     <h4>{t('page-person-details.text-informations')}</h4>
