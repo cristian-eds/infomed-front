@@ -125,11 +125,13 @@
         "label-email": "E-mail:",
         "label-image": "Image:",
         "placeholder-name-person": "Name of the person...",
+        "label-change-image": "Change image:",
 
         "question-confirm-delete-medicine-item": "Do you confirm the exclusion of this item from the medicine?",
         "question-confirm-delete-medicine": "Do you confirm the exclusion of the medicine?",
         "question-confirm-duplicate-medicine": "Do you confirm the duplication of the medicine?",
         "question-confirm-delete-person": "Do you confirm the exclusion of the person: {{name}} ?",
+        "question-confirm-delete-image": "Do you confirm the exclusion of the image?",
 
         "unit-hours": "hours",
         "unit-days": "days"

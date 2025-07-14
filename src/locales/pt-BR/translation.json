@@ -129,11 +129,14 @@
         "label-email": "E-mail:",
         "label-image": "Imagem:",
         "placeholder-name-person": "Nome da pessoa...",
+        "label-change-image": "Alterar imagem:",
 
         "question-confirm-delete-medicine-item": "Confirma a exclusão desse item do medicamento?",
         "question-confirm-delete-medicine": "Confirma a exclusão do medicamento?",
         "question-confirm-duplicate-medicine": "Confirma a duplicação do medicamento?",
         "question-confirm-delete-person": "Confirma a exclusão da pessoa: {{name}} ?",
+        "question-confirm-delete-image": "Confirma a exclusão da imagem?",
+        
         
         "unit-hours": "horas",
         "unit-days": "dias"
