@@ -137,6 +137,18 @@ export const updateImagePerson = createAsyncThunk(
     }
 )
 
+export const deleteImagePerson = createAsyncThunk(
+    'person/deleteImage',
+    async (id) => {
+        const config = requestConfig("DELETE");
+
+        const res = await fetch(`${API_URL}/person/${id}/image`, config)
+            .then(res => res);
+
+        return res;
+    }
+)
+
 export const personSlice = createSlice({
     name: "person",
     initialState,
@@ -210,6 +222,9 @@ export const personSlice = createSlice({
                 if(action.payload) {
                     state.detailsPerson.imageUrl = action.payload.imageUrl;
                 }
+            })
+            .addCase(deleteImagePerson.fulfilled, (state) => {
+                state.detailsPerson.imageUrl = "";
             })
     }
 })
