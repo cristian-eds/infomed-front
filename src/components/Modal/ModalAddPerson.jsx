@@ -15,6 +15,7 @@ import FormModalRow from './FormModal/FormModalRow';
 import FormInputGroup from './FormModal/FormInputGroup';
 import MessageError from '../MessageError/MessageError';
 import { useTranslation } from 'react-i18next';
+import InputFile from '../InputFile/InputFile';
 
 const ModalAddPerson = ({ setShowModal, dispatch }) => {
 
@@ -39,6 +40,11 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
         }
         dispatch(createPerson(data));
         setShowModal(false);
+    }
+
+    const handleChangeImage = (e) => {
+        e.preventDefault();
+        setImage(e.target.files[0]);
     }
 
      const validateFields = () => {
@@ -85,7 +91,7 @@ const ModalAddPerson = ({ setShowModal, dispatch }) => {
                     <FormModalRow>
                         <label htmlFor="image">{t('modals.label-image')}</label>
                         <FormInputGroup>
-                            <input type="file" id="image" accept="image/png, image/jpeg" capture="user|environment" name="image" onChange={(e) => setImage(e.target.files[0])}/>
+                            <InputFile image={image} handleChangeImage={handleChangeImage}/>
                         </FormInputGroup>
                     </FormModalRow>
 

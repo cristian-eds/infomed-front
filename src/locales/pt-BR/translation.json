@@ -130,6 +130,8 @@
         "label-image": "Imagem:",
         "placeholder-name-person": "Nome da pessoa...",
         "label-change-image": "Alterar imagem:",
+        "placeholder-choose-image": "Escolher",
+        "label-no-image": "Nenhuma imagem selecionada",
 
         "question-confirm-delete-medicine-item": "Confirma a exclusão desse item do medicamento?",
         "question-confirm-delete-medicine": "Confirma a exclusão do medicamento?",

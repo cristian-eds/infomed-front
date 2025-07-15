@@ -18,6 +18,7 @@ import FormModal from './FormModal/FormModal';
 import Button from '../Button/Button';
 import ButtonGroup from '../Button/ButtonGroup';
 import ModalConfirmDelete from './ModalConfirmDelete';
+import InputFile from '../InputFile/InputFile';
 
 
 const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
@@ -89,7 +90,7 @@ const ModalEditImage = ({ showModal, imgSrc, closeModal }) => {
                             <FormModalRow>
                                 <label htmlFor="image">{t('modals.label-image')}</label>
                                 <FormInputGroup>
-                                    <input key={inputKey} type="file" id="image" accept="image/png, image/jpeg" capture="user|environment" name="image" onChange={handleFileChange} />
+                                    <InputFile key={inputKey} image={newImage} handleChangeImage={handleFileChange}/>
                                 </FormInputGroup>
                             </FormModalRow>
 

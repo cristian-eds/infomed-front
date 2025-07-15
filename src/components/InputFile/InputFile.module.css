@@ -1,0 +1,43 @@
+.container_input_file {
+    display: flex;
+    align-items: center;
+}
+
+.container_input_file input[type='file'] {
+    display: none;
+}
+
+.container_input_file button {
+    color: black;
+    padding: .15em .35em;
+    border-radius: .15em;
+    border: none;
+    transition: all ease-in-out .3s;
+}
+
+.container_input_file button:hover {
+    background-color: rgb(211, 211, 211);
+}
+
+.container_input_file>span {
+    color: white;
+    margin-left: .5em;
+    font-weight: normal;
+    font-size: .8em;
+}
+
+@media (max-width : 768px) {
+
+    .container_input_file button {
+        padding: .2em .8em;
+    }
+
+    .container_input_file button span {
+        display: none;
+    }
+
+    .container_input_file>span {
+        text-wrap: initial;
+    }
+
+}
