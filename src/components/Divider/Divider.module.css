@@ -1,0 +1,7 @@
+.container_divider {
+    width: 85%;
+    height: .115rem;
+    border-radius: .5rem;
+    margin: .5rem auto;
+    background-color: rgba(211, 211, 211, 0.882);
+}
