@@ -18,7 +18,7 @@ import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 
-  const {user, loading , role, error, login, logout, register} = useContext(AuthContext);
+  const {user, loading , role, error, login, logout, register, loginWithAccessCode} = useContext(AuthContext);
  
   return (
   <BrowserRouter>
@@ -26,13 +26,13 @@ function App() {
     {user && <NavbarPhone role={role}/> }
     <Routes>
       <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
-      <Route path='/login' element={!user ?  <Login login={login}/> : <Navigate to="/"/>}/>
+      <Route path='/login' element={!user ?  <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Navigate to="/"/>}/>
       <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
-      <Route path='/medicines' element={!user ? <Login login={login}/> : <Medicines/> }/>
-      <Route path='/profile' element={!user ? <Login login={login}/> : <Profile userContext={user}/> }/>
-      <Route path='/person' element={!user ? <Login login={login} /> : role === "ADMIN" ? <Person /> : <Home/>} />
-      <Route path='/person/:id' element={!user ? <Login login={login} /> : role === "ADMIN" ? <PersonDetails />: <Home/>} />
-      <Route path='*' element={!user ?  <Login login={login}/> : <NotFound />}/>
+      <Route path='/medicines' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Medicines/> }/>
+      <Route path='/profile' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Profile userContext={user}/> }/>
+      <Route path='/person' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : role === "ADMIN" ? <Person /> : <Home/>} />
+      <Route path='/person/:id' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : role === "ADMIN" ? <PersonDetails />: <Home/>} />
+      <Route path='*' element={!user ?  <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <NotFound />}/>
     </Routes>
   </BrowserRouter>
   )

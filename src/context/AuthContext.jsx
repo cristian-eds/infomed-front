@@ -1,12 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
-import { requestConfig } from "../utils/requests";
+import { API_URL, requestConfig } from "../utils/requests";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const url = 'http://192.168.0.112:8080/';
+    const url = API_URL;
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         const config = requestConfig("POST", userData);
         try {
-            const res = await fetch(url + 'auth/login', config)
+            const res = await fetch(url + '/auth/login', config)
                 .then(res => res.json());
 
             if (res.token) {
@@ -53,12 +53,34 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const loginWithAccessCode = async (accessCode) => {
+        setLoading(true);
+        const config = requestConfig("POST", accessCode);
+        try {
+            const res = await fetch(url + '/auth/accessCode', config)
+                .then(res => res.json());
+
+            if (res.token) {
+                localStorage.setItem("token", res.token);
+                var payload = jwtDecode(res.token);
+                setRole(payload.role);
+                setUser(payload.email);
+            } else {
+                return res;
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const register = async (userData) => {
         setLoading(true);
         const config = requestConfig("POST", userData);
 
         try {
-            const res = await fetch(url + 'users', config)
+            const res = await fetch(url + '/users', config)
                 .then(res => res.json());
 
             return res;
@@ -77,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, role, loading, login, logout, register }}>
+        <AuthContext.Provider value={{ user, role, loading, login, logout, register, loginWithAccessCode }}>
             {children}
         </AuthContext.Provider>
     )
