@@ -7,6 +7,9 @@
         "placeholder-email": "E-mail...",
         "placeholder-password": "Senha...",
 
+        "text-access-code": "Entre com código de acesso",
+        "placeholder-access-code": "Código de acesso...",
+
         "value-button-confirm-login": "Entrar",
         "value-button-register": "Registrar-se"
     },

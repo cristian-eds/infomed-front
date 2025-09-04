@@ -3,8 +3,13 @@
 
     "page-login": {
         "text-login": "Connecting",
+
         "placeholder-email": "E-mail...",
         "placeholder-password": "Password...",
+
+        "text-access-code": "Enter with access code",
+        "placeholder-access-code": "Acess code...",
+
         "value-button-confirm-login": "Login",
         "value-button-register": "Registrer"
     },
