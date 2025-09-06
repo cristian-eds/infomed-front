@@ -8,7 +8,7 @@ const CustomCheckBox = ({ checked, handleCheck, centralized = true }) => {
 
     return (
         <div className={`${styles.container_checkbox} ${centralized && styles.centralized} `} onClick={handleCheck}> 
-            {checked  &&  <FaCheck /> }
+            {checked  &&  <FaCheck color='greeen'/> }
         </div>
     )
 }

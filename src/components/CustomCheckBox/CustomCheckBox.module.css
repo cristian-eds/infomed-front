@@ -10,7 +10,7 @@
 }
 
 .container_checkbox * {
-    color: rgb(10, 47, 1);
+    color:  rgb(10, 47, 1) !important;
 }
 
 .centralized {
