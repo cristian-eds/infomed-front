@@ -2,6 +2,7 @@
     /* Theme Dark (default) */
     --primary-color: rgba(27, 197, 58, 0.859);
     --secondary-color: #016909;
+    --background-image: radial-gradient(circle, #1c1c1ceb 0%, #161616eb 100%);
     --background-color: #161616eb;
     --second-background-color: rgb(52, 54, 51);
 
@@ -25,6 +26,7 @@ body.light-theme {
     --secondary-color: #189322;
     --background-color: #dce3db;
     --second-background-color: #bdcbba;
+    --background-image: radial-gradient(circle, #d9e2d7 0%, #bdcbba 100%);
 
     --placeholder-color: #0c4406;
     --background-input-color: #ededed;
