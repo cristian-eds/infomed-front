@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { deleteMedicine, resetSuccess, updateMedicine } from '../../slices/medicineSlice'
 
@@ -23,10 +23,12 @@ import MessageError from '../MessageError/MessageError'
 import DuplicateButton from '../Button/DuplicateButton'
 import ModalConfirm from './ModalConfirm'
 import { useTranslation } from 'react-i18next'
+import { AuthContext } from '../../context/AuthContext'
 
 const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success, handleDuplicateMedicine }) => {
 
     const {t} = useTranslation();
+    const {role} = useContext(AuthContext);
 
     const [name, setName] = useState(medicine.name);
     const [idPerson, setIdPerson] = useState(medicine.person?.id);
@@ -92,10 +94,11 @@ const ModalEditMedicine = ({ showModal, hiddenModal, medicine, dispatch, success
                             <div>
                                 <h2 className={styles.modal_content_header_text}>{medicine.name}</h2>
                             </div>
+                            {role !== "GUEST" && 
                             <div className={styles.actions_buttons}>
                                 <DuplicateButton actionClick={toggle}/>
                                 <DeleteButton actionClick={() => setShowModalDelete(true)} />
-                            </div>
+                            </div>}
                         </ModalHeader>
                         <FormModal action={handleSubmit}>
                             <FormModalRow>

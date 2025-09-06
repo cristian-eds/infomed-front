@@ -63,8 +63,9 @@ export const AuthProvider = ({ children }) => {
             if (res.token) {
                 localStorage.setItem("token", res.token);
                 var payload = jwtDecode(res.token);
+                console.log(payload);
                 setRole(payload.role);
-                setUser(payload.email);
+                setUser(payload.sub);
             } else {
                 return res;
             }

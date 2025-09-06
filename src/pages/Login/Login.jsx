@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router';
 
 import { useTranslation } from 'react-i18next';
@@ -10,10 +10,13 @@ import styles from './Login.module.css'
 import ButtonGroup from '../../components/Button/ButtonGroup';
 import Button from '../../components/Button/Button';
 import Divider from '../../components/Divider/Divider';
+import { AuthContext } from '../../context/AuthContext';
 
-const Login = ({ login, loginWithAccessCode }) => {
+const Login = () => {
 
   const { t } = useTranslation();
+
+  const { login, loginWithAccessCode} = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

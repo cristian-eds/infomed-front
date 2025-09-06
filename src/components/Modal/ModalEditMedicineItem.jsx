@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from './Modal'
 
 import { deleteMedicineItem, updateMedicineItem } from '../../slices/medicineItemSlice'
@@ -20,10 +20,12 @@ import FormInputGroup from './FormModal/FormInputGroup'
 import MessageError from '../MessageError/MessageError'
 import CustomCheckBox from '../CustomCheckBox/CustomCheckBox'
 import { useTranslation } from 'react-i18next'
+import { AuthContext } from '../../context/AuthContext'
 
 const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch }) => {
 
     const {t} = useTranslation();
+    const {role} = useContext(AuthContext);
 
     const [dayHour, setDayHour] = useState(medicine.dayHour);
     const [conclusion, setConclusion] = useState(medicine.conclusion);
@@ -95,7 +97,7 @@ const ModalEditMedicineItem = ({ showModal, setCloseModal, medicine, dispatch })
                                 <h3 className={styles.modal_content_header_text}>{medicine.sequency}/{medicine.total}</h3>
                             </div>
                             <div className={styles.actions_buttons}>
-                                <DeleteButton actionClick={() => setShowModalDelete(true)} />
+                                {role !== "GUEST" && <DeleteButton actionClick={() => setShowModalDelete(true)} />}
                             </div>
                         </ModalHeader>
                         <FormModal action={handleEdit}>

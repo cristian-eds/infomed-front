@@ -18,7 +18,7 @@ const Navbar = ({ logout, role }) => {
         <NavLink to="/" activeClassName="active">{t('navbar.text-home')}</NavLink>
         <NavLink to="/medicines" activeClassName="active">{t('navbar.text-medicine')}</NavLink>
         {role === "ADMIN" && <NavLink to="/person" activeClassName="active">{t('navbar.text-person')}</NavLink>}
-        <NavLink to="/profile" activeClassName="active">{t('navbar.text-profile')}</NavLink>
+        {role !== "GUEST" && <NavLink to="/profile" activeClassName="active">{t('navbar.text-profile')}</NavLink>}
       </div>
       <div className={styles.navbar__itens}>
         <button onClick={logout}>{t('navbar.text-logout')}</button>

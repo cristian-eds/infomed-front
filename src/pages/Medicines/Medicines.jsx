@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -18,11 +18,14 @@ import { changeFieldSort, changeTypeSort, changeValueFieldFilter, createMedicine
 import { formatDate } from '../../utils/formatterDates';
 
 import styles from './Medicines.module.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const Medicines = () => {
 
     const dispatch = useDispatch();
+
     const {t} = useTranslation();
+    const {role} = useContext(AuthContext);
 
     const titles = [
         { name: t("title-tables.text-name"), field: "name" },
@@ -165,7 +168,7 @@ const Medicines = () => {
                 <td><CustomCheckBox checked={verifyConclusionMedicine(medicine)} /></td>
                 <td>
                     <MdEdit size={20} onClick={() => handleShowModalEdit(medicine)} />
-                    <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)} />
+                    {role !== "GUEST" && <MdDelete size={20} onClick={() => handleShowModalDelete(medicine)} />}
                 </td>
             </tr>
         ))
@@ -180,7 +183,7 @@ const Medicines = () => {
                 {loading ? <p>Loading...</p> : <>
                     <div className={styles.container_flex}>
                         <h3>{t('page-medicines.text-history-medicines')}</h3>
-                        <ButtonPlus action={() => setShowModalNewMedicine(true)} />
+                        {role !== "GUEST" && <ButtonPlus action={() => setShowModalNewMedicine(true)} />}
                     </div>
                     <div className={styles.container_table} ref={containerTableRef}>
                         <Table titles={titles} sort={sort} handleSort={handleSort}>

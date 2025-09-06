@@ -36,7 +36,7 @@ const SideMenu = ({ closeMenu, role }) => {
                 <li onClick={() => navigateToLink("/")}><FaHome /> {t('navbar.text-home')}</li>
                 <li onClick={() => navigateToLink("/medicines")}><RiMedicineBottleLine />{t('navbar.text-medicine')}</li>
                 {role === "ADMIN" && <li onClick={() => navigateToLink("/person")}><IoMdPeople />{t('navbar.text-person')}</li>}
-                <li onClick={() => navigateToLink("/profile")}><ImProfile />{t('navbar.text-profile')}</li>
+                {role !== "GUEST" && <li onClick={() => navigateToLink("/profile")}><ImProfile />{t('navbar.text-profile')}</li>}
             </ul>
             <div>
                 <ul>

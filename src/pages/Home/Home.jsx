@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import styles from './Home.module.css'
 
@@ -16,11 +16,14 @@ import ButtonPlus from '../../components/Button/ButtonPlus';
 
 import { changeFieldSort, changeTypeSort, changeValueFieldFilter, changeValuesFilter, createMedicine, searchCustomMedicinesItemUser } from '../../slices/medicineItemSlice';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '../../context/AuthContext';
 
 const Home = () => {
 
   const dispatch = useDispatch();
   const {t} = useTranslation();
+
+  const {role} = useContext(AuthContext);
 
   const titles = [
     { name: t('title-tables.text-name'), field: "NAME" },
@@ -98,7 +101,7 @@ const Home = () => {
         {loading ? <p>Loading...</p> : <>
           <div className={styles.container_caption}>
             <FilterHome handleSearch={handleSearch} filters={filters} />
-            <ButtonPlus action={() => setShowModal(true)} />
+            {role !== "GUEST" && <ButtonPlus action={() => setShowModal(true)} />}
           </div>
           <div className={styles.container_table}>
             <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>
