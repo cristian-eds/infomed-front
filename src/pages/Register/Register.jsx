@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router';
 
 import logo from '../../assets/Infomed.png'
@@ -9,10 +9,12 @@ import Button from '../../components/Button/Button';
 
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '../../context/AuthContext';
 
-const Register = ({ register, loading }) => {
+const Register = () => {
 
     const { t } = useTranslation();
+    const {register, loading} = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");

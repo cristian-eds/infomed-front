@@ -18,23 +18,23 @@ import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 
-  const {user, loading , role, error, login, logout, register, loginWithAccessCode} = useContext(AuthContext);
- 
+  const { user, role, logout } = useContext(AuthContext);
+
   return (
-  <BrowserRouter>
-    {user && <Navbar logout={logout} role={role} />}
-    {user && <NavbarPhone role={role}/> }
-    <Routes>
-      <Route path='/' element={user ?  <Home/> : <Navigate to="/login"/>}/>
-      <Route path='/login' element={!user ?  <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Navigate to="/"/>}/>
-      <Route path='/register' element={!user ?  <Register register={register} loading={loading} serverError={error}/> : <Navigate to="/"/>}/>
-      <Route path='/medicines' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Medicines/> }/>
-      <Route path='/profile' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <Profile userContext={user}/> }/>
-      <Route path='/person' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : role === "ADMIN" ? <Person /> : <Home/>} />
-      <Route path='/person/:id' element={!user ? <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : role === "ADMIN" ? <PersonDetails />: <Home/>} />
-      <Route path='*' element={!user ?  <Login login={login} loginWithAccessCode={loginWithAccessCode}/> : <NotFound />}/>
-    </Routes>
-  </BrowserRouter>
+    <BrowserRouter>
+      {user && <Navbar logout={logout} role={role} />}
+      {user && <NavbarPhone role={role} />}
+      <Routes>
+        <Route path='/' element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route path='/login' element={!user ? <Login /> : <Navigate to="/" />} />
+        <Route path='/register' element={!user ? <Register /> : <Navigate to="/" />} />
+        <Route path='/medicines' element={!user ? <Login /> : <Medicines />} />
+        <Route path='/profile' element={!user ? <Login /> : <Profile userContext={user} />} />
+        <Route path='/person' element={!user ? <Login /> : role === "ADMIN" ? <Person /> : <Home />} />
+        <Route path='/person/:id' element={!user ? <Login /> : role === "ADMIN" ? <PersonDetails /> : <Home />} />
+        <Route path='*' element={!user ? <Login /> : <NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
