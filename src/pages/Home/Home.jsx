@@ -21,9 +21,9 @@ import { AuthContext } from '../../context/AuthContext';
 const Home = () => {
 
   const dispatch = useDispatch();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
-  const {role} = useContext(AuthContext);
+  const { role } = useContext(AuthContext);
 
   const titles = [
     { name: t('title-tables.text-name'), field: "NAME" },
@@ -32,7 +32,8 @@ const Home = () => {
     { name: t('title-tables.text-frequence'), field: "FREQUENCE" },
     { name: t('title-tables.text-schedule'), field: "DAY_HOUR" },
     { name: t('title-tables.text-completed'), field: "CONCLUSION" },
-    { name: t('title-tables.text-actions'), }];
+    { name: t('title-tables.text-actions'), }
+  ];
 
   const { loading, medicinesItems, page, sort, filters } = useSelector(state => state.medicineItem);
 
@@ -42,7 +43,7 @@ const Home = () => {
   const [showModalEditMedicineItem, setShowModalEditMedicineItem] = useState(false);
   const [medicineEditing, setMedicineEditing] = useState();
 
-  const sizePage = 6;
+  const SIZE_PAGE = 6;
 
   useEffect(() => {
     dispatch(searchCustomMedicinesItemUser(filters));
@@ -64,8 +65,8 @@ const Home = () => {
 
   }
 
-  const fillRowTable = (medicinesState) => {
-    const listItens = medicinesState.slice(0, sizePage);
+  const renderRowTable = (medicinesState) => {
+    const listItens = medicinesState.slice(0, SIZE_PAGE);
     return listItens.map((medicine) => (
       <RowTableMedicineItem medicine={medicine} key={medicine.medicineItemId} setShowMedicineEditing={handleSetShowModalMedicineEditing} />
     ));
@@ -90,31 +91,30 @@ const Home = () => {
   }
 
   return (
-    <>
-      <main className="container_main">
-        <header className={styles.header}>
-          <NextMedicine medicinesItems={medicinesItems} />
-          <div className={styles.header_input}>
-            <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
-          </div>
-        </header>
-        {loading ? <p>Loading...</p> : <>
-          <div className={styles.container_caption}>
-            <FilterHome handleSearch={handleSearch} filters={filters} />
-            {role !== "GUEST" && <ButtonPlus action={() => setShowModal(true)} />}
-          </div>
-          <div className={styles.container_table}>
-            <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>
-              {medicinesItems.length > 0 && fillRowTable(medicinesItems)}
-            </Table>
-          </div>
-          <Pagination page={page} />
-        </>}
-        <ModalAddMedicine showModal={showModal} handleCloseModal={() => setShowModal(false)} actionToDispatch={createMedicine} dispatch={dispatch} />
-        {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
+    <main className="container_main">
+      <header className={styles.header}>
+        <NextMedicine medicinesItems={medicinesItems} />
+        <div className={styles.header_input}>
+          <InputSearch searchText={search} setSearchText={setSearch} loading={loading} handleSearch={handleSearch} />
+        </div>
+      </header>
+      {loading ? <p>Loading...</p> : <>
+        <div className={styles.container_caption}>
+          <FilterHome handleSearch={handleSearch} filters={filters} />
+          {role !== "GUEST" && <ButtonPlus action={() => setShowModal(true)} />}
+        </div>
+        <div className={styles.container_table}>
+          <Table titles={titles} dispatch={dispatch} sort={sort} handleSort={handleSort}>
+            {medicinesItems.length > 0 && renderRowTable(medicinesItems)}
+          </Table>
+        </div>
+        <Pagination page={page} />
+      </>}
+      <ModalAddMedicine showModal={showModal} handleCloseModal={() => setShowModal(false)} actionToDispatch={createMedicine} dispatch={dispatch} />
+      {medicineEditing && <ModalEditMedicineItem showModal={showModalEditMedicineItem} setCloseModal={handleCloseModalMedicineEditing} medicine={medicineEditing} dispatch={dispatch} />}
 
-      </main>
-    </>
+    </main>
+
   )
 }
 

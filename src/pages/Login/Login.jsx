@@ -50,9 +50,13 @@ const Login = () => {
   }
 
   const handleSetAccessCode = (e) => {
-    if (accessCode.length < 6) {
-      setAccessCode(e.target.value.toLocaleUpperCase())
-    }
+    setAccessCode(prevState => { 
+      if(prevState.length <= 6 && e.target.value.length <=6) {
+        return e.target.value.toLocaleUpperCase()
+      }
+      return prevState;
+    })
+  
   }
 
   return (

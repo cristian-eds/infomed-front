@@ -4,7 +4,6 @@ import { NavLink } from 'react-router'
 
 import { useTranslation } from 'react-i18next';
 
-import ControlTheme from '../ControlTheme/ControlTheme';
 import ConfigPopHover from '../ConfigPopHover/ConfigPopHover';
 
 const Navbar = ({ logout, role }) => {
